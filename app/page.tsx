@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { WebApp } from '@twa-dev/types'
-import HomeUI from './HomeUI'
+import './HomeUI'
 
 declare global {
   interface Window {
