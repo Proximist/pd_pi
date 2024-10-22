@@ -54,22 +54,32 @@ export default function HomeUI({
   }, []);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (farmingStatus === 'farming') {
-      interval = setInterval(() => {
-        setIsSliding(true);
-        setTimeout(() => {
-          setFarmingPoints(prev => prev + 1);
-          setCurrentNumber(prev => prev + 1);
-          setIsSliding(false);
-        }, 500);
-      }, 1000);
-    } else {
-      setFarmingPoints(0);
-      setCurrentNumber(0);
-    }
-    return () => clearInterval(interval);
-  }, [farmingStatus]);
+  let interval: NodeJS.Timeout;
+  if (farmingStatus === 'farming' && user?.startFarming) {
+    // Calculate initial points based on time elapsed since farming started
+    const startTime = new Date(user.startFarming).getTime();
+    const currentTime = new Date().getTime();
+    const secondsElapsed = Math.floor((currentTime - startTime) / 1000);
+    
+    // Set initial points
+    setFarmingPoints(secondsElapsed);
+    setCurrentNumber(secondsElapsed);
+
+    // Continue counting from current point
+    interval = setInterval(() => {
+      setIsSliding(true);
+      setTimeout(() => {
+        setFarmingPoints(prev => prev + 1);
+        setCurrentNumber(prev => prev + 1);
+        setIsSliding(false);
+      }, 500);
+    }, 1000);
+  } else {
+    setFarmingPoints(0);
+    setCurrentNumber(0);
+  }
+  return () => clearInterval(interval);
+}, [farmingStatus, user?.startFarming]); // Added user.startFarming as dependency
 
   const handleClaimClick = () => {
     setIsClaimAnimating(true);
