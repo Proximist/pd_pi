@@ -1,7 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
+/* Light theme variables (default) */
+:root {
+  --background-color: #f7fafc;
+  --header-bg: #edf2f7;
+  --dog-container-bg: #e2e8f0;
+  --text-color: black;
+  --tasks-container-bg: #f7fafc;
+  --social-container-bg: #edf2f7;
+  --button-bg: #e2e8f0;
+  --footer-bg: white;
+  --box-shadow: rgba(0, 0, 0, 0.1);
+  --farm-button-bg: #4CAF50;
+  --farm-button-color: white;
+  --notification-bg: rgba(0, 0, 0, 0.8);
+  --notification-color: white;
+}
+
+/* Dark theme variables */
+[data-theme="dark"] {
+  --background-color: #1f1f1f;
+  --header-bg: #2a2a2a;
+  --dog-container-bg: #333333;
+  --text-color: #ffffff;
+  --tasks-container-bg: #2a2a2a;
+  --social-container-bg: #333333;
+  --button-bg: #404040;
+  --footer-bg: #2a2a2a;
+  --box-shadow: rgba(0, 0, 0, 0.3);
+  --farm-button-bg: #2d662f;
+  --farm-button-color: white;
+  --notification-bg: rgba(255, 255, 255, 0.1);
+  --notification-color: white;
+}
+
 .home-container {
-  background-color: #f7fafc;
+  background-color: var(--background-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,7 +73,7 @@
 }
 
 .header-container {
-  background-color: #edf2f7;
+  background-color: var(--header-bg);
   width: 100%;
   height: 47%;
   border-radius: 0 0 2rem 2rem;
@@ -47,11 +81,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px var(--box-shadow);
 }
 
 .dog-image-container {
-  background-color: #e2e8f0;
+  background-color: var(--dog-container-bg);
   width: 13rem;
   height: 13rem;
   border-radius: 50%;
@@ -67,14 +101,14 @@
 }
 
 .pixel-dogs-count {
-  color: black;
+  color: var(--text-color);
   font-size: 2rem;
   font-family: 'Fredoka One', cursive;
   margin-top: 1rem;
 }
 
 .tasks-container {
-  background-color: #f7fafc;
+  background-color: var(--tasks-container-bg);
   width: 85%;
   margin-top: 1rem;
   padding: 1.5rem;
@@ -82,13 +116,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--box-shadow);
   margin-bottom: 155px;
 }
 
 .tasks-button {
-  background-color: #edf2f7;
-  color: black;
+  background-color: var(--button-bg);
+  color: var(--text-color);
   padding: 0.5rem 1.5rem;
   border-radius: 1rem;
   margin-bottom: 1rem;
@@ -98,11 +132,12 @@
 }
 
 .tasks-button:hover {
-  background-color: #e2e8f0;
+  background-color: var(--button-bg);
+  opacity: 0.9;
 }
 
 .social-container {
-  background-color: #edf2f7;
+  background-color: var(--social-container-bg);
   width: 100%;
   padding: 1rem;
   border-radius: 1rem;
@@ -110,17 +145,17 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--box-shadow);
 }
 
 .social-text {
-  color: black;
+  color: var(--text-color);
   font-weight: 500;
 }
 
 .claim-button {
-  background-color: #e2e8f0;
-  color: black;
+  background-color: var(--button-bg);
+  color: var(--text-color);
   padding: 0.5rem 1rem;
   border-radius: 1rem;
   font-weight: 600;
@@ -129,18 +164,18 @@
 }
 
 .claim-button:hover:not(.disabled) {
-  background-color: #cbd5e0;
+  background-color: var(--button-bg);
+  opacity: 0.9;
 }
 
 .claim-button.disabled {
   cursor: not-allowed;
-  background-color: #e2e8f0;
+  opacity: 0.7;
 }
 
-/* Farm Button Styles */
 .farm-button {
-  background-color: #4CAF50;
-  color: white;
+  background-color: var(--farm-button-bg);
+  color: var(--farm-button-color);
   width: 75%;
   padding: 1rem;
   border-radius: 1rem;
@@ -165,7 +200,7 @@
 }
 
 .farm-button.farming {
-  background-color: #4CAF50;
+  background-color: var(--farm-button-bg);
   animation: pulse 2s infinite;
 }
 
@@ -173,7 +208,6 @@
   pointer-events: none;
 }
 
-/* Farming Points Animation */
 .farming-points {
   display: inline-block;
   position: relative;
@@ -193,13 +227,12 @@
   animation: slideOut 0.5s ease-in;
 }
 
-/* Claim Farm Animation */
 .claimFarm {
   position: relative;
   padding: 10px 22px;
   border-radius: 6px;
   border: none;
-  color: white;
+  color: var(--farm-button-color);
   cursor: pointer;
   background-color: transparent;
   transition: all 0.2s ease;
@@ -357,8 +390,8 @@
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
+  background-color: var(--notification-bg);
+  color: var(--notification-color);
   padding: 10px 20px;
   border-radius: 5px;
   z-index: 1000;
@@ -377,7 +410,7 @@
 }
 
 .update-text {
-  color: black;
+  color: var(--text-color);
   text-align: center;
   margin-bottom: 1rem;
   font-size: 0.875rem;
@@ -385,7 +418,7 @@
 }
 
 .footer-container {
-  background-color: white;
+  background-color: var(--footer-bg);
   width: 100%;
   padding: 1rem;
   display: flex;
@@ -402,7 +435,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: black;
+  color: var(--text-color);
   transition: color 0.3s;
 }
 
