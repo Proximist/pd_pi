@@ -181,13 +181,13 @@ export default function TaskUI({
           </a>
         </Link>
         <Link href="/invite">
-          <a className="footerLink activeFooterLink">
+          <a className="footerLink">
             <i className="fas fa-users text-2xl"></i>
             <p className="text-sm">Friends</p>
           </a>
         </Link>
         <Link href="/task">
-          <a className="footerLink">
+          <a className="footerLink activeFooterLink">
             <i className="fas fa-clipboard text-2xl"></i>
             <p className="text-sm">Tasks</p>
           </a>
