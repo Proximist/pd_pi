@@ -402,13 +402,16 @@
   bottom: 0;
   left: 0;
   z-index: 1000;
-  padding: 0;
+  padding: 8px 0;  /* Added padding */
+  min-height: 64px; /* Added minimum height */
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Added shadow for better visibility */
 }
 
 .label {
   padding: 8px 18px;
   transition: all 200ms;
   display: inline-block;
+  cursor: pointer; /* Added cursor pointer */
 }
 
 .label input[type="radio"] {
@@ -418,7 +421,8 @@
 .label > svg {
   transition: all 200ms;
   fill: var(--col-gray);
-  width: 24px;
+  width: 28px; /* Increased size */
+  height: 28px; /* Added height */
 }
 
 .label:hover:not(:has(input:checked)) > svg {
