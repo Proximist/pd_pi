@@ -175,7 +175,7 @@ body {
     cursor: not-allowed;
 }
 
-.footerContainer {
+.footer-container {
     background-color: rgba(255, 255, 255, 0.8);
     width: 100%;
     padding: 0.5rem;
@@ -189,7 +189,7 @@ body {
     z-index: 1000;
   }
   
-  .darkMode .footerContainer {
+  .darkMode .footer-container {
     background-color: rgba(18, 18, 18, 0.8);
     box-shadow: 0 -2px 4px rgba(255, 255, 255, 0.1);
   }
