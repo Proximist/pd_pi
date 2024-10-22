@@ -79,15 +79,6 @@ body {
     color: #000;
 }
 
-.dark-theme .footer {
-    background-color: #1c1c1e;
-    border-top: 2px solid #3a3a3c;
-}
-
-.dark-theme .footer i {
-    color: #a0a0a0;
-}
-
 /* Common styles */
 .points {
     display: inline-block;
@@ -189,7 +180,7 @@ body {
     z-index: 1000;
   }
   
-  .darkMode .footer-container {
+  .dark-theme .footer-container {
     background-color: rgba(18, 18, 18, 0.8);
     box-shadow: 0 -2px 4px rgba(255, 255, 255, 0.1);
   }
@@ -206,7 +197,7 @@ body {
     transition: background-color 0.3s ease;
   }
   
-  .darkMode .footerLink {
+  .dark-theme .footerLink {
     color: white;
   }
   
@@ -220,7 +211,7 @@ body {
     background-color: rgba(0, 0, 0, 0.1);
   }
   
-  .darkMode .activeFooterLink {
+  .dark-theme .activeFooterLink {
     background-color: rgba(255, 255, 255, 0.1);
   }
   
@@ -237,7 +228,7 @@ body {
     z-index: -1;
   }
   
-  .darkMode .activeFooterLink::before {
+  .dark-theme .activeFooterLink::before {
     opacity: 0.2;
   }
 
