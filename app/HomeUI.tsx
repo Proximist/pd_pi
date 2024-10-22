@@ -3,6 +3,19 @@ import Link from 'next/link';
 import { toggleUpdateText } from './utils';
 import './HomeUI.css';
 
+// Add TypeScript interface for Telegram WebApp
+declare global {
+  interface Window {
+    Telegram?: {
+      WebApp?: {
+        colorScheme: 'light' | 'dark';
+        onEvent: (event: string, callback: () => void) => void;
+        offEvent: (event: string, callback: () => void) => void;
+      };
+    };
+  }
+}
+
 interface HomeUIProps {
   user: any;
   buttonStage1: 'check' | 'claim' | 'claimed';
@@ -53,33 +66,59 @@ export default function HomeUI({
     toggleUpdateText();
   }, []);
 
+  // Add theme detection effect
   useEffect(() => {
-  let interval: NodeJS.Timeout;
-  if (farmingStatus === 'farming' && user?.startFarming) {
-    // Calculate initial points based on time elapsed since farming started
-    const startTime = new Date(user.startFarming).getTime();
-    const currentTime = new Date().getTime();
-    const secondsElapsed = Math.floor((currentTime - startTime) / 1000);
-    
-    // Set initial points
-    setFarmingPoints(secondsElapsed);
-    setCurrentNumber(secondsElapsed);
+    // Function to detect Telegram theme
+    const detectTelegramTheme = () => {
+      if (window.Telegram?.WebApp) {
+        const colorScheme = window.Telegram.WebApp.colorScheme;
+        document.documentElement.setAttribute('data-theme', colorScheme);
+      }
+    };
 
-    // Continue counting from current point
-    interval = setInterval(() => {
-      setIsSliding(true);
-      setTimeout(() => {
-        setFarmingPoints(prev => prev + 1);
-        setCurrentNumber(prev => prev + 1);
-        setIsSliding(false);
-      }, 500);
-    }, 1000);
-  } else {
-    setFarmingPoints(0);
-    setCurrentNumber(0);
-  }
-  return () => clearInterval(interval);
-}, [farmingStatus, user?.startFarming]); // Added user.startFarming as dependency
+    // Initial detection
+    detectTelegramTheme();
+
+    // Listen for theme changes
+    if (window.Telegram?.WebApp) {
+      window.Telegram.WebApp.onEvent('themeChanged', detectTelegramTheme);
+    }
+
+    // Cleanup
+    return () => {
+      if (window.Telegram?.WebApp) {
+        window.Telegram.WebApp.offEvent('themeChanged', detectTelegramTheme);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (farmingStatus === 'farming' && user?.startFarming) {
+      // Calculate initial points based on time elapsed since farming started
+      const startTime = new Date(user.startFarming).getTime();
+      const currentTime = new Date().getTime();
+      const secondsElapsed = Math.floor((currentTime - startTime) / 1000);
+      
+      // Set initial points
+      setFarmingPoints(secondsElapsed);
+      setCurrentNumber(secondsElapsed);
+
+      // Continue counting from current point
+      interval = setInterval(() => {
+        setIsSliding(true);
+        setTimeout(() => {
+          setFarmingPoints(prev => prev + 1);
+          setCurrentNumber(prev => prev + 1);
+          setIsSliding(false);
+        }, 500);
+      }, 1000);
+    } else {
+      setFarmingPoints(0);
+      setCurrentNumber(0);
+    }
+    return () => clearInterval(interval);
+  }, [farmingStatus, user?.startFarming]);
 
   const handleClaimClick = () => {
     setIsClaimAnimating(true);
