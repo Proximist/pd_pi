@@ -7,11 +7,7 @@ import HomeUI from './HomeUI'
 declare global {
   interface Window {
     Telegram?: {
-      WebApp: WebApp & {
-        colorScheme: 'light' | 'dark'
-        onEvent: (event: string, callback: () => void) => void
-        offEvent: (event: string, callback: () => void) => void
-      }
+      WebApp: WebApp
     }
   }
 }
@@ -26,7 +22,7 @@ export default function Home() {
   const [buttonStage3, setButtonStage3] = useState<'check' | 'claim' | 'claimed'>('check')
   const [farmingStatus, setFarmingStatus] = useState<'farm' | 'farming' | 'claim'>('farm')
   const [isLoading, setIsLoading] = useState(false)
-  const [isInitialLoading, setIsInitialLoading] = useState(true)
+   const [isInitialLoading, setIsInitialLoading] = useState(true)
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
@@ -137,34 +133,34 @@ export default function Home() {
   }
 
   const handleFarmClick = async () => {
-    if (!user) return
+  if (!user) return
 
-    if (farmingStatus === 'farm') {
-      try {
-        const res = await fetch('/api/start-farming', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ telegramId: user.telegramId }),
-        })
-        const data = await res.json()
-        if (data.success) {
-          // Update the local user state with new startFarming timestamp
-          setUser({ ...user, startFarming: new Date().toISOString() })
-          setFarmingStatus('farming')
-          setTimeout(() => setFarmingStatus('claim'), 30000)
-        }
-      } catch (error) {
-        console.error('Error starting farming:', error)
+  if (farmingStatus === 'farm') {
+    try {
+      const res = await fetch('/api/start-farming', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ telegramId: user.telegramId }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        // Update the local user state with new startFarming timestamp
+        setUser({ ...user, startFarming: new Date().toISOString() })
+        setFarmingStatus('farming')
+        setTimeout(() => setFarmingStatus('claim'), 30000)
       }
-    } else if (farmingStatus === 'claim') {
-      handleIncreasePoints(200, 'farmButton')
-      setTimeout(() => {
-        setFarmingStatus('farm')
-      }, 600)
+    } catch (error) {
+      console.error('Error starting farming:', error)
     }
+  } else if (farmingStatus === 'claim') {
+    handleIncreasePoints(200, 'farmButton')
+    setTimeout(() => {
+      setFarmingStatus('farm')
+    }, 600)
   }
+}
 
   const handleButtonClick1 = () => {
     if (buttonStage1 === 'check') {
