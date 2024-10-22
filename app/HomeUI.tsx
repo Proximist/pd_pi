@@ -138,7 +138,7 @@ export default function HomeUI({
           </p>
           <div className={tasksClass}>
             <button className={`tasks-button ${isDarkMode ? 'dark-mode' : ''}`}>Daily Tasks..!</button>
-            <div className={socialClass}>
+            <div className={`social-container ${isDarkMode ? 'dark-mode' : ''}`}>
               <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Youtube!</p>
               <button
                 onClick={() => {
@@ -154,7 +154,7 @@ export default function HomeUI({
                 {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
               </button>
             </div>
-            <div className="social-container">
+            <div className={`social-container ${isDarkMode ? 'dark-mode' : ''}`}>
               <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Twitter!</p>
               <button
                 onClick={() => {
@@ -162,12 +162,12 @@ export default function HomeUI({
                   handleClaim2();
                 }}
                 disabled={buttonStage2 === 'claimed'}
-                className="claim-button"
+                className={`claim-button ${buttonStage2 === 'claimed' ? 'disabled' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
               >
                 {buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
               </button>
             </div>
-            <div className="social-container">
+            <div className={`social-container ${isDarkMode ? 'dark-mode' : ''}`}>
               <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Join Our Telegram!</p>
               <button
                 onClick={() => {
@@ -175,7 +175,7 @@ export default function HomeUI({
                   handleClaim3();
                 }}
                 disabled={buttonStage3 === 'claimed'}
-                className="claim-button"
+                className={`claim-button ${buttonStage3 === 'claimed' ? 'disabled' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
               >
                 {buttonStage3 === 'check' ? 'Check' : buttonStage3 === 'claim' ? 'Claim' : 'Claimed'}
               </button>
