@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { WebApp } from '@twa-dev/types'
-import HomeUI from './HomeUI'
+import './TaskUI'
 
 // Update the WebApp interface to include all required properties
 type ExtendedWebApp = WebApp & {
