@@ -133,30 +133,33 @@ export default function Home() {
   }
 
   const handleFarmClick = async () => {
-    if (!user) return
+  if (!user) return
 
-    if (farmingStatus === 'farm') {
-      try {
-        const res = await fetch('/api/start-farming', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ telegramId: user.telegramId }),
-        })
-        const data = await res.json()
-        if (data.success) {
-          setFarmingStatus('farming')
-          setTimeout(() => setFarmingStatus('claim'), 30000)
-        }
-      } catch (error) {
-        console.error('Error starting farming:', error)
+  if (farmingStatus === 'farm') {
+    try {
+      const res = await fetch('/api/start-farming', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ telegramId: user.telegramId }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setFarmingStatus('farming')
+        setTimeout(() => setFarmingStatus('claim'), 30000)
       }
-    } else if (farmingStatus === 'claim') {
-      handleIncreasePoints(200, 'farmButton')
-      setFarmingStatus('farm')
+    } catch (error) {
+      console.error('Error starting farming:', error)
     }
+  } else if (farmingStatus === 'claim') {
+    handleIncreasePoints(200, 'farmButton')
+    // Add a timeout to match the animation duration (600ms)
+    setTimeout(() => {
+      setFarmingStatus('farm')
+    }, 600)
   }
+}
 
   const handleButtonClick1 = () => {
     if (buttonStage1 === 'check') {
