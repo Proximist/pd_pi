@@ -497,6 +497,17 @@
   z-index: 1000;
 }
 
+.footer-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10%;
+  height: 2px;
+  background-color: #fff;
+}
+
 .footer-link {
   display: flex;
   flex-direction: column;
