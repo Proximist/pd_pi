@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import styles from './TaskUI.css';
+import './TaskUI.css';
 
 interface TaskUIProps {
   user: any;
