@@ -51,7 +51,6 @@ export default function Home() {
               setButtonStage3(data.user.claimedButton6 ? 'claimed' : 'check')
               setButtonStage7(data.user.claimedButton7 ? 'claimed' : 'check')
               setButtonStage8(data.user.claimedButton8 ? 'claimed' : 'check')
-              
             }
           })
           .catch(() => {
@@ -88,7 +87,6 @@ export default function Home() {
       setError('An error occurred while increasing points')
     }
   }
-
 
   const handleButtonClick4 = () => {
     if (buttonStage1 === 'check') {
@@ -172,16 +170,10 @@ export default function Home() {
     }
   }
 
-  
-  if (error) {
-    return <div className="container mx-auto p-4 text-red-500">{error}</div>
-  }
-
-  if (!user) return <div className="container mx-auto p-4">Loading...</div>
-
   return (
     <TaskUI 
       user={user}
+      error={error}
       buttonStage1={buttonStage1}
       buttonStage2={buttonStage2}
       buttonStage3={buttonStage3}
@@ -201,7 +193,6 @@ export default function Home() {
       handleClaim6={handleClaim6}
       handleClaim7={handleClaim7}
       handleClaim8={handleClaim8}
-      
     />
   )
 }
