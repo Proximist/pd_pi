@@ -1,41 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
-/* Light theme variables (default) */
-:root {
-  --background-color: #f7fafc;
-  --header-bg: #edf2f7;
-  --dog-container-bg: #e2e8f0;
-  --text-color: black;
-  --tasks-container-bg: #f7fafc;
-  --social-container-bg: #edf2f7;
-  --button-bg: #e2e8f0;
-  --footer-bg: white;
-  --box-shadow: rgba(0, 0, 0, 0.1);
-  --farm-button-bg: #4CAF50;
-  --farm-button-color: white;
-  --notification-bg: rgba(0, 0, 0, 0.8);
-  --notification-color: white;
-}
-
-/* Dark theme variables */
-[data-theme="dark"] {
-  --background-color: #1f1f1f;
-  --header-bg: #2a2a2a;
-  --dog-container-bg: #333333;
-  --text-color: #ffffff;
-  --tasks-container-bg: #2a2a2a;
-  --social-container-bg: #333333;
-  --button-bg: #404040;
-  --footer-bg: #2a2a2a;
-  --box-shadow: rgba(0, 0, 0, 0.3);
-  --farm-button-bg: #2d662f;
-  --farm-button-color: white;
-  --notification-bg: rgba(255, 255, 255, 0.1);
-  --notification-color: white;
-}
-
 .home-container {
-  background-color: var(--background-color);
+  background-color: #f7fafc;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -73,7 +39,7 @@
 }
 
 .header-container {
-  background-color: var(--header-bg);
+  background-color: #edf2f7;
   width: 100%;
   height: 47%;
   border-radius: 0 0 2rem 2rem;
@@ -81,11 +47,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px var(--box-shadow);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .dog-image-container {
-  background-color: var(--dog-container-bg);
+  background-color: #e2e8f0;
   width: 13rem;
   height: 13rem;
   border-radius: 50%;
@@ -101,14 +67,14 @@
 }
 
 .pixel-dogs-count {
-  color: var(--text-color);
+  color: black;
   font-size: 2rem;
   font-family: 'Fredoka One', cursive;
   margin-top: 1rem;
 }
 
 .tasks-container {
-  background-color: var(--tasks-container-bg);
+  background-color: #f7fafc;
   width: 85%;
   margin-top: 1rem;
   padding: 1.5rem;
@@ -116,13 +82,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 2px 4px var(--box-shadow);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 155px;
 }
 
 .tasks-button {
-  background-color: var(--button-bg);
-  color: var(--text-color);
+  background-color: #edf2f7;
+  color: black;
   padding: 0.5rem 1.5rem;
   border-radius: 1rem;
   margin-bottom: 1rem;
@@ -132,12 +98,11 @@
 }
 
 .tasks-button:hover {
-  background-color: var(--button-bg);
-  opacity: 0.9;
+  background-color: #e2e8f0;
 }
 
 .social-container {
-  background-color: var(--social-container-bg);
+  background-color: #edf2f7;
   width: 100%;
   padding: 1rem;
   border-radius: 1rem;
@@ -145,17 +110,17 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-  box-shadow: 0 2px 4px var(--box-shadow);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .social-text {
-  color: var(--text-color);
+  color: black;
   font-weight: 500;
 }
 
 .claim-button {
-  background-color: var(--button-bg);
-  color: var(--text-color);
+  background-color: #e2e8f0;
+  color: black;
   padding: 0.5rem 1rem;
   border-radius: 1rem;
   font-weight: 600;
@@ -164,18 +129,18 @@
 }
 
 .claim-button:hover:not(.disabled) {
-  background-color: var(--button-bg);
-  opacity: 0.9;
+  background-color: #cbd5e0;
 }
 
 .claim-button.disabled {
   cursor: not-allowed;
-  opacity: 0.7;
+  background-color: #e2e8f0;
 }
 
+/* Farm Button Styles */
 .farm-button {
-  background-color: var(--farm-button-bg);
-  color: var(--farm-button-color);
+  background-color: #4CAF50;
+  color: white;
   width: 75%;
   padding: 1rem;
   border-radius: 1rem;
@@ -200,7 +165,7 @@
 }
 
 .farm-button.farming {
-  background-color: var(--farm-button-bg);
+  background-color: #4CAF50;
   animation: pulse 2s infinite;
 }
 
@@ -208,6 +173,7 @@
   pointer-events: none;
 }
 
+/* Farming Points Animation */
 .farming-points {
   display: inline-block;
   position: relative;
@@ -227,12 +193,13 @@
   animation: slideOut 0.5s ease-in;
 }
 
+/* Claim Farm Animation */
 .claimFarm {
   position: relative;
   padding: 10px 22px;
   border-radius: 6px;
   border: none;
-  color: var(--farm-button-color);
+  color: white;
   cursor: pointer;
   background-color: transparent;
   transition: all 0.2s ease;
@@ -385,13 +352,86 @@
   }
 }
 
+/* Dark mode styles */
+.dark-mode.home-container {
+  background-color: #1a1a1a;
+}
+
+.dark-mode.header-container {
+  background-color: #2d2d2d;
+}
+
+.dark-mode.tasks-container {
+  background-color: #2d2d2d;
+}
+
+.dark-mode.social-container {
+  background-color: #363636;
+}
+
+.dark-mode .social-text {
+  color: #ffffff;
+}
+
+.dark-mode .pixel-dogs-count {
+  color: #ffffff;
+}
+
+.dark-mode .update-text {
+  color: #ffffff;
+}
+
+.dark-mode .tasks-button {
+  background-color: #404040;
+  color: #ffffff;
+}
+
+.dark-mode .claim-button {
+  background-color: #404040;
+  color: #ffffff;
+}
+
+.dark-mode .claim-button:hover:not(.disabled) {
+  background-color: #505050;
+}
+
+.dark-mode .claim-button.disabled {
+  background-color: #363636;
+  color: #808080;
+}
+
+.dark-mode.footer-container {
+  background-color: #2d2d2d;
+}
+
+.dark-mode.footer-link {
+  color: #ffffff;
+}
+
+.dark-mode.notification-banner {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .footer-text {
+  color: #ffffff;
+}
+
+/* Preserve the farm button's green color but slightly darker in dark mode */
+.dark-mode.farm-button {
+  background-color: #3d8b40;
+}
+
+.dark-mode.farm-button:disabled {
+  background-color: #2d662f;
+}
+
 .notification-banner {
   position: fixed;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--notification-bg);
-  color: var(--notification-color);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
   padding: 10px 20px;
   border-radius: 5px;
   z-index: 1000;
@@ -410,7 +450,7 @@
 }
 
 .update-text {
-  color: var(--text-color);
+  color: black;
   text-align: center;
   margin-bottom: 1rem;
   font-size: 0.875rem;
@@ -418,7 +458,7 @@
 }
 
 .footer-container {
-  background-color: var(--footer-bg);
+  background-color: white;
   width: 100%;
   padding: 1rem;
   display: flex;
@@ -435,7 +475,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: var(--text-color);
+  color: black;
   transition: color 0.3s;
 }
 
