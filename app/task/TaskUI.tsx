@@ -175,19 +175,19 @@ export default function TaskUI({
       {renderContent()}
       <div className="footer-container">
         <Link href="/">
-          <a className="flex flex-col items-center text-gray-800">
+          <a className="footerLink">
             <i className="fas fa-home text-2xl"></i>
             <p className="text-sm">Home</p>
           </a>
         </Link>
         <Link href="/invite">
-          <a className="flex flex-col items-center text-gray-800">
+          <a className="footerLink activeFooterLink">
             <i className="fas fa-users text-2xl"></i>
             <p className="text-sm">Friends</p>
           </a>
         </Link>
         <Link href="/task">
-          <a className="flex flex-col items-center text-gray-800">
+          <a className="footerLink">
             <i className="fas fa-clipboard text-2xl"></i>
             <p className="text-sm">Tasks</p>
           </a>
