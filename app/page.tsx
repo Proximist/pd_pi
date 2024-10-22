@@ -146,6 +146,8 @@ export default function Home() {
       })
       const data = await res.json()
       if (data.success) {
+        // Update the local user state with new startFarming timestamp
+        setUser({ ...user, startFarming: new Date().toISOString() })
         setFarmingStatus('farming')
         setTimeout(() => setFarmingStatus('claim'), 30000)
       }
@@ -154,7 +156,6 @@ export default function Home() {
     }
   } else if (farmingStatus === 'claim') {
     handleIncreasePoints(200, 'farmButton')
-    // Add a timeout to match the animation duration (600ms)
     setTimeout(() => {
       setFarmingStatus('farm')
     }, 600)
