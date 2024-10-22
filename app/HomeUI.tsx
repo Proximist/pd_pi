@@ -3,19 +3,6 @@ import Link from 'next/link';
 import { toggleUpdateText } from './utils';
 import './HomeUI.css';
 
-// Add TypeScript interface for Telegram WebApp
-declare global {
-  interface Window {
-    Telegram?: {
-      WebApp?: {
-        colorScheme: 'light' | 'dark';
-        onEvent: (event: string, callback: () => void) => void;
-        offEvent: (event: string, callback: () => void) => void;
-      };
-    };
-  }
-}
-
 interface HomeUIProps {
   user: any;
   buttonStage1: 'check' | 'claim' | 'claimed';
@@ -57,6 +44,7 @@ export default function HomeUI({
   const [currentNumber, setCurrentNumber] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
   const [isClaimAnimating, setIsClaimAnimating] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -64,47 +52,27 @@ export default function HomeUI({
     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
     document.head.appendChild(link);
     toggleUpdateText();
-  }, []);
 
-  // Add theme detection effect
-  useEffect(() => {
-    // Function to detect Telegram theme
-    const detectTelegramTheme = () => {
-      if (window.Telegram?.WebApp) {
-        const colorScheme = window.Telegram.WebApp.colorScheme;
-        document.documentElement.setAttribute('data-theme', colorScheme);
-      }
-    };
-
-    // Initial detection
-    detectTelegramTheme();
-
-    // Listen for theme changes
+    // Check Telegram theme
     if (window.Telegram?.WebApp) {
-      window.Telegram.WebApp.onEvent('themeChanged', detectTelegramTheme);
-    }
+      const isDark = window.Telegram.WebApp.colorScheme === 'dark';
+      setIsDarkMode(isDark);
 
-    // Cleanup
-    return () => {
-      if (window.Telegram?.WebApp) {
-        window.Telegram.WebApp.offEvent('themeChanged', detectTelegramTheme);
-      }
-    };
+      // Add theme classes to body
+      document.body.classList.toggle('dark-mode', isDark);
+    }
   }, []);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (farmingStatus === 'farming' && user?.startFarming) {
-      // Calculate initial points based on time elapsed since farming started
       const startTime = new Date(user.startFarming).getTime();
       const currentTime = new Date().getTime();
       const secondsElapsed = Math.floor((currentTime - startTime) / 1000);
       
-      // Set initial points
       setFarmingPoints(secondsElapsed);
       setCurrentNumber(secondsElapsed);
 
-      // Continue counting from current point
       interval = setInterval(() => {
         setIsSliding(true);
         setTimeout(() => {
@@ -128,6 +96,13 @@ export default function HomeUI({
     }, 1000);
   };
 
+  // Add dark mode classes to elements
+  const containerClass = `home-container ${isDarkMode ? 'dark-mode' : ''}`;
+  const headerClass = `header-container ${isDarkMode ? 'dark-mode' : ''}`;
+  const tasksClass = `tasks-container ${isDarkMode ? 'dark-mode' : ''}`;
+  const socialClass = `social-container ${isDarkMode ? 'dark-mode' : ''}`;
+  const footerClass = `footer-container ${isDarkMode ? 'dark-mode' : ''}`;
+
   const renderContent = () => {
     if (isInitialLoading) {
       return (
@@ -147,7 +122,7 @@ export default function HomeUI({
 
     return (
       <>
-        <div className="header-container">
+        <div className={headerClass}>
           <div className="dog-image-container">
             <img
               alt="Animated style dog image"
@@ -155,16 +130,16 @@ export default function HomeUI({
               src="https://storage.googleapis.com/a1aa/image/YlpvEfbklKRiDi8LX5Rww5U3zZZwHEUfju1qUNknpEZ6e2OnA.jpg"
             />
           </div>
-          <p id="pixelDogsCount" className="pixel-dogs-count">
+          <p id="pixelDogsCount" className={`pixel-dogs-count ${isDarkMode ? 'dark-mode' : ''}`}>
             {user.points} PixelDogs
           </p>
-          <p id="updateText" className="update-text fade fade-in">
+          <p id="updateText" className={`update-text fade fade-in ${isDarkMode ? 'dark-mode' : ''}`}>
             Exciting updates are on the way :)
           </p>
-          <div className="tasks-container">
-            <button className="tasks-button">Daily Tasks..!</button>
-            <div className="social-container">
-              <p className="social-text">Follow Our Youtube!</p>
+          <div className={tasksClass}>
+            <button className={`tasks-button ${isDarkMode ? 'dark-mode' : ''}`}>Daily Tasks..!</button>
+            <div className={socialClass}>
+              <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Youtube!</p>
               <button
                 onClick={() => {
                   if (buttonStage1 === 'check') {
@@ -174,7 +149,7 @@ export default function HomeUI({
                   }
                 }}
                 disabled={buttonStage1 === 'claimed' || isLoading}
-                className={`claim-button ${buttonStage1 === 'claimed' || isLoading ? 'disabled' : ''}`}
+                className={`claim-button ${buttonStage1 === 'claimed' || isLoading ? 'disabled' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
               >
                 {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
               </button>
@@ -209,7 +184,7 @@ export default function HomeUI({
         </div>
         <div className="flex-grow"></div>
         <button
-          className={`farm-button ${farmingStatus === 'farming' ? 'farming' : ''} ${isClaimAnimating ? 'claim-animating' : ''}`}
+          className={`farm-button ${farmingStatus === 'farming' ? 'farming' : ''} ${isClaimAnimating ? 'claim-animating' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
           onClick={farmingStatus === 'claim' ? handleClaimClick : handleFarmClick}
           disabled={farmingStatus === 'farming' || isClaimAnimating}
         >
@@ -228,29 +203,29 @@ export default function HomeUI({
             <span className="claimFarm">Claim Farm</span>
           )}
         </button>
-        {notification && <div className="notification-banner">{notification}</div>}
+        {notification && <div className={`notification-banner ${isDarkMode ? 'dark-mode' : ''}`}>{notification}</div>}
       </>
     );
   };
 
   return (
-    <div className="home-container">
+    <div className={containerClass}>
       {renderContent()}
-      <div className="footer-container">
+      <div className={footerClass}>
         <Link href="/">
-          <div className="footer-link active-link">
+          <div className={`footer-link active-link ${isDarkMode ? 'dark-mode' : ''}`}>
             <i className="fas fa-home footer-icon"></i>
             <p className="footer-text">Home</p>
           </div>
         </Link>
         <Link href="/invite">
-          <div className="footer-link">
+          <div className={`footer-link ${isDarkMode ? 'dark-mode' : ''}`}>
             <i className="fas fa-users footer-icon"></i>
             <p className="footer-text">Friends</p>
           </div>
         </Link>
         <Link href="/task">
-          <div className="footer-link">
+          <div className={`footer-link ${isDarkMode ? 'dark-mode' : ''}`}>
             <i className="fas fa-clipboard footer-icon"></i>
             <p className="footer-text">Tasks</p>
           </div>
