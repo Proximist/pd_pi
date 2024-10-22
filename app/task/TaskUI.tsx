@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import './TaskUI.css';
-import styles from './TaskUI.css';
 
 interface TaskUIProps {
   user: any;
@@ -66,11 +65,11 @@ export default function TaskUI({
 
   const renderContent = () => {
     if (error) {
-      return <div className={styles.error}>{error}</div>;
+      return <div className="container mx-auto p-4 text-red-500">{error}</div>;
     }
 
     if (!user) {
-      return <div className={styles.loader}></div>;
+      return <div className="loader"></div>;
     }
 
     return (
