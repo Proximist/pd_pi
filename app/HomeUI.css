@@ -515,11 +515,6 @@
   color: black;
   transition: color 0.3s;
 }
-
-.footer-link:hover {
-  color: #07bff2;
-}
-
 .footer-icon {
   font-size: 1.5rem;
 }
