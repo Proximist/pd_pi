@@ -2,28 +2,34 @@
 
 import { useEffect, useState } from 'react'
 import { WebApp } from '@twa-dev/types'
-import TaskUI from './TaskUI'
+import HomeUI from './HomeUI'
+
+// Update the WebApp interface to include all required properties
+type ExtendedWebApp = WebApp & {
+  colorScheme: 'light' | 'dark'
+  onEvent: (event: string, callback: () => void) => void
+  offEvent: (event: string, callback: () => void) => void
+}
 
 declare global {
   interface Window {
     Telegram?: {
-      WebApp: WebApp
+      WebApp: ExtendedWebApp
     }
   }
 }
 
 export default function Home() {
   const [user, setUser] = useState<any>(null)
+  const [inviterInfo, setInviterInfo] = useState<any>(null)
   const [error, setError] = useState<string | null>(null)
   const [notification, setNotification] = useState('')
   const [buttonStage1, setButtonStage1] = useState<'check' | 'claim' | 'claimed'>('check')
   const [buttonStage2, setButtonStage2] = useState<'check' | 'claim' | 'claimed'>('check')
   const [buttonStage3, setButtonStage3] = useState<'check' | 'claim' | 'claimed'>('check')
-  const [buttonStage7, setButtonStage7] = useState<'check' | 'claim' | 'claimed'>('check')
-  const [buttonStage8, setButtonStage8] = useState<'check' | 'claim' | 'claimed'>('check')
+  const [farmingStatus, setFarmingStatus] = useState<'farm' | 'farming' | 'claim'>('farm')
   const [isLoading, setIsLoading] = useState(false)
-  const [isLoading1, setIsLoading1] = useState(false)
-  const [isLoading2, setIsLoading2] = useState(false)
+  const [isInitialLoading, setIsInitialLoading] = useState(true)
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
@@ -46,11 +52,11 @@ export default function Home() {
               setError(data.error)
             } else {
               setUser(data.user)
-              setButtonStage1(data.user.claimedButton4 ? 'claimed' : 'check')
-              setButtonStage2(data.user.claimedButton5 ? 'claimed' : 'check')
-              setButtonStage3(data.user.claimedButton6 ? 'claimed' : 'check')
-              setButtonStage7(data.user.claimedButton7 ? 'claimed' : 'check')
-              setButtonStage8(data.user.claimedButton8 ? 'claimed' : 'check')
+              setInviterInfo(data.inviterInfo)
+              setButtonStage1(data.user.claimedButton1 ? 'claimed' : 'check')
+              setButtonStage2(data.user.claimedButton2 ? 'claimed' : 'check')
+              setButtonStage3(data.user.claimedButton3 ? 'claimed' : 'check')
+              checkFarmingStatus(data.user)
             }
           })
           .catch(() => {
@@ -63,6 +69,51 @@ export default function Home() {
       setError('This app should be opened in Telegram')
     }
   }, [])
+
+  useEffect(() => {
+    const updateOnlineStatus = () => {
+      if (user) {
+        fetch('/api/update-online-status', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ telegramId: user.telegramId, isOnline: true }),
+        })
+      }
+    }
+
+    const interval = setInterval(updateOnlineStatus, 5000) // Update every minute
+
+    return () => {
+      clearInterval(interval)
+      if (user) {
+        fetch('/api/update-online-status', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ telegramId: user.telegramId, isOnline: false }),
+        })
+      }
+    }
+  }, [user])
+
+  const checkFarmingStatus = (userData: any) => {
+    if (userData.startFarming) {
+      const now = new Date()
+      const startTime = new Date(userData.startFarming)
+      const timeDiff = now.getTime() - startTime.getTime()
+      if (timeDiff < 30000) { // Less than 30 seconds
+        setFarmingStatus('farming')
+        setTimeout(() => setFarmingStatus('claim'), 30000 - timeDiff)
+      } else {
+        setFarmingStatus('claim')
+      }
+    } else {
+      setFarmingStatus('farm')
+    }
+  }
 
   const handleIncreasePoints = async (pointsToAdd: number, buttonId: string) => {
     if (!user) return
@@ -88,45 +139,61 @@ export default function Home() {
     }
   }
 
-  const handleButtonClick4 = () => {
+  const handleFarmClick = async () => {
+    if (!user) return
+
+    if (farmingStatus === 'farm') {
+      try {
+        const res = await fetch('/api/start-farming', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ telegramId: user.telegramId }),
+        })
+        const data = await res.json()
+        if (data.success) {
+          // Update the local user state with new startFarming timestamp
+          setUser({ ...user, startFarming: new Date().toISOString() })
+          setFarmingStatus('farming')
+          setTimeout(() => setFarmingStatus('claim'), 30000)
+        }
+      } catch (error) {
+        console.error('Error starting farming:', error)
+      }
+    } else if (farmingStatus === 'claim') {
+      handleIncreasePoints(200, 'farmButton')
+      setTimeout(() => {
+        setFarmingStatus('farm')
+      }, 600)
+    }
+  }
+
+  const handleButtonClick1 = () => {
     if (buttonStage1 === 'check') {
       window.open('https://youtu.be/xvFZjo5PgG0', '_blank')
       setButtonStage1('claim')
     }
   }
 
-  const handleButtonClick5 = () => {
+  const handleButtonClick2 = () => {
     if (buttonStage2 === 'check') {
       window.open('https://twitter.com', '_blank')
       setButtonStage2('claim')
     }
   }
 
-  const handleButtonClick6 = () => {
+  const handleButtonClick3 = () => {
     if (buttonStage3 === 'check') {
       window.open('https://telegram.org', '_blank')
       setButtonStage3('claim')
     }
   }
 
-  const handleButtonClick7 = () => {
-    if (buttonStage7 === 'check') {
-      window.open('https://discord.com', '_blank')
-      setButtonStage7('claim')
-    }
-  }
-
-  const handleButtonClick8 = () => {
-    if (buttonStage8 === 'check') {
-      window.open('https://tiktok.com', '_blank')
-      setButtonStage8('claim')
-    }
-  }
-
-  const handleClaim4 = () => {
+  const handleClaim1 = () => {
     if (buttonStage1 === 'claim') {
       setIsLoading(true)
-      handleIncreasePoints(100, 'button4')
+      handleIncreasePoints(5, 'button1')
       setTimeout(() => {
         setButtonStage1('claimed')
         setIsLoading(false)
@@ -134,65 +201,38 @@ export default function Home() {
     }
   }
 
-  const handleClaim5 = () => {
+  const handleClaim2 = () => {
     if (buttonStage2 === 'claim') {
-      handleIncreasePoints(150, 'button5')
+      handleIncreasePoints(3, 'button2')
       setButtonStage2('claimed')
     }
   }
 
-  const handleClaim6 = () => {
+  const handleClaim3 = () => {
     if (buttonStage3 === 'claim') {
-      handleIncreasePoints(300, 'button6')
+      handleIncreasePoints(9, 'button3')
       setButtonStage3('claimed')
     }
   }
 
-  const handleClaim7 = () => {
-    if (buttonStage7 === 'claim') {
-      setIsLoading1(true)
-      handleIncreasePoints(150, 'button7')
-      setTimeout(() => {
-        setButtonStage7('claimed')
-        setIsLoading1(false)
-      }, 3000)
-    }
-  }
-
-  const handleClaim8 = () => {
-    if (buttonStage8 === 'claim') {
-      setIsLoading2(true)
-      handleIncreasePoints(150, 'button8')
-      setTimeout(() => {
-        setButtonStage8('claimed')
-        setIsLoading2(false)
-      }, 3000)
-    }
-  }
-
   return (
-    <TaskUI 
+    <HomeUI 
       user={user}
-      error={error}
       buttonStage1={buttonStage1}
       buttonStage2={buttonStage2}
       buttonStage3={buttonStage3}
-      buttonStage7={buttonStage7}
-      buttonStage8={buttonStage8}
+      farmingStatus={farmingStatus}
       isLoading={isLoading}
-      isLoading1={isLoading1}
-      isLoading2={isLoading2}
       notification={notification}
-      handleButtonClick4={handleButtonClick4}
-      handleButtonClick5={handleButtonClick5}
-      handleButtonClick6={handleButtonClick6}
-      handleButtonClick7={handleButtonClick7}
-      handleButtonClick8={handleButtonClick8}
-      handleClaim4={handleClaim4}
-      handleClaim5={handleClaim5}
-      handleClaim6={handleClaim6}
-      handleClaim7={handleClaim7}
-      handleClaim8={handleClaim8}
+      error={error}
+      isInitialLoading={!user}
+      handleButtonClick1={handleButtonClick1}
+      handleButtonClick2={handleButtonClick2}
+      handleButtonClick3={handleButtonClick3}
+      handleClaim1={handleClaim1}
+      handleClaim2={handleClaim2}
+      handleClaim3={handleClaim3}
+      handleFarmClick={handleFarmClick}
     />
   )
 }
