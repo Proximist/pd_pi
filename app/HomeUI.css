@@ -1,12 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
-:root {
-  --col-orange: #d17842;
-  --col-dark: #0c0f14;
-  --col-darkGray: #52555a;
-  --col-gray: #aeaeae;
-}
-
 .home-container {
   background-color: #f7fafc;
   display: flex;
@@ -15,7 +8,6 @@
   justify-content: space-between;
   min-height: 100vh;
   position: relative;
-  padding-bottom: 80px; /* Increased padding to accommodate taller nav */
 }
 
 .content-area {
@@ -24,8 +16,8 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: calc(100vh - 90px); /* Adjusted for taller nav */
-  padding-bottom: 90px;
+  min-height: calc(100vh - 70px);
+  padding-bottom: 70px;
 }
 
 .loader {
@@ -158,7 +150,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
   position: fixed;
-  bottom: 85px; /* Adjusted to accommodate taller nav */
+  bottom: 65px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
@@ -201,76 +193,71 @@
   animation: slideOut 0.5s ease-in;
 }
 
-/* New Footer Navigation Styles */
-.footer-container {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  background-color: var(--col-dark);
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  padding: 8px 0;
-  height: 70px; /* Set explicit height */
-}
-
-.label {
-  padding: 8px 18px;
-  transition: all 200ms;
-  display: inline-block;
-  cursor: pointer;
-}
-
-.label input[type="radio"] {
-  display: none;
-}
-
-.label > svg {
-  transition: all 200ms;
-  fill: var(--col-gray);
-  width: 28px; /* Increased size */
-  height: 28px; /* Increased size */
-}
-
-.label:hover:not(:has(input:checked)) > svg {
-  fill: var(--col-orange);
-  opacity: 0.6;
-}
-
-.label::before {
-  content: "";
-  display: block;
-  width: 0%;
-  height: 2px;
-  border-radius: 5px;
+/* Claim Farm Animation */
+.claimFarm {
   position: relative;
+  padding: 10px 22px;
+  border-radius: 6px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  display: inline-block;
+  animation: claimPop 0.6s ease-out;
+}
+
+.claimFarm:active {
+  transform: scale(0.96);
+}
+
+.farm-button.claim-animating .claimFarm {
+  animation: claimPopAndFade 1s ease-out;
+}
+
+.claimFarm:active:before,
+.claimFarm:active:after {
+  position: absolute;
+  content: "";
+  width: 150%;
   left: 50%;
-  top: 20px;
-  background: var(--col-orange);
-  transition: all 200ms;
+  height: 100%;
+  transform: translateX(-50%);
+  z-index: -1000;
+  background-repeat: no-repeat;
 }
 
-.label > svg {
-  transition: 300ms;
-  fill: var(--col-darkGray);
-  margin-top: 0;
+.claimFarm:active:before {
+  top: -70%;
+  background-image: radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, transparent 20%, #7d2ae8 20%, transparent 30%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, #7d2ae8 15%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%);
+  background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
+    10% 10%, 18% 18%;
+  background-position: 50% 120%;
+  animation: greentopBubbles 0.6s ease;
 }
 
-.label:has(input:checked) > svg {
-  fill: var(--col-orange);
-  scale: 1.2;
-  margin-top: -5px;
+.claimFarm:active::after {
+  bottom: -70%;
+  background-image: radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, #7d2ae8 15%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%);
+  background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 20% 20%, 18% 18%;
+  background-position: 50% 0%;
+  animation: greenbottomBubbles 0.6s ease;
 }
 
-.label:has(input:checked)::before {
-  width: 100%;
-  left: 0;
-  top: 25px;
-}
-
-/* Animations */
 @keyframes slideIn {
   0% {
     transform: translateX(100%);
@@ -395,6 +382,40 @@
   margin-bottom: 1rem;
   font-size: 0.875rem;
   margin-bottom: 20px;
+}
+
+.footer-container {
+  background-color: white;
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.footer-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+  transition: color 0.3s;
+}
+
+.footer-link:hover {
+  color: #07bff2;
+}
+
+.footer-icon {
+  font-size: 1.5rem;
+}
+
+.footer-text {
+  font-weight: 500;
 }
 
 .flex-grow {
