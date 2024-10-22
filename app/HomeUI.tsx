@@ -155,7 +155,7 @@ export default function HomeUI({
               </button>
             </div>
             <div className="social-container">
-              <p className="social-text">Follow Our Twitter!</p>
+              <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Twitter!</p>
               <button
                 onClick={() => {
                   handleButtonClick2();
@@ -168,7 +168,7 @@ export default function HomeUI({
               </button>
             </div>
             <div className="social-container">
-              <p className="social-text">Join Our Telegram!</p>
+              <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Join Our Telegram!</p>
               <button
                 onClick={() => {
                   handleButtonClick3();
