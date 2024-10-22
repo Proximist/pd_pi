@@ -1,0 +1,423 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+.home-container {
+  background-color: #f7fafc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
+  position: relative;
+}
+
+.content-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: calc(100vh - 70px);
+  padding-bottom: 70px;
+}
+
+.loader {
+  width: fit-content;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 30px;
+  padding-bottom: 8px;
+  background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
+  animation: l2 2s linear infinite;
+}
+
+.loader:before {
+  content: "Loading..."
+}
+
+@keyframes l2 {
+  to { background-size: 100% 3px }
+}
+
+.header-container {
+  background-color: #edf2f7;
+  width: 100%;
+  height: 47%;
+  border-radius: 0 0 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dog-image-container {
+  background-color: #e2e8f0;
+  width: 13rem;
+  height: 13rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+.dog-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.pixel-dogs-count {
+  color: black;
+  font-size: 2rem;
+  font-family: 'Fredoka One', cursive;
+  margin-top: 1rem;
+}
+
+.tasks-container {
+  background-color: #f7fafc;
+  width: 85%;
+  margin-top: 1rem;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 155px;
+}
+
+.tasks-button {
+  background-color: #edf2f7;
+  color: black;
+  padding: 0.5rem 1.5rem;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+.tasks-button:hover {
+  background-color: #e2e8f0;
+}
+
+.social-container {
+  background-color: #edf2f7;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.social-text {
+  color: black;
+  font-weight: 500;
+}
+
+.claim-button {
+  background-color: #e2e8f0;
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+.claim-button:hover:not(.disabled) {
+  background-color: #cbd5e0;
+}
+
+.claim-button.disabled {
+  cursor: not-allowed;
+  background-color: #e2e8f0;
+}
+
+/* Farm Button Styles */
+.farm-button {
+  background-color: #4CAF50;
+  color: white;
+  width: 75%;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: fixed;
+  bottom: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  cursor: pointer;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.farm-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.farm-button.farming {
+  background-color: #4CAF50;
+  animation: pulse 2s infinite;
+}
+
+.farm-button.claim-animating {
+  pointer-events: none;
+}
+
+/* Farming Points Animation */
+.farming-points {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  height: 1.5em;
+  margin-left: 5px;
+  min-width: 40px;
+}
+
+.farming-points-number {
+  animation: slideIn 0.5s ease-out;
+  height: 1.5em;
+  left: 0;
+}
+
+.farming-points-number.sliding-out {
+  animation: slideOut 0.5s ease-in;
+}
+
+/* Claim Farm Animation */
+.claimFarm {
+  position: relative;
+  padding: 10px 22px;
+  border-radius: 6px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  display: inline-block;
+  animation: claimPop 0.6s ease-out;
+}
+
+.claimFarm:active {
+  transform: scale(0.96);
+}
+
+.farm-button.claim-animating .claimFarm {
+  animation: claimPopAndFade 1s ease-out;
+}
+
+.claimFarm:active:before,
+.claimFarm:active:after {
+  position: absolute;
+  content: "";
+  width: 150%;
+  left: 50%;
+  height: 100%;
+  transform: translateX(-50%);
+  z-index: -1000;
+  background-repeat: no-repeat;
+}
+
+.claimFarm:active:before {
+  top: -70%;
+  background-image: radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, transparent 20%, #7d2ae8 20%, transparent 30%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, #7d2ae8 15%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%);
+  background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
+    10% 10%, 18% 18%;
+  background-position: 50% 120%;
+  animation: greentopBubbles 0.6s ease;
+}
+
+.claimFarm:active::after {
+  bottom: -70%;
+  background-image: radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, #7d2ae8 15%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%);
+  background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 20% 20%, 18% 18%;
+  background-position: 50% 0%;
+  animation: greenbottomBubbles 0.6s ease;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.05);
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes claimPop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes claimPopAndFade {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes greentopBubbles {
+  0% {
+    background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
+      40% 90%, 55% 90%, 70% 90%;
+  }
+  50% {
+    background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
+      50% 50%, 65% 20%, 90% 30%;
+  }
+  100% {
+    background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
+      50% 40%, 65% 10%, 90% 20%;
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+@keyframes greenbottomBubbles {
+  0% {
+    background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
+      70% -10%, 70% 0%;
+  }
+  50% {
+    background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%,
+      105% 0%;
+  }
+  100% {
+    background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%,
+      110% 10%;
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+.notification-banner {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.update-text {
+  color: black;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  margin-bottom: 20px;
+}
+
+.footer-container {
+  background-color: white;
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.footer-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+  transition: color 0.3s;
+}
+
+.footer-link:hover {
+  color: #2d3748;
+}
+
+.footer-icon {
+  font-size: 1.5rem;
+}
+
+.footer-text {
+  font-weight: 500;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}

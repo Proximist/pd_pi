@@ -1,0 +1,273 @@
+/* invite.module.css */
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  color: black;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.1) 2px, transparent 0);
+  background-size: 30px 30px;
+  background-position: -5px -5px;
+}
+
+.darkMode {
+  background-color: #313131;
+  color: white;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.171) 2px, transparent 0);
+}
+
+.content {
+  flex-grow: 1;
+  padding: 1rem;
+  padding-bottom: 4rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.loader {
+  width: fit-content;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 30px;
+  padding-bottom: 8px;
+  background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
+  animation: l2 2s linear infinite;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loader:before {
+  content: "Loading..."
+}
+
+@keyframes l2 {
+  to { background-size: 100% 3px }
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.icon {
+  width: 4rem;
+  height: 4rem;
+  color: black;
+}
+
+.darkMode .icon {
+  color: white;
+}
+
+.icon + .icon {
+  margin-left: 1rem;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.inviteButton {
+  width: 100%;
+  height: 45px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+
+.darkMode .inviteButton {
+  background-color: white;
+  color: black;
+}
+
+.inviteButton:active {
+  background-color: #333;
+}
+
+.darkMode .inviteButton:active {
+  background-color: #e0e0e0;
+}
+
+.buttonText,
+.buttonIcon {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: top 0.3s ease, opacity 0.3s ease;
+}
+
+.buttonText {
+  top: 0;
+}
+
+.buttonIcon {
+  top: 100%;
+}
+
+.inviteButton.copied .buttonText {
+  top: -100%;
+  opacity: 0;
+}
+
+.inviteButton.copied .buttonIcon {
+  top: 0;
+  opacity: 1;
+}
+
+.inviteButton.fadeOut .buttonIcon {
+  opacity: 0;
+}
+
+.inviteButton.fadeOut .buttonText {
+  top: 0;
+  opacity: 1;
+}
+
+.invitedSection {
+  background-color: rgba(243, 244, 246, 0.8);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.darkMode .invitedSection {
+  background-color: rgba(42, 42, 42, 0.8);
+}
+
+.invitedHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.invitedIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+  color: black;
+}
+
+.darkMode .invitedIcon {
+  color: white;
+}
+
+.invitedTitle {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.invitedList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.invitedList li {
+  margin-bottom: 0.5rem;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.emptyStateText {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.notification {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: #d1fae5;
+  color: #047857;
+  border-radius: 0.25rem;
+}
+
+.footerContainer {
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.darkMode .footerContainer {
+  background-color: rgba(18, 18, 18, 0.8);
+  box-shadow: 0 -2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.footerLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+  text-decoration: none;
+  font-size: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.darkMode .footerLink {
+  color: white;
+}
+
+.footerLink i {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.activeFooterLink {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.darkMode .activeFooterLink {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.activeFooterLink::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: currentColor;
+  opacity: 0.1;
+  border-radius: 0.5rem;
+  z-index: -1;
+}
+
+.darkMode .activeFooterLink::before {
+  opacity: 0.2;
+}
