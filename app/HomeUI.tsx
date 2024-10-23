@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { toggleUpdateText } from './utils';
 import './HomeUI.css';
+import './globals.css';
 
 interface HomeUIProps {
   user: any;
