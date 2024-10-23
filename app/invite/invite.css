@@ -9,7 +9,6 @@
   height: 100vh;
   background-color: #f0f0f0;
   color: black;
-  background-image: radial-gradient(rgba(0, 0, 0, 0.1) 2px, transparent 0);
   background-size: 30px 30px;
   background-position: -5px -5px;
   position: fixed;
@@ -20,9 +19,8 @@
 }
 
 .container.dark-mode {
-  background-color: #313131;
+  background-color: #000;
   color: white;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.171) 2px, transparent 0);
 }
 
 .content {
