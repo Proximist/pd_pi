@@ -225,7 +225,7 @@
   box-shadow: 0 -2px 4px rgba(255, 255, 255, 0.1);
 }
 
-.footercontainer::before {
+.footerContainer::before {
   content: "";
   position: absolute;
   top: 0;
