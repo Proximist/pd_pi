@@ -14,7 +14,7 @@
 }
 
 .darkMode {
-  background-color: #313131;
+  background-color: #1c1c1e;
   color: white;
   background-image: radial-gradient(rgba(255, 255, 255, 0.171) 2px, transparent 0);
 }
