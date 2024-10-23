@@ -73,7 +73,7 @@ body {
 }
 
 .dark-mode .footerContainer {
-  background-color: rgba(18, 18, 18, 0.8);
+  background-color: #000;
   box-shadow: 0 -2px 4px rgba(255, 255, 255, 0.1);
 }
 
