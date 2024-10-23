@@ -165,28 +165,6 @@
   background-color: #444;
 }
 
-
-/* Notification Banner */
-.notification-banner {
-  position: fixed;
-  bottom: 70px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
-  border-radius: 5px;
-  text-align: center;
-  animation: slideUp 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1001;
-}
-
-.notification-banner.dark-mode {
-  background-color: #388E3C;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-}
-
 /* Loader */
 .loader {
   width: 40px;
