@@ -13,7 +13,7 @@
   background-position: -5px -5px;
 }
 
-.darkMode {
+.container.dark-mode {
   background-color: #313131;
   color: white;
   background-image: radial-gradient(rgba(255, 255, 255, 0.171) 2px, transparent 0);
@@ -64,7 +64,7 @@
   color: black;
 }
 
-.darkMode .icon {
+.dark-mode .icon {
   color: white;
 }
 
@@ -94,7 +94,7 @@
   transition: background-color 0.3s ease;
 }
 
-.darkMode .inviteButton {
+.dark-mode .inviteButton {
   background-color: white;
   color: black;
 }
@@ -103,7 +103,7 @@
   background-color: #333;
 }
 
-.darkMode .inviteButton:active {
+.dark-mode .inviteButton:active {
   background-color: #e0e0e0;
 }
 
@@ -152,7 +152,7 @@
   padding: 1rem;
 }
 
-.darkMode .invitedSection {
+.dark-mode .invitedSection {
   background-color: rgba(42, 42, 42, 0.8);
 }
 
@@ -169,7 +169,7 @@
   color: black;
 }
 
-.darkMode .invitedIcon {
+.dark-mode .invitedIcon {
   color: white;
 }
 
@@ -220,7 +220,7 @@
   z-index: 1000;
 }
 
-.darkMode .footerContainer {
+.dark-mode .footerContainer {
   background-color: rgba(18, 18, 18, 0.8);
   box-shadow: 0 -2px 4px rgba(255, 255, 255, 0.1);
 }
@@ -237,7 +237,7 @@
   transition: background-color 0.3s ease;
 }
 
-.darkMode .footerLink {
+.dark-mode .footerLink {
   color: white;
 }
 
@@ -251,7 +251,7 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.darkMode .activeFooterLink {
+.dark-mode .activeFooterLink {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -268,6 +268,6 @@
   z-index: -1;
 }
 
-.darkMode .activeFooterLink::before {
+.dark-mode .activeFooterLink::before {
   opacity: 0.2;
 }
