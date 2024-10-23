@@ -103,6 +103,9 @@ export default function HomeUI({
   const tasksClass = `tasks-container ${isDarkMode ? 'dark-mode' : ''}`;
   const socialClass = `social-container ${isDarkMode ? 'dark-mode' : ''}`;
   const footerClass = `footer-container ${isDarkMode ? 'dark-mode' : ''}`;
+  const footerContainerClass = `footerContainer ${isDarkMode ? 'dark-mode' : ''}`
+  const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`
+  const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`
 
   const renderContent = () => {
     if (isInitialLoading) {
@@ -212,24 +215,24 @@ export default function HomeUI({
   return (
     <div className={containerClass}>
       {renderContent()}
-      <div className={footerClass}>
+      <div className={footerContainerClass}>
         <Link href="/">
-          <div className={`footer-link active-link ${isDarkMode ? 'dark-mode' : ''}`}>
-            <i className="fas fa-home footer-icon"></i>
-            <p className="footer-text">Home</p>
-          </div>
+          <a className={activefooterLinkClass}>
+            <i className="fas fa-home"></i>
+            <span>Home</span>
+          </a>
         </Link>
         <Link href="/invite">
-          <div className={`footer-link ${isDarkMode ? 'dark-mode' : ''}`}>
-            <i className="fas fa-users footer-icon"></i>
-            <p className="footer-text">Friends</p>
-          </div>
+          <a className={FooterLinkClass}>
+            <i className="fas fa-users"></i>
+            <span>Friends</span>
+          </a>
         </Link>
         <Link href="/task">
-          <div className={`footer-link ${isDarkMode ? 'dark-mode' : ''}`}>
-            <i className="fas fa-clipboard footer-icon"></i>
-            <p className="footer-text">Tasks</p>
-          </div>
+          <a className={footerLinkClass}>
+            <i className="fas fa-clipboard"></i>
+            <span>Tasks</span>
+          </a>
         </Link>
       </div>
     </div>
