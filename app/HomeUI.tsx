@@ -137,7 +137,7 @@ export default function HomeUI({
             Exciting updates are on the way :)
           </p>
           <div className={tasksClass}>
-            <button className={`tasks-button ${isDarkMode ? 'dark-mode' : ''}`}>Daily Tasks..!</button>
+            <button className={`tasks-button ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Socials..!</button>
             <div className={`social-container ${isDarkMode ? 'dark-mode' : ''}`}>
               <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Youtube!</p>
               <button
