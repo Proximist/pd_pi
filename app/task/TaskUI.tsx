@@ -52,46 +52,61 @@ export default function TaskUI({
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-      const tg = window.Telegram.WebApp;
-      setIsDarkMode(tg.colorScheme === 'dark');
+    if (window.Telegram?.WebApp) {
+      const isDark = window.Telegram.WebApp.colorScheme === 'dark';
+      setIsDarkMode(isDark);
 
-      // Listen for theme changes
-      tg.onEvent('themeChanged', () => {
-        setIsDarkMode(tg.colorScheme === 'dark');
-      });
+      // Add theme classes to body
+      document.body.classList.toggle('dark-mode', isDark);
     }
   }, []);
 
+  // Add dark mode classes to elements
+  const containerClass = `task-page ${isDarkMode ? 'dark-mode' : ''}`;
+  const headerClass = `header ${isDarkMode ? 'dark-mode' : ''}`;
+  const pointsClass = `points ${isDarkMode ? 'dark-mode' : ''}`;
+  const taskIconContainerClass = `task-icon-container ${isDarkMode ? 'dark-mode' : ''}`;
+  const taskIconClass = `task-icon ${isDarkMode ? 'dark-mode' : ''}`;
+  const descriptionClass = `description ${isDarkMode ? 'dark-mode' : ''}`;
+  const taskListClass = `task-list ${isDarkMode ? 'dark-mode' : ''}`;
+  const taskItemClass = `task-item ${isDarkMode ? 'dark-mode' : ''}`;
+  const buttonClass = `task-button ${isDarkMode ? 'dark-mode' : ''}`;
+  const footerClass = `footer-container ${isDarkMode ? 'dark-mode' : ''}`;
+  const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`;
+  const activeFooterClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`;
+  const notificationClass = `notification-banner ${isDarkMode ? 'dark-mode' : ''}`;
+  const errorClass = `container mx-auto p-4 text-red-500 ${isDarkMode ? 'dark-mode' : ''}`;
+  const loaderClass = `loader ${isDarkMode ? 'dark-mode' : ''}`;
+
   const renderContent = () => {
     if (error) {
-      return <div className="container mx-auto p-4 text-red-500">{error}</div>;
+      return <div className={errorClass}>{error}</div>;
     }
 
     if (!user) {
-      return <div className="loader"></div>;
+      return <div className={loaderClass}></div>;
     }
 
     return (
       <>
-        <div className="header">
-          <div className="points">
+        <div className={headerClass}>
+          <div className={pointsClass}>
             <span>₱ {user.points}</span>
           </div>
         </div>
-        <div className="task-icon-container">
-          <div className="task-icon">
+        <div className={taskIconContainerClass}>
+          <div className={taskIconClass}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 11l3 3L22 4"></path>
               <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
             </svg>
           </div>
         </div>
-        <div className="description">
+        <div className={descriptionClass}>
           Complete the following tasks<br />and increase PG
         </div>
-        <ul className="task-list">
-          <li>
+        <ul className={taskListClass}>
+          <li className={taskItemClass}>
             <i className="fab fa-youtube"></i>
             <span>Subscribe PG YouTube channel :</span>
             <button
@@ -103,11 +118,12 @@ export default function TaskUI({
                 }
               }}
               disabled={buttonStage1 === 'claimed' || isLoading}
+              className={buttonClass}
             >
               {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? '+200' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </li>
-          <li>
+          <li className={taskItemClass}>
             <i className="fab fa-telegram-plane"></i>
             <span>Subscribe PG Telegram Channel :</span>
             <button
@@ -116,11 +132,12 @@ export default function TaskUI({
                 handleClaim6();
               }}
               disabled={buttonStage3 === 'claimed'}
+              className={buttonClass}
             >
               {buttonStage3 === 'check' ? '+200' : buttonStage3 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </li>
-          <li>
+          <li className={taskItemClass}>
             <i className="fab fa-twitter"></i>
             <span>Follow PG's X Handle :</span>
             <button
@@ -129,11 +146,12 @@ export default function TaskUI({
                 handleClaim5();
               }}
               disabled={buttonStage2 === 'claimed'}
+              className={buttonClass}
             >
               {buttonStage2 === 'check' ? '+200' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </li>
-          <li>
+          <li className={taskItemClass}>
             <i className="fab fa-discord"></i>
             <span>Join PG's Discord Server :</span>
             <button
@@ -145,11 +163,12 @@ export default function TaskUI({
                 }
               }}
               disabled={buttonStage7 === 'claimed' || isLoading1}
+              className={buttonClass}
             >
               {isLoading1 ? 'Claiming...' : buttonStage7 === 'check' ? '+200' : buttonStage7 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </li>
-          <li>
+          <li className={taskItemClass}>
             <i className="fab fa-instagram"></i>
             <span>Follow PG Instagram Handle :</span>
             <button
@@ -161,6 +180,7 @@ export default function TaskUI({
                 }
               }}
               disabled={buttonStage8 === 'claimed' || isLoading2}
+              className={buttonClass}
             >
               {isLoading2 ? 'Claiming...' : buttonStage8 === 'check' ? '+200' : buttonStage8 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
@@ -171,29 +191,29 @@ export default function TaskUI({
   };
 
   return (
-    <div className={`task-page ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
+    <div className={containerClass}>
       {renderContent()}
-      <div className="footer-container">
+      <div className={footerClass}>
         <Link href="/">
-          <a className="footerLink">
+          <a className={footerLinkClass}>
             <i className="fas fa-home text-2xl"></i>
             <p className="text-sm">Home</p>
           </a>
         </Link>
         <Link href="/invite">
-          <a className="footerLink">
+          <a className={footerLinkClass}>
             <i className="fas fa-users text-2xl"></i>
             <p className="text-sm">Friends</p>
           </a>
         </Link>
         <Link href="/task">
-          <a className="footerLink activeFooterLink">
+          <a className={activeFooterClass}>
             <i className="fas fa-clipboard text-2xl"></i>
             <p className="text-sm">Tasks</p>
           </a>
         </Link>
       </div>
-      {notification && <div className="notification-banner">{notification}</div>}
+      {notification && <div className={notificationClass}>{notification}</div>}
     </div>
   );
 }
