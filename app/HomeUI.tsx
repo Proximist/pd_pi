@@ -223,7 +223,7 @@ export default function HomeUI({
           </a>
         </Link>
         <Link href="/invite">
-          <a className={FooterLinkClass}>
+          <a className={footerLinkClass}>
             <i className="fas fa-users"></i>
             <span>Friends</span>
           </a>
