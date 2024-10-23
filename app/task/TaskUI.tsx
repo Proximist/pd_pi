@@ -71,9 +71,9 @@ export default function TaskUI({
   const taskListClass = `task-list ${isDarkMode ? 'dark-mode' : ''}`;
   const taskItemClass = `task-item ${isDarkMode ? 'dark-mode' : ''}`;
   const buttonClass = `task-button ${isDarkMode ? 'dark-mode' : ''}`;
-  const footerClass = `footer-container ${isDarkMode ? 'dark-mode' : ''}`;
+  const footerContainerClass = `footerContainer ${isDarkMode ? 'dark-mode' : ''}`
   const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`;
-  const activeFooterClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`;
+  const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`
   const notificationClass = `notification-banner ${isDarkMode ? 'dark-mode' : ''}`;
   const errorClass = `container mx-auto p-4 text-red-500 ${isDarkMode ? 'dark-mode' : ''}`;
   const loaderClass = `loader ${isDarkMode ? 'dark-mode' : ''}`;
@@ -193,7 +193,7 @@ export default function TaskUI({
   return (
     <div className={containerClass}>
       {renderContent()}
-      <div className={footerClass}>
+      <div className={footerContainerClass}>
         <Link href="/">
           <a className={footerLinkClass}>
             <i className="fas fa-home text-2xl"></i>
@@ -207,7 +207,7 @@ export default function TaskUI({
           </a>
         </Link>
         <Link href="/task">
-          <a className={activeFooterClass}>
+          <a className={activeFooterLinkClass}>
             <i className="fas fa-clipboard text-2xl"></i>
             <p className="text-sm">Tasks</p>
           </a>
