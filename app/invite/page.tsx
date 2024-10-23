@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { WebApp } from '@twa-dev/types'
 import './invite.css'
-import './globals.css'
+import '../globals.css'
 
 declare global {
   interface Window {
