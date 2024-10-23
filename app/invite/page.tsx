@@ -27,7 +27,11 @@ export default function Invite() {
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
       const tg = window.Telegram.WebApp
       tg.ready()
-      setIsDarkMode(tg.colorScheme === 'dark')
+      const isDark = tg.colorScheme === 'dark'
+      setIsDarkMode(isDark)
+
+      // Add theme classes to body
+      document.body.classList.toggle('dark-mode', isDark)
 
       const initDataUnsafe = tg.initDataUnsafe || {}
 
@@ -79,17 +83,32 @@ export default function Invite() {
     }
   }
 
+  // Add dark mode classes to elements
+  const containerClass = `container ${isDarkMode ? 'dark-mode' : ''}`
+  const contentClass = `content ${isDarkMode ? 'dark-mode' : ''}`
+  const headerClass = `header ${isDarkMode ? 'dark-mode' : ''}`
+  const titleClass = `title ${isDarkMode ? 'dark-mode' : ''}`
+  const inviteButtonClass = `inviteButton ${buttonState} ${isDarkMode ? 'dark-mode' : ''}`
+  const invitedSectionClass = `invitedSection ${isDarkMode ? 'dark-mode' : ''}`
+  const invitedHeaderClass = `invitedHeader ${isDarkMode ? 'dark-mode' : ''}`
+  const invitedTitleClass = `invitedTitle ${isDarkMode ? 'dark-mode' : ''}`
+  const emptyStateClass = `emptyState ${isDarkMode ? 'dark-mode' : ''}`
+  const notificationClass = `notification ${isDarkMode ? 'dark-mode' : ''}`
+  const footerContainerClass = `footerContainer ${isDarkMode ? 'dark-mode' : ''}`
+  const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`
+  const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`
+
   return (
-    <div className={`container ${isDarkMode ? 'darkMode' : ''}`}>
+    <div className={containerClass}>
       <div className="backgroundShapes"></div>
-      <div className="content">
+      <div className={contentClass}>
         {error ? (
           <div className="error">{error}</div>
         ) : !user ? (
           <div className="loader"></div>
         ) : (
           <>
-            <div className="header">
+            <div className={headerClass}>
               <div className="iconContainer">
                 <svg className="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="12" cy="12" r="11" stroke="currentColor" strokeWidth="2"/>
@@ -100,14 +119,14 @@ export default function Invite() {
                   <circle cx="12" cy="12" r="4" fill="currentColor"/>
                 </svg>
               </div>
-              <p className="title">
+              <p className={titleClass}>
                 Invite your friends and earn 1,000 points for each one you bring!
               </p>
             </div>
 
             <button 
               onClick={handleInvite} 
-              className={`inviteButton ${buttonState}`}
+              className={inviteButtonClass}
             >
               <span className="buttonText">Copy Invite Link</span>
               <span className="buttonIcon">
@@ -115,13 +134,13 @@ export default function Invite() {
               </span>
             </button>
 
-            <div className="invitedSection">
-              <div className="invitedHeader">
+            <div className={invitedSectionClass}>
+              <div className={invitedHeaderClass}>
                 <svg className="invitedIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                <h2 className="invitedTitle">Invited Friends : {invitedUsers.length}</h2>
+                <h2 className={invitedTitleClass}>Invited Friends : {invitedUsers.length}</h2>
               </div>
               {invitedUsers.length > 0 ? (
                 <ul className="invitedList">
@@ -130,33 +149,33 @@ export default function Invite() {
                   ))}
                 </ul>
               ) : (
-                <div className="emptyState">
+                <div className={emptyStateClass}>
                   <p className="emptyStateText">The Invite List is empty</p>
                 </div>
               )}
             </div>
 
             {notification && (
-              <div className="notification">{notification}</div>
+              <div className={notificationClass}>{notification}</div>
             )}
           </>
         )}
       </div>
-      <div className="footerContainer">
+      <div className={footerContainerClass}>
         <Link href="/">
-          <a className="footerLink">
+          <a className={footerLinkClass}>
             <i className="fas fa-home"></i>
             <span>Home</span>
           </a>
         </Link>
         <Link href="/invite">
-          <a className={`footerLink activeFooterLink`}>
+          <a className={activeFooterLinkClass}>
             <i className="fas fa-users"></i>
             <span>Friends</span>
           </a>
         </Link>
         <Link href="/task">
-          <a className="footerLink">
+          <a className={footerLinkClass}>
             <i className="fas fa-clipboard"></i>
             <span>Tasks</span>
           </a>
