@@ -217,7 +217,7 @@ export default function HomeUI({
       {renderContent()}
       <div className={footerContainerClass}>
         <Link href="/">
-          <a className={activefooterLinkClass}>
+          <a className={activeFooterLinkClass}>
             <i className="fas fa-home"></i>
             <span>Home</span>
           </a>
