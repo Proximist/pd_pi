@@ -129,9 +129,9 @@ export default function HomeUI({
         <div className={headerClass}>
           <div className="dog-image-container">
              <img
-                alt="Profile picture"
-                className="dog-image"
-                src={} // Use the imported image here
+              alt="Animated style dog image"
+              className="dog-image"
+              src="https://storage.googleapis.com/a1aa/image/YlpvEfbklKRiDi8LX5Rww5U3zZZwHEUfju1qUNknpEZ6e2OnA.jpg"
                 />
           </div>
           <p id="pixelDogsCount" className={`pixel-dogs-count ${isDarkMode ? 'dark-mode' : ''}`}>
