@@ -59,7 +59,7 @@ body {
 }
 
 .footerContainer {
-  position: relative;
+  position: fixed;
   padding: 0.75rem 0.5rem;
   bottom: 0;
   left: 0;
