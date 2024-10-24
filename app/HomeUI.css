@@ -139,7 +139,7 @@
 
 /* Farm Button Styles */
 .farm-button {
-  background-color: #4CAF50;
+  background-color: #75736e;
   color: white;
   width: 75%;
   padding: 0.75rem;
@@ -406,7 +406,7 @@
 
 /* Preserve the farm button's green color but slightly darker in dark mode */
 .dark-mode.farm-button {
-  background-color: #3d8b40;
+  background-color: #75736e;
 }
 
 .dark-mode.farm-button:disabled {
