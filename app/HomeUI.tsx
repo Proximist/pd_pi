@@ -72,6 +72,7 @@ export default function HomeUI({
       const currentTime = new Date().getTime();
       const secondsElapsed = Math.floor((currentTime - startTime) / 1000);
       const progressPercentage = Math.min((secondsElapsed / 30) * 100, 100);
+      const remainingSeconds = Math.max(30 - secondsElapsed, 0);
 
      // Update farming points as before
       setFarmingPoints(secondsElapsed);
@@ -89,6 +90,7 @@ export default function HomeUI({
           const newTime = new Date().getTime();
           const newSecondsElapsed = Math.floor((newTime - startTime) / 1000);
           const newProgressPercentage = Math.min((newSecondsElapsed / 30) * 100, 100);
+           const newRemainingSeconds = Math.max(30 - newSecondsElapsed, 0);
           
           setFarmingPoints(prev => prev + 1);
           setCurrentNumber(prev => prev + 1);
@@ -226,6 +228,9 @@ export default function HomeUI({
                   {farmingPoints}
                 </span>
               </div>
+               <span className="countdown-timer">
+      {Math.max(30 - Math.floor((new Date().getTime() - new Date(user?.startFarming).getTime()) / 1000), 0)}s
+    </span>
             </>
           ) : (
             <span className="claimFarm">Claim Farm</span>
