@@ -161,6 +161,39 @@
   justify-content: center;
   align-items: center;
   min-height: 3.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Add new progress bar styles */
+.farm-button.farming::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #2e3748;
+  opacity: 0.3;
+  transform: translateX(-100%);
+  animation: progressBar 30s linear forwards;
+  z-index: 0;
+}
+
+/* Add new keyframe for progress bar */
+@keyframes progressBar {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Ensure text stays above progress bar */
+.farm-button > * {
+  position: relative;
+  z-index: 1;
 }
 
 .farm-button:disabled {
