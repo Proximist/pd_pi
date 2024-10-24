@@ -233,8 +233,7 @@ export default function TaskUI({
       </a>
     </Link>
   </nav>
+  {notification && <div className={notificationClass}>{notification}</div>}
 </div>
-      {notification && <div className={notificationClass}>{notification}</div>}
-    </div>
   );
 }
