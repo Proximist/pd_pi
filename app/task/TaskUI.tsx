@@ -51,7 +51,6 @@ export default function TaskUI({
   handleClaim8,
 }: TaskUIProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(1);
 
   useEffect(() => {
     if (window.Telegram?.WebApp) {
@@ -62,12 +61,6 @@ export default function TaskUI({
       document.body.classList.toggle('dark-mode', isDark);
     }
   }, []);
-  
-  const getIndicatorStyle = () => {
-    return {
-      transform: `translateX(${activeIndex * 100}%) translateY(-50%)`,
-    };
-  };
 
   // Add dark mode classes to elements
   const containerClass = `task-page ${isDarkMode ? 'dark-mode' : ''}`;
@@ -199,41 +192,29 @@ export default function TaskUI({
   };
 
   return (
-    <div className={footerContainerClass}>
-  <nav className="footerNav">
-    <div 
-      className="navIndicator" 
-      style={getIndicatorStyle()} 
-    />
-    <Link href="/">
-      <a 
-        className={footerLinkClass} 
-        onClick={() => setActiveIndex(0)}
-      >
-        <i className="fas fa-home"></i>
-        <span>Home</span>
-      </a>
-    </Link>
-    <Link href="/invite">
-      <a 
-        className={activeIndex === 1 ? activeFooterLinkClass : footerLinkClass}
-        onClick={() => setActiveIndex(1)}
-      >
-        <i className="fas fa-clipboard"></i>
-        <span>Friends</span>
-      </a>
-    </Link>
-    <Link href="/task">
-      <a 
-         className={footerLinkClass}
-        onClick={() => setActiveIndex(2)}
-      >
-        <i className="fas fa-users"></i>
-        <span>Tasks</span>
-      </a>
-    </Link>
-  </nav>
-  {notification && <div className={notificationClass}>{notification}</div>}
-</div>
+    <div className={containerClass}>
+      {renderContent()}
+      <div className={footerContainerClass}>
+        <Link href="/">
+          <a className={footerLinkClass}>
+            <i className="fas fa-home text-2xl"></i>
+            <p className="text-sm">Home</p>
+          </a>
+        </Link>
+        <Link href="/invite">
+          <a className={footerLinkClass}>
+            <i className="fas fa-users text-2xl"></i>
+            <p className="text-sm">Friends</p>
+          </a>
+        </Link>
+        <Link href="/task">
+          <a className={activeFooterLinkClass}>
+            <i className="fas fa-clipboard text-2xl"></i>
+            <p className="text-sm">Tasks</p>
+          </a>
+        </Link>
+      </div>
+      {notification && <div className={notificationClass}>{notification}</div>}
+    </div>
   );
 }
