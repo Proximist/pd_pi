@@ -59,7 +59,8 @@ body {
 }
 
 .footerContainer {
-  position: fixed;
+  position: relative;
+  padding: 0.75rem 0.5rem;
   bottom: 0;
   left: 0;
   right: 0;
@@ -77,6 +78,29 @@ body {
   background-color: #2a2a2a;
 }
 
+.footerNav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.navIndicator {
+  position: absolute;
+  height: 80%;
+  width: calc(100% / 3); /* Since we have 3 links */
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.dark-mode .navIndicator {
+  background-color: rgba(255, 255, 255, 0.1);
+}
 
 .footerContainer::before {
   content: "";
@@ -94,19 +118,22 @@ body {
 }
 
 .footerLink {
+  position: relative;
+  z-index: 2;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 0.5rem 0;
+  color: black;
   text-decoration: none;
-  color: rgba(51, 65, 85, 1);
-  transition: all 0.15s ease-in-out;
-  border-radius: 0.5rem;
-  gap: 4px;
+  font-size: 0.75rem;
+  padding: 0.5rem;
+  transition: color 0.3s ease;
 }
 
+.dark-mode .footerLink {
+  color: white;
+}
 
 .dark-mode .activeFooterLink {
   background-color: #3a3a3a;
@@ -124,9 +151,7 @@ body {
 
 
 .activeFooterLink {
-  position: relative;
-  font-weight: 600;
-  color: rgba(51, 65, 85, 1);
+  background-color: transparent;
 }
 
 .dark-mode .activeFooterLink {
@@ -134,16 +159,7 @@ body {
 }
 
 .activeFooterLink::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: currentColor;
-  opacity: 0.1;
-  border-radius: 0.5rem;
-  z-index: -1;
+  display: none;
 }
 
 .dark-mode .activeFooterLink::before {
