@@ -124,9 +124,6 @@ body {
   position: relative;
   font-weight: 600;
   color: rgba(51, 65, 85, 1);
-  display: inline-block; /* Ensure the element respects width */
-  width: 130%; /* Increase the width by 30% */
-  transform: translateX(-15%); /* Center the expanded element */
 }
 
 .dark-mode .activeFooterLink {
