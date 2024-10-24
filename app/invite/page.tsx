@@ -24,28 +24,27 @@ export default function Invite() {
   const [isCopied, setIsCopied] = useState(false)
   const [buttonState, setButtonState] = useState('initial')
 
+  const preventLongPress = (e: Event) => {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  };
+
   useEffect(() => {
+    // Add event listeners to prevent long press
+    const links = document.querySelectorAll('.footerContainer a');
+    links.forEach(element => {
+      element.addEventListener('contextmenu', preventLongPress);
+      element.addEventListener('touchstart', preventLongPress);
+      element.addEventListener('touchend', preventLongPress);
+      element.addEventListener('mousedown', preventLongPress);
+    });
+
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
       const tg = window.Telegram.WebApp
       tg.ready()
       const isDark = tg.colorScheme === 'dark'
       setIsDarkMode(isDark)
-
-      const preventLongPress = (e: Event) => {
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    };
-
-    // Add these event listeners
-    document.querySelectorAll('.footerContainer a').forEach(element => {
-      element.addEventListener('contextmenu', preventLongPress);
-      element.addEventListener('touchstart', preventLongPress);
-      element.addEventListener('touchend', preventLongPress);
-      element.addEventListener('touchcancel', preventLongPress);
-      element.addEventListener('mousedown', preventLongPress);
-      element.addEventListener('mouseup', preventLongPress);
-    });
 
       // Add theme classes to body
       document.body.classList.toggle('dark-mode', isDark)
@@ -80,14 +79,13 @@ export default function Invite() {
       setError('This app should be opened in Telegram')
     }
 
+    // Cleanup event listeners
     return () => {
-      document.querySelectorAll('.footerContainer a').forEach(element => {
+      links.forEach(element => {
         element.removeEventListener('contextmenu', preventLongPress);
         element.removeEventListener('touchstart', preventLongPress);
         element.removeEventListener('touchend', preventLongPress);
-        element.removeEventListener('touchcancel', preventLongPress);
         element.removeEventListener('mousedown', preventLongPress);
-        element.removeEventListener('mouseup', preventLongPress);
       });
     };
   }, [])
@@ -112,9 +110,9 @@ export default function Invite() {
   }
 
   const preventDefaultHandler = (e: React.MouseEvent | React.TouchEvent) => {
-  e.preventDefault();
-  e.stopPropagation();
-};
+    e.preventDefault();
+    e.stopPropagation();
+  };
 
   // Add dark mode classes to elements
   const containerClass = `container ${isDarkMode ? 'dark-mode' : ''}`
