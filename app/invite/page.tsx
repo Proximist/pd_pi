@@ -162,26 +162,38 @@ export default function Invite() {
           </>
         )}
       </div>
-      <div className={footerContainerClass}>
-        <Link href="/">
-          <a className={footerLinkClass}>
-            <i className="fas fa-home"></i>
-            <span>Home</span>
-          </a>
-        </Link>
-        <Link href="/invite">
-          <a className={activeFooterLinkClass}>
-            <i className="fas fa-users"></i>
-            <span>Friends</span>
-          </a>
-        </Link>
-        <Link href="/task">
-          <a className={footerLinkClass}>
-            <i className="fas fa-clipboard"></i>
-            <span>Tasks</span>
-          </a>
-        </Link>
-      </div>
+      <div 
+  className={footerContainerClass}
+  onContextMenu={(e) => e.preventDefault()}
+>
+  <Link href="/">
+    <a 
+      className={footerLinkClass}
+      onContextMenu={(e) => e.preventDefault()}
+    >
+      <i className="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+  </Link>
+  <Link href="/invite">
+    <a 
+      className={activeFooterLinkClass}
+      onContextMenu={(e) => e.preventDefault()}
+    >
+      <i className="fas fa-users"></i>
+      <span>Friends</span>
+    </a>
+  </Link>
+  <Link href="/task">
+    <a 
+      className={footerLinkClass}
+      onContextMenu={(e) => e.preventDefault()}
+    >
+      <i className="fas fa-clipboard"></i>
+      <span>Tasks</span>
+    </a>
+  </Link>
+</div>
     </div>
   )
 }
