@@ -187,14 +187,12 @@ export default function Invite() {
         className={footerContainerClass}
         onContextMenu={preventDefaultHandler}
         onMouseDown={preventDefaultHandler}
-        ontouchstart={preventDefaultHandler}
       >
         <Link href="/">
           <a 
             className={footerLinkClass}
             onContextMenu={preventDefaultHandler}
             onMouseDown={preventDefaultHandler}
-            ontouchstart={preventDefaultHandler}
             draggable="false"
           >
             <i className="fas fa-home"></i>
@@ -206,7 +204,6 @@ export default function Invite() {
             className={activeFooterLinkClass}
             onContextMenu={preventDefaultHandler}
             onMouseDown={preventDefaultHandler}
-            ontouchstart={preventDefaultHandler}
             draggable="false"
           >
             <i className="fas fa-users"></i>
@@ -218,7 +215,6 @@ export default function Invite() {
             className={footerLinkClass}
             onContextMenu={preventDefaultHandler}
             onMouseDown={preventDefaultHandler}
-            ontouchstart={preventDefaultHandler}
             draggable="false"
           >
             <i className="fas fa-clipboard"></i>
