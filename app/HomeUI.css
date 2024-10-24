@@ -202,6 +202,14 @@
   gap: 0.5rem;
 }
 
+.countdown-timer {
+  font-weight: bold;
+  font-size: 1rem;
+  color: white;
+  min-width: 2.5rem;
+  text-align: right;
+}
+
 .farm-button.claim-animating {
   pointer-events: none;
 }
