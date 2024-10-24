@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { toggleUpdateText } from './utils';
 import './HomeUI.css';
 import './globals.css';
@@ -132,6 +133,8 @@ export default function HomeUI({
               alt="Animated style dog image"
               className="dog-image"
               src="/cat.jpg"
+              width={500}
+              height={500}
                 />
           </div>
           <p id="pixelDogsCount" className={`pixel-dogs-count ${isDarkMode ? 'dark-mode' : ''}`}>
