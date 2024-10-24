@@ -24,20 +24,30 @@ export default function Invite() {
   const [isCopied, setIsCopied] = useState(false)
   const [buttonState, setButtonState] = useState('initial')
 
-  const preventLongPress = (e: Event) => {
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  };
+  // Timer for detecting long press
+  let pressTimer: NodeJS.Timeout;
+  const pressDelay = 500; // Time in ms to consider a press as a long press
 
   useEffect(() => {
-    // Add event listeners to prevent long press
-    const links = document.querySelectorAll('.footerContainer a');
-    links.forEach(element => {
-      element.addEventListener('contextmenu', preventLongPress);
-      element.addEventListener('touchstart', preventLongPress);
-      element.addEventListener('touchend', preventLongPress);
-      element.addEventListener('mousedown', preventLongPress);
+    const handleTouchStart = (e: TouchEvent) => {
+      pressTimer = setTimeout(() => {
+        e.preventDefault();
+      }, pressDelay);
+    };
+
+    const handleTouchEnd = () => {
+      clearTimeout(pressTimer);
+    };
+
+    const handleContextMenu = (e: Event) => {
+      e.preventDefault();
+    };
+
+    // Add event listeners
+    document.querySelectorAll('.footerContainer a').forEach(element => {
+      element.addEventListener('touchstart', handleTouchStart);
+      element.addEventListener('touchend', handleTouchEnd);
+      element.addEventListener('contextmenu', handleContextMenu);
     });
 
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
@@ -45,8 +55,6 @@ export default function Invite() {
       tg.ready()
       const isDark = tg.colorScheme === 'dark'
       setIsDarkMode(isDark)
-
-      // Add theme classes to body
       document.body.classList.toggle('dark-mode', isDark)
 
       const initDataUnsafe = tg.initDataUnsafe || {}
@@ -79,14 +87,14 @@ export default function Invite() {
       setError('This app should be opened in Telegram')
     }
 
-    // Cleanup event listeners
+    // Cleanup
     return () => {
-      links.forEach(element => {
-        element.removeEventListener('contextmenu', preventLongPress);
-        element.removeEventListener('touchstart', preventLongPress);
-        element.removeEventListener('touchend', preventLongPress);
-        element.removeEventListener('mousedown', preventLongPress);
+      document.querySelectorAll('.footerContainer a').forEach(element => {
+        element.removeEventListener('touchstart', handleTouchStart);
+        element.removeEventListener('touchend', handleTouchEnd);
+        element.removeEventListener('contextmenu', handleContextMenu);
       });
+      clearTimeout(pressTimer);
     };
   }, [])
 
@@ -108,11 +116,6 @@ export default function Invite() {
       })
     }
   }
-
-  const preventDefaultHandler = (e: React.MouseEvent | React.TouchEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
 
   // Add dark mode classes to elements
   const containerClass = `container ${isDarkMode ? 'dark-mode' : ''}`
@@ -192,48 +195,21 @@ export default function Invite() {
           </>
         )}
       </div>
-      <div 
-        className={footerContainerClass}
-        onContextMenu={preventDefaultHandler}
-        onTouchStart={preventDefaultHandler}
-        onTouchEnd={preventDefaultHandler}
-        onMouseDown={preventDefaultHandler}
-      >
+      <div className={footerContainerClass}>
         <Link href="/">
-          <a 
-            className={footerLinkClass}
-            onContextMenu={preventDefaultHandler}
-            onTouchStart={preventDefaultHandler}
-            onTouchEnd={preventDefaultHandler}
-            onMouseDown={preventDefaultHandler}
-            draggable="false"
-          >
+          <a className={footerLinkClass}>
             <i className="fas fa-home"></i>
             <span>Home</span>
           </a>
         </Link>
         <Link href="/invite">
-          <a 
-            className={activeFooterLinkClass}
-            onContextMenu={preventDefaultHandler}
-            onTouchStart={preventDefaultHandler}
-            onTouchEnd={preventDefaultHandler}
-            onMouseDown={preventDefaultHandler}
-            draggable="false"
-          >
+          <a className={activeFooterLinkClass}>
             <i className="fas fa-users"></i>
             <span>Friends</span>
           </a>
         </Link>
         <Link href="/task">
-          <a 
-            className={footerLinkClass}
-            onContextMenu={preventDefaultHandler}
-            onTouchStart={preventDefaultHandler}
-            onTouchEnd={preventDefaultHandler}
-            onMouseDown={preventDefaultHandler}
-            draggable="false"
-          >
+          <a className={footerLinkClass}>
             <i className="fas fa-clipboard"></i>
             <span>Tasks</span>
           </a>
