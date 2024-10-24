@@ -24,14 +24,10 @@ export default function Invite() {
   const [isCopied, setIsCopied] = useState(false)
   const [buttonState, setButtonState] = useState('initial')
 
-  // Initialize timer ref for long press detection
-  let timeoutRef: NodeJS.Timeout;
-
   const preventLongPress = (e: Event) => {
-    if (e.type === 'contextmenu') {
-      e.preventDefault();
-      return false;
-    }
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
   };
 
   useEffect(() => {
@@ -39,6 +35,7 @@ export default function Invite() {
     const links = document.querySelectorAll('.footerContainer a');
     links.forEach(element => {
       element.addEventListener('contextmenu', preventLongPress);
+      element.addEventListener('mousedown', preventLongPress);
     });
 
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
@@ -84,6 +81,7 @@ export default function Invite() {
     return () => {
       links.forEach(element => {
         element.removeEventListener('contextmenu', preventLongPress);
+        element.removeEventListener('mousedown', preventLongPress);
       });
     };
   }, [])
@@ -108,10 +106,8 @@ export default function Invite() {
   }
 
   const preventDefaultHandler = (e: React.MouseEvent | React.TouchEvent) => {
-    if (e.type === 'contextmenu') {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+    e.preventDefault();
+    e.stopPropagation();
   };
 
   // Add dark mode classes to elements
@@ -195,11 +191,14 @@ export default function Invite() {
       <div 
         className={footerContainerClass}
         onContextMenu={preventDefaultHandler}
+        onMouseDown={preventDefaultHandler}
       >
         <Link href="/">
           <a 
             className={footerLinkClass}
             onContextMenu={preventDefaultHandler}
+            onMouseDown={preventDefaultHandler}
+            draggable="false"
           >
             <i className="fas fa-home"></i>
             <span>Home</span>
@@ -209,6 +208,8 @@ export default function Invite() {
           <a 
             className={activeFooterLinkClass}
             onContextMenu={preventDefaultHandler}
+            onMouseDown={preventDefaultHandler}
+            draggable="false"
           >
             <i className="fas fa-users"></i>
             <span>Friends</span>
@@ -218,6 +219,8 @@ export default function Invite() {
           <a 
             className={footerLinkClass}
             onContextMenu={preventDefaultHandler}
+            onMouseDown={preventDefaultHandler}
+            draggable="false"
           >
             <i className="fas fa-clipboard"></i>
             <span>Tasks</span>
