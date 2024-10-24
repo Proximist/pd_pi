@@ -78,7 +78,7 @@ export default function HomeUI({
       setCurrentNumber(secondsElapsed);
 
       // Update progress bar
-      const buttonElement = document.querySelector('.farm-button');
+      const buttonElement = document.querySelector('.farm-button') as HTMLElement;
       if (buttonElement) {
         buttonElement.style.setProperty('--progress-percentage', `${progressPercentage}%`);
       }
@@ -105,7 +105,7 @@ export default function HomeUI({
       setCurrentNumber(0);
 
       // Reset progress bar
-      const buttonElement = document.querySelector('.farm-button');
+      const buttonElement = document.querySelector('.farm-button') as HTMLElement;
       if (buttonElement) {
         buttonElement.style.setProperty('--progress-percentage', '0%');
       }
