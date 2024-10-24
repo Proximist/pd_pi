@@ -21,16 +21,9 @@ export default function Invite() {
   const [inviteLink, setInviteLink] = useState('')
   const [invitedUsers, setInvitedUsers] = useState<string[]>([])
   const [isDarkMode, setIsDarkMode] = useState(false)
-  const [isCopied, setIsCopied] = useState(false)
   const [buttonState, setButtonState] = useState('initial')
 
-  const preventLongPress = (e: Event) => {
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  };
-
-  const preventDefaultHandler = (e: React.MouseEvent | React.TouchEvent) => {
+  const preventDefaultHandler = (e: Event) => {
     e.preventDefault();
     e.stopPropagation();
   };
