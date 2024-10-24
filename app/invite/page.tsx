@@ -23,7 +23,7 @@ export default function Invite() {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [buttonState, setButtonState] = useState('initial')
 
-  const preventDefaultHandler = (e: Event) => {
+  const preventDefaultHandler = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
     e.stopPropagation();
   };
