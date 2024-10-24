@@ -23,7 +23,6 @@ export default function Invite() {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
   const [buttonState, setButtonState] = useState('initial')
-  const [activeIndex, setActiveIndex] = useState(1);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
@@ -84,12 +83,6 @@ export default function Invite() {
       })
     }
   }
-
-  const getIndicatorStyle = () => {
-  return {
-    transform: `translateX(${activeIndex * 100}%) translateY(-50%)`,
-  }
-}
 
   // Add dark mode classes to elements
   const containerClass = `container ${isDarkMode ? 'dark-mode' : ''}`
@@ -170,40 +163,25 @@ export default function Invite() {
         )}
       </div>
       <div className={footerContainerClass}>
-  <nav className="footerNav">
-    <div 
-      className="navIndicator" 
-      style={getIndicatorStyle()} 
-    />
-    <Link href="/">
-      <a 
-        className={footerLinkClass} 
-        onClick={() => setActiveIndex(0)}
-      >
-        <i className="fas fa-home"></i>
-        <span>Home</span>
-      </a>
-    </Link>
-    <Link href="/invite">
-      <a 
-        className={activeIndex === 1 ? activeFooterLinkClass : footerLinkClass}
-        onClick={() => setActiveIndex(1)}
-      >
-        <i className="fas fa-users"></i>
-        <span>Friends</span>
-      </a>
-    </Link>
-    <Link href="/task">
-      <a 
-        className={footerLinkClass}
-        onClick={() => setActiveIndex(2)}
-      >
-        <i className="fas fa-clipboard"></i>
-        <span>Tasks</span>
-      </a>
-    </Link>
-  </nav>
-</div>
+        <Link href="/">
+          <a className={footerLinkClass}>
+            <i className="fas fa-home"></i>
+            <span>Home</span>
+          </a>
+        </Link>
+        <Link href="/invite">
+          <a className={activeFooterLinkClass}>
+            <i className="fas fa-users"></i>
+            <span>Friends</span>
+          </a>
+        </Link>
+        <Link href="/task">
+          <a className={footerLinkClass}>
+            <i className="fas fa-clipboard"></i>
+            <span>Tasks</span>
+          </a>
+        </Link>
+      </div>
     </div>
   )
 }
