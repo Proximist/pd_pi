@@ -216,8 +216,8 @@ export default function TaskUI({
     </Link>
     <Link href="/invite">
       <a 
-        className={activeIndex === 1 ? activeFooterLinkClass : footerLinkClass}
-        onClick={() => setActiveIndex(1)}
+         className={footerLinkClass}
+        onClick={() => setActiveIndex(2)}
       >
         <i className="fas fa-users"></i>
         <span>Friends</span>
@@ -225,8 +225,8 @@ export default function TaskUI({
     </Link>
     <Link href="/task">
       <a 
-        className={footerLinkClass}
-        onClick={() => setActiveIndex(2)}
+        className={activeIndex === 1 ? activeFooterLinkClass : footerLinkClass}
+        onClick={() => setActiveIndex(1)}
       >
         <i className="fas fa-clipboard"></i>
         <span>Tasks</span>
