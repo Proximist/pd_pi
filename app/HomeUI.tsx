@@ -129,13 +129,11 @@ export default function HomeUI({
       <>
         <div className={headerClass}>
           <div className="dog-image-container">
-             <img
+            <img
               alt="Animated style dog image"
               className="dog-image"
-              src="/cat.jpg"
-              width={500}
-              height={500}
-                />
+              src="https://i.imgur.com/F13Hj7a.jpeg"
+            />
           </div>
           <p id="pixelDogsCount" className={`pixel-dogs-count ${isDarkMode ? 'dark-mode' : ''}`}>
             {user.points} PixelDogs
