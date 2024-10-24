@@ -157,6 +157,10 @@
   cursor: pointer;
   opacity: 1;
   pointer-events: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 3.5rem;
 }
 
 .farm-button:disabled {
@@ -166,23 +170,10 @@
 
 .farm-button.farming {
   background-color: #75736e;
-  color: white;
-  width: 75%;
-  padding: 0.75rem;
-  border-radius: 1rem;
-  margin-bottom: 1.5rem;
-  font-weight: 700;
-  font-size: 1.1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-  position: fixed;
-  bottom: 65px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  cursor: pointer;
-  opacity: 1;
-  pointer-events: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .farm-button.claim-animating {
@@ -191,7 +182,8 @@
 
 /* Farming Points Animation */
 .farming-points {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   position: relative;
   overflow: hidden;
   height: 1.5em;
@@ -202,7 +194,8 @@
 .farming-points-number {
   animation: slideIn 0.5s ease-out;
   height: 1.5em;
-  left: 0;
+  display: flex;
+  align-items: center;
 }
 
 .farming-points-number.sliding-out {
@@ -219,7 +212,10 @@
   cursor: pointer;
   background-color: transparent;
   transition: all 0.2s ease;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   animation: claimPop 0.6s ease-out;
 }
 
