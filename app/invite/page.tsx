@@ -31,6 +31,22 @@ export default function Invite() {
       const isDark = tg.colorScheme === 'dark'
       setIsDarkMode(isDark)
 
+      const preventLongPress = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
+
+    // Add these event listeners
+    document.querySelectorAll('.footerContainer a').forEach(element => {
+      element.addEventListener('contextmenu', preventLongPress);
+      element.addEventListener('touchstart', preventLongPress);
+      element.addEventListener('touchend', preventLongPress);
+      element.addEventListener('touchcancel', preventLongPress);
+      element.addEventListener('mousedown', preventLongPress);
+      element.addEventListener('mouseup', preventLongPress);
+    });
+
       // Add theme classes to body
       document.body.classList.toggle('dark-mode', isDark)
 
@@ -63,6 +79,17 @@ export default function Invite() {
     } else {
       setError('This app should be opened in Telegram')
     }
+
+    return () => {
+      document.querySelectorAll('.footerContainer a').forEach(element => {
+        element.removeEventListener('contextmenu', preventLongPress);
+        element.removeEventListener('touchstart', preventLongPress);
+        element.removeEventListener('touchend', preventLongPress);
+        element.removeEventListener('touchcancel', preventLongPress);
+        element.removeEventListener('mousedown', preventLongPress);
+        element.removeEventListener('mouseup', preventLongPress);
+      });
+    };
   }, [])
 
   const handleInvite = () => {
@@ -83,6 +110,11 @@ export default function Invite() {
       })
     }
   }
+
+  const preventDefaultHandler = (e: React.MouseEvent | React.TouchEvent) => {
+  e.preventDefault();
+  e.stopPropagation();
+};
 
   // Add dark mode classes to elements
   const containerClass = `container ${isDarkMode ? 'dark-mode' : ''}`
@@ -163,37 +195,52 @@ export default function Invite() {
         )}
       </div>
       <div 
-  className={footerContainerClass}
-  onContextMenu={(e) => e.preventDefault()}
->
-  <Link href="/">
-    <a 
-      className={footerLinkClass}
-      onContextMenu={(e) => e.preventDefault()}
-    >
-      <i className="fas fa-home"></i>
-      <span>Home</span>
-    </a>
-  </Link>
-  <Link href="/invite">
-    <a 
-      className={activeFooterLinkClass}
-      onContextMenu={(e) => e.preventDefault()}
-    >
-      <i className="fas fa-users"></i>
-      <span>Friends</span>
-    </a>
-  </Link>
-  <Link href="/task">
-    <a 
-      className={footerLinkClass}
-      onContextMenu={(e) => e.preventDefault()}
-    >
-      <i className="fas fa-clipboard"></i>
-      <span>Tasks</span>
-    </a>
-  </Link>
-</div>
+        className={footerContainerClass}
+        onContextMenu={preventDefaultHandler}
+        onTouchStart={preventDefaultHandler}
+        onTouchEnd={preventDefaultHandler}
+        onMouseDown={preventDefaultHandler}
+      >
+        <Link href="/">
+          <a 
+            className={footerLinkClass}
+            onContextMenu={preventDefaultHandler}
+            onTouchStart={preventDefaultHandler}
+            onTouchEnd={preventDefaultHandler}
+            onMouseDown={preventDefaultHandler}
+            draggable="false"
+          >
+            <i className="fas fa-home"></i>
+            <span>Home</span>
+          </a>
+        </Link>
+        <Link href="/invite">
+          <a 
+            className={activeFooterLinkClass}
+            onContextMenu={preventDefaultHandler}
+            onTouchStart={preventDefaultHandler}
+            onTouchEnd={preventDefaultHandler}
+            onMouseDown={preventDefaultHandler}
+            draggable="false"
+          >
+            <i className="fas fa-users"></i>
+            <span>Friends</span>
+          </a>
+        </Link>
+        <Link href="/task">
+          <a 
+            className={footerLinkClass}
+            onContextMenu={preventDefaultHandler}
+            onTouchStart={preventDefaultHandler}
+            onTouchEnd={preventDefaultHandler}
+            onMouseDown={preventDefaultHandler}
+            draggable="false"
+          >
+            <i className="fas fa-clipboard"></i>
+            <span>Tasks</span>
+          </a>
+        </Link>
+      </div>
     </div>
   )
 }
