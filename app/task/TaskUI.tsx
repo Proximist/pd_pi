@@ -62,6 +62,12 @@ export default function TaskUI({
       document.body.classList.toggle('dark-mode', isDark);
     }
   }, []);
+  
+  const getIndicatorStyle = () => {
+    return {
+      transform: `translateX(${activeIndex * 100}%) translateY(-50%)`,
+    };
+  };
 
   // Add dark mode classes to elements
   const containerClass = `task-page ${isDarkMode ? 'dark-mode' : ''}`;
@@ -88,12 +94,6 @@ export default function TaskUI({
     if (!user) {
       return <div className={loaderClass}></div>;
     }
-
-    const getIndicatorStyle = () => {
-  return {
-    transform: `translateX(${activeIndex * 100}%) translateY(-50%)`,
-  }
-}
 
     return (
       <>
