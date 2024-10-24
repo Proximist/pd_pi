@@ -183,7 +183,6 @@
   cursor: pointer;
   opacity: 1;
   pointer-events: auto;
-  animation: pulse 2s infinite;
 }
 
 .farm-button.claim-animating {
@@ -212,15 +211,24 @@
 
 /* Claim Farm Animation */
 .claimFarm {
-  position: relative;
-  padding: 10px 22px;
-  border-radius: 6px;
-  border: none;
+  background-color: #75736e;
   color: white;
-  cursor: pointer;
-  background-color: transparent;
+  width: 75%;
+  padding: 0.75rem;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
-  display: inline-block;
+  position: fixed;
+  bottom: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  cursor: pointer;
+  opacity: 1;
+  pointer-events: auto;
   animation: claimPop 0.6s ease-out;
 }
 
