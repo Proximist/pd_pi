@@ -1,0 +1,268 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+body {
+    font-family: 'Hero', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.task-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 100px;
+}
+
+/* Header and Points */
+.header {
+    padding: 20px 0;
+}
+
+.points {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin-top: 10px;
+    background-color: #d3d3d3;
+    color: #000;
+}
+
+.points span {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Task Icon */
+.task-icon-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.task-icon {
+    font-size: 100px;
+    margin: 20px 0;
+}
+
+.task-icon svg {
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+    color: #666;
+}
+
+/* Description */
+.description {
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding: 0 20px;
+    color: #666;
+}
+
+/* Task List */
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.task-list li {
+  border-bottom: 1px solid #ddd;
+}
+
+.task-list li button {
+  background-color: #000;
+  color: #fff;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.task-item:last-child {
+    border-bottom: none;
+}
+
+.task-item i {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.task-item span {
+    flex-grow: 1;
+    text-align: left;
+    font-weight: 400;
+}
+
+.task-button {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Hero', sans-serif;
+    font-weight: 800;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+
+.task-button:hover:not(:disabled) {
+    transform: scale(1.05);
+}
+
+.task-button:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.task-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@keyframes l2 {
+  100% { background-size: 100% 3px; }
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #000;
+    color: #fff;
+}
+
+.dark-mode .points {
+  background-color: #2c2c2e;
+  color: #fff;
+}
+
+.dark-mode .task-icon svg {
+    color: #a0a0a0;
+}
+
+.dark-mode .description {
+    color: #a0a0a0;
+}
+
+.dark-mode .task-item {
+    border-bottom: 1px solid #3a3a3c;
+}
+
+.dark-mode .task-button {
+    background-color: #fff;
+    color: #000;
+}
+
+
+.button {
+  --width: 100px;
+  --height: 35px;
+  --tooltip-height: 35px;
+  --tooltip-width: 90px;
+  --gap-between-tooltip-to-button: 18px;
+  --button-color: #222;
+  --tooltip-color: #fff;
+  width: var(--width);
+  height: var(--height);
+  background: var(--button-color);
+  position: relative;
+  text-align: center;
+  border-radius: 0.45em;
+  font-family: "Hero", sans-serif;
+  transition: background 0.3s;
+}
+
+.button::before {
+  position: absolute;
+  content: attr(data-tooltip);
+  width: var(--tooltip-width);
+  height: var(--tooltip-height);
+  background-color: #555;
+  font-size: 0.9rem;
+  color: #fff;
+  border-radius: .25em;
+  line-height: var(--tooltip-height);
+  bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) + 10px);
+  left: calc(50% - var(--tooltip-width) / 2);
+}
+
+.button::after {
+  position: absolute;
+  content: '';
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: #555;
+  left: calc(50% - 10px);
+  bottom: calc(100% + var(--gap-between-tooltip-to-button) - 10px);
+}
+
+.button::after, .button::before {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s;
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-wrapper, .text, .icon {
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  color: #fff;
+}
+
+.text {
+  top: 0
+}
+
+.text, .icon {
+  transition: top 0.5s;
+}
+
+.icon {
+  color: #fff;
+  top: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.button:hover {
+  background: #222;
+}
+
+.button:hover .text {
+  top: -100%;
+}
+
+.button:hover .icon {
+  top: 0;
+}
+
+.button:hover:before, .button:hover:after {
+  opacity: 1;
+  visibility: visible;
+}
+
+.button:hover:after {
+  bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) - 20px);
+}
+
+.button:hover:before {
+  bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
+}
