@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { toggleUpdateText } from './utils';
@@ -71,21 +71,44 @@ export default function HomeUI({
       const startTime = new Date(user.startFarming).getTime();
       const currentTime = new Date().getTime();
       const secondsElapsed = Math.floor((currentTime - startTime) / 1000);
-      
+      const progressPercentage = Math.min((secondsElapsed / 30) * 100, 100);
+
+     // Update farming points as before
       setFarmingPoints(secondsElapsed);
       setCurrentNumber(secondsElapsed);
+
+      // Update progress bar
+      const buttonElement = document.querySelector('.farm-button');
+      if (buttonElement) {
+        buttonElement.style.setProperty('--progress-percentage', `${progressPercentage}%`);
+      }
 
       interval = setInterval(() => {
         setIsSliding(true);
         setTimeout(() => {
+          const newTime = new Date().getTime();
+          const newSecondsElapsed = Math.floor((newTime - startTime) / 1000);
+          const newProgressPercentage = Math.min((newSecondsElapsed / 30) * 100, 100);
+          
           setFarmingPoints(prev => prev + 1);
           setCurrentNumber(prev => prev + 1);
           setIsSliding(false);
+          
+          // Update progress bar
+          if (buttonElement) {
+            buttonElement.style.setProperty('--progress-percentage', `${newProgressPercentage}%`);
+          }
         }, 500);
       }, 1000);
     } else {
       setFarmingPoints(0);
       setCurrentNumber(0);
+
+      // Reset progress bar
+      const buttonElement = document.querySelector('.farm-button');
+      if (buttonElement) {
+        buttonElement.style.setProperty('--progress-percentage', '0%');
+      }
     }
     return () => clearInterval(interval);
   }, [farmingStatus, user?.startFarming]);
