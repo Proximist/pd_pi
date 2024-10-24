@@ -47,6 +47,7 @@ export default function HomeUI({
   const [isSliding, setIsSliding] = useState(false);
   const [isClaimAnimating, setIsClaimAnimating] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [activeTab, setActiveTab] = useState('home');
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -63,7 +64,12 @@ export default function HomeUI({
       // Add theme classes to body
       document.body.classList.toggle('dark-mode', isDark);
     }
-  }, []);
+  // Add this:
+  const path = window.location.pathname;
+  if (path === '/') setActiveTab('home');
+  else if (path === '/invite') setActiveTab('friends');
+  else if (path === '/task') setActiveTab('tasks');
+}, []);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -216,24 +222,37 @@ export default function HomeUI({
   return (
     <div className={containerClass}>
       {renderContent()}
-      <div className={footerContainerClass}>
+      <div 
+  className={footerContainerClass} 
+  data-active={activeTab}
+  data-from={activeTab === 'tasks' && newTab === 'home' ? 'tasks' : activeTab === 'home' && newTab === 'tasks' ? 'home' : undefined}
+>
         <Link href="/">
-          <a className={activeFooterLinkClass}>
-            <i className="fas fa-home"></i>
-            <span>Home</span>
-          </a>
-        </Link>
-        <Link href="/invite">
-          <a className={footerLinkClass}>
-            <i className="fas fa-users"></i>
-            <span>Friends</span>
-          </a>
-        </Link>
-        <Link href="/task">
-          <a className={footerLinkClass}>
-            <i className="fas fa-clipboard"></i>
-            <span>Tasks</span>
-          </a>
+          <a 
+    className={activeTab === 'home' ? activeFooterLinkClass : footerLinkClass}
+    onClick={() => setActiveTab('home')}
+  >
+    <i className="fas fa-home"></i>
+    <span>Home</span>
+  </a>
+</Link>
+<Link href="/invite">
+  <a 
+    className={activeTab === 'friends' ? activeFooterLinkClass : footerLinkClass}
+    onClick={() => setActiveTab('friends')}
+  >
+    <i className="fas fa-users"></i>
+    <span>Friends</span>
+  </a>
+</Link>
+<Link href="/task">
+  <a 
+    className={activeTab === 'tasks' ? activeFooterLinkClass : footerLinkClass}
+    onClick={() => setActiveTab('tasks')}
+  >
+    <i className="fas fa-clipboard"></i>
+    <span>Tasks</span>
+  </a>
         </Link>
       </div>
     </div>
