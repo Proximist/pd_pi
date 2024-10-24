@@ -162,7 +162,6 @@
   align-items: center;
   min-height: 3.5rem;
   overflow: hidden;
-  position: relative;
 }
 
 /* Add new progress bar styles */
