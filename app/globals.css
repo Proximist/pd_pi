@@ -71,11 +71,13 @@ body {
   height: 89px;
   box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
   z-index: 1000;
+  position: relative;
 }
 
 .dark-mode.footerContainer {
   background-color: #2a2a2a;
 }
+
 .footerContainer::before {
   content: "";
   position: absolute;
@@ -87,8 +89,42 @@ body {
   background-color: #000;
 }
 
+.footerContainer[data-from="home"][data-active="tasks"]::after,
+.footerContainer[data-from="tasks"][data-active="home"]::after {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .dark-mode .footerContainer::before {
   background-color: #fff;
+}
+
+.footerContainer::after {
+  content: '';
+  position: absolute;
+  height: calc(100% - 1rem);
+  width: calc(33.33% - 1rem); /* Approximately one-third of the container minus padding */
+  background-color: rgba(51, 65, 85, 0.1);
+  border-radius: 0.5rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  bottom: 0.5rem;
+  left: 0.5rem;
+  pointer-events: none;
+}
+
+.dark-mode .footerContainer::after {
+  background-color: #3a3a3a;
+}
+
+.footerContainer[data-active="home"]::after {
+  transform: translateX(0);
+}
+
+.footerContainer[data-active="friends"]::after {
+  transform: translateX(100%);
+}
+
+.footerContainer[data-active="tasks"]::after {
+  transform: translateX(200%);
 }
 
 .footerLink {
@@ -103,6 +139,7 @@ body {
   transition: all 0.15s ease-in-out;
   border-radius: 0.5rem;
   gap: 4px;
+  position: relative;
 }
 
 .dark-mode .activeFooterLink {
@@ -121,10 +158,9 @@ body {
 
 
 .activeFooterLink {
-  position: absolute;
+  position: relative;
   font-weight: 600;
   color: rgba(51, 65, 85, 1);
-  width: 30px;
 }
 
 .dark-mode .activeFooterLink {
@@ -132,16 +168,7 @@ body {
 }
 
 .activeFooterLink::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: currentColor;
-  opacity: 0.1;
-  border-radius: 0.5rem;
-  z-index: -1;
+  display: none;
 }
 
 .dark-mode .activeFooterLink::before {
