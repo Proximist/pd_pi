@@ -131,7 +131,7 @@ export default function HomeUI({
              <img
               alt="Animated style dog image"
               className="dog-image"
-              src="https://ibb.co/31TLWNn"
+              src="/cat.jpg"
                 />
           </div>
           <p id="pixelDogsCount" className={`pixel-dogs-count ${isDarkMode ? 'dark-mode' : ''}`}>
