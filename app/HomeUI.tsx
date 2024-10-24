@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { toggleUpdateText } from './utils';
 import './HomeUI.css';
 import './globals.css';
-import logo from '../icons/logo.jpg';
 
 interface HomeUIProps {
   user: any;
@@ -132,9 +131,9 @@ export default function HomeUI({
              <img
                 alt="Profile picture"
                 className="dog-image"
-                src={logo} // Use the imported image here
+                src={} // Use the imported image here
                 />
-</div>
+          </div>
           <p id="pixelDogsCount" className={`pixel-dogs-count ${isDarkMode ? 'dark-mode' : ''}`}>
             {user.points} PixelDogs
           </p>
