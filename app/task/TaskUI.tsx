@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import '../globaltask.css';
+import './TaskUI.css';
 import '../globals.css'
 
 interface TaskUIProps {
