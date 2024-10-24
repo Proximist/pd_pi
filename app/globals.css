@@ -105,6 +105,10 @@ body {
   gap: 4px;
 }
 
+.dark-mode .footerLink {
+  color: #fff;
+}
+
 .dark-mode .activeFooterLink {
   color: white;
 }
