@@ -174,13 +174,11 @@ body {
 
 /* Add or update these styles in your invite.css */
 
-.footerContainer a {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-}
+/* Add just these styles to your invite.css file */
 
-.footerContainer a * {
-  pointer-events: none;
+.footerContainer a {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: manipulation;
 }
