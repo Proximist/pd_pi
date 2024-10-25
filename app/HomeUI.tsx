@@ -229,7 +229,7 @@ export default function HomeUI({
             <span className="claimFarms">Farm PixelDogs</span>
           ) : farmingStatus === 'farming' ? (
             <>
-              Farming
+              <span className="farmingtext">Farming</span>
               <div className="farming-points">
                 <span className={`farming-points-number ${isSliding ? 'sliding-out' : ''}`} key={currentNumber}>
                   {farmingPoints}
