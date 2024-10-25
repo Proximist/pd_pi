@@ -7,6 +7,7 @@ import './globals.css';
 
 interface HomeUIProps {
   user: any;
+  error: string | null;
   buttonStage1: 'check' | 'claim' | 'claimed';
   buttonStage2: 'check' | 'claim' | 'claimed';
   buttonStage3: 'check' | 'claim' | 'claimed';
