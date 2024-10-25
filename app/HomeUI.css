@@ -443,6 +443,10 @@
   background-color: #2d662f;
 }
 
+.dark-mode .loader {
+  color: #fff;
+}
+
 .update-text {
   color: black;
   text-align: center;
