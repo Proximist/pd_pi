@@ -146,6 +146,11 @@
   overflow: hidden;
 }
 
+.dark-mode.farm-button {
+  background-color: #fff;
+  color: #2e3748;
+}
+
 /* Add new progress bar styles */
 .farm-button.farming::before {
   content: '';
@@ -176,6 +181,11 @@
   opacity: 0.7;
 }
 
+.dark-mode.farm-button:disabled {
+  background-color: #aaa8a4fa;
+  color: white;
+}
+
 .farm-button.farming {
   background-color: #75736e;
   display: flex;
@@ -185,6 +195,11 @@
   z-index: 1;
 }
 
+.dark-mode.farm-button.farming {
+  background-color: #aaa8a4fa;
+  color: white;
+}
+
 .countdown-timer {
   font-weight: bold;
   font-size: 1rem;
@@ -192,6 +207,10 @@
   min-width: 2.5rem;
   text-align: right;
   z-index: 1;
+}
+
+.dark-mode.countdown-timer {
+  color: black;
 }
 
 .farm-button.claim-animating {
@@ -431,17 +450,6 @@
 }
 
 /* Preserve the farm button's green color but slightly darker in dark mode */
-.dark-mode.farm-button {
-  background-color: #75736e;
-}
-
-.dark-mode.farm-button:disabled {
-  background-color: #2d662f;
-}
-
-.dark-mode .loader {
-  color: #fff;
-}
 
 .update-text {
   opacity: 1;
