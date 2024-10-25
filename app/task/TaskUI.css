@@ -103,6 +103,7 @@
     font-family: 'Hero', sans-serif;
     font-weight: 800;
     transition: background-color 0.3s, transform 0.3s;
+    margin-left: 20px;
 }
 
 .task-page .task-button:hover:not(:disabled) {
