@@ -27,6 +27,12 @@ export async function POST(req: NextRequest) {
             claimedField = 'claimedButton7';
         } else if (buttonId === 'button8') {
             claimedField = 'claimedButton8';
+        } else if (buttonId === 'button9') {
+            claimedField = 'claimblum';
+        } else if (buttonId === 'button10') {
+            claimedField = 'claimsajor';
+        } else if (buttonId === 'button10') {
+            claimedField = 'claimtomato';
         }
 
         const updateData: any = { 
