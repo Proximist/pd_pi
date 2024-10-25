@@ -55,18 +55,16 @@ export default function TaskUI({
   handleClaim8,
 }: TaskUIProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [activeTab, setActiveTab] = useState('handles');
 
   useEffect(() => {
     if (window.Telegram?.WebApp) {
       const isDark = window.Telegram.WebApp.colorScheme === 'dark';
       setIsDarkMode(isDark);
-
-      // Add theme classes to body
       document.body.classList.toggle('dark-mode', isDark);
     }
   }, []);
 
-  // Add dark mode classes to elements
   const containerClass = `task-page ${isDarkMode ? 'dark-mode' : ''}`;
   const headerClass = `header ${isDarkMode ? 'dark-mode' : ''}`;
   const pointsClass = `points ${isDarkMode ? 'dark-mode' : ''}`;
@@ -76,12 +74,128 @@ export default function TaskUI({
   const taskListClass = `task-list ${isDarkMode ? 'dark-mode' : ''}`;
   const taskItemClass = `task-item ${isDarkMode ? 'dark-mode' : ''}`;
   const buttonClass = `task-button ${isDarkMode ? 'dark-mode' : ''}`;
-  const footerContainerClass = `footerContainer ${isDarkMode ? 'dark-mode' : ''}`
+  const footerContainerClass = `footerContainer ${isDarkMode ? 'dark-mode' : ''}`;
   const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`;
-  const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`
+  const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`;
   const notificationClass = `notification-banner ${isDarkMode ? 'dark-mode' : ''}`;
   const errorClass = `container mx-auto p-4 text-red-500 ${isDarkMode ? 'dark-mode' : ''}`;
   const loaderClass = `loader ${isDarkMode ? 'dark-mode' : ''}`;
+
+  const tabsContainerClass = `flex justify-center space-x-4 mb-4 ${isDarkMode ? 'dark-mode' : ''}`;
+  const tabClass = (isActive: boolean) => `
+    px-4 py-2 font-medium rounded-lg cursor-pointer transition-colors
+    ${isDarkMode 
+      ? (isActive ? 'bg-gray-700 text-white' : 'text-gray-400 hover:text-gray-300') 
+      : (isActive ? 'bg-gray-200 text-gray-800' : 'text-gray-600 hover:text-gray-800')}
+  `;
+
+  const renderHandlesTasks = () => (
+    <ul className={taskListClass}>
+      <li className={taskItemClass}>
+        <i className="fab fa-youtube"></i>
+        <span>Subscribe PG YouTube channel :</span>
+        <button
+          onClick={() => {
+            if (buttonStage1 === 'check') handleButtonClick4();
+            else if (buttonStage1 === 'claim') handleClaim4();
+          }}
+          disabled={buttonStage1 === 'claimed' || isLoading4}
+          className={buttonClass}
+        >
+          {isLoading4 ? 'Claiming...' : buttonStage1 === 'check' ? '+100' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+        </button>
+      </li>
+      <li className={taskItemClass}>
+        <i className="fab fa-telegram-plane"></i>
+        <span>Subscribe PG Telegram Channel :</span>
+        <button
+          onClick={() => {
+            if (buttonStage1 === 'check') handleButtonClick6();
+            else if (buttonStage1 === 'claim') handleClaim6();
+          }}
+          disabled={buttonStage1 === 'claimed' || isLoading6}
+          className={buttonClass}
+        >
+          {isLoading6 ? 'Claiming...' : buttonStage1 === 'check' ? '+300' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+        </button>
+      </li>
+      <li className={taskItemClass}>
+        <i className="fab fa-twitter"></i>
+        <span>Follow PG's X Handle :</span>
+        <button
+          onClick={() => {
+            if (buttonStage1 === 'check') handleButtonClick5();
+            else if (buttonStage1 === 'claim') handleClaim5();
+          }}
+          disabled={buttonStage1 === 'claimed' || isLoading5}
+          className={buttonClass}
+        >
+          {isLoading5 ? 'Claiming...' : buttonStage1 === 'check' ? '+150' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+        </button>
+      </li>
+      <li className={taskItemClass}>
+        <i className="fab fa-discord"></i>
+        <span>Join PG's Discord Server :</span>
+        <button
+          onClick={() => {
+            if (buttonStage7 === 'check') handleButtonClick7();
+            else if (buttonStage7 === 'claim') handleClaim7();
+          }}
+          disabled={buttonStage7 === 'claimed' || isLoading7}
+          className={buttonClass}
+        >
+          {isLoading7 ? 'Claiming...' : buttonStage7 === 'check' ? '+150' : buttonStage7 === 'claim' ? 'Claim' : 'Claimed'}
+        </button>
+      </li>
+      <li className={taskItemClass}>
+        <i className="fab fa-instagram"></i>
+        <span>Follow PG Instagram Handle :</span>
+        <button
+          onClick={() => {
+            if (buttonStage8 === 'check') handleButtonClick8();
+            else if (buttonStage8 === 'claim') handleClaim8();
+          }}
+          disabled={buttonStage8 === 'claimed' || isLoading8}
+          className={buttonClass}
+        >
+          {isLoading8 ? 'Claiming...' : buttonStage8 === 'check' ? '+150' : buttonStage8 === 'claim' ? 'Claim' : 'Claimed'}
+        </button>
+      </li>
+    </ul>
+  );
+
+  const renderPartnersTasks = () => (
+    <ul className={taskListClass}>
+      <li className={taskItemClass}>
+        <i className="fab fa-twitch"></i>
+        <span>Follow Partner's Twitch :</span>
+        <button
+          onClick={() => {
+            if (buttonStage1 === 'check') handleButtonClick4();
+            else if (buttonStage1 === 'claim') handleClaim4();
+          }}
+          disabled={buttonStage1 === 'claimed' || isLoading4}
+          className={buttonClass}
+        >
+          {isLoading4 ? 'Claiming...' : buttonStage1 === 'check' ? '+100' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+        </button>
+      </li>
+      <li className={taskItemClass}>
+        <i className="fab fa-youtube"></i>
+        <span>Subscribe Partner's Channel :</span>
+        <button
+          onClick={() => {
+            if (buttonStage1 === 'check') handleButtonClick6();
+            else if (buttonStage1 === 'claim') handleClaim6();
+          }}
+          disabled={buttonStage1 === 'claimed' || isLoading6}
+          className={buttonClass}
+        >
+          {isLoading6 ? 'Claiming...' : buttonStage1 === 'check' ? '+300' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+        </button>
+      </li>
+    </ul>
+  );
 
   const renderContent = () => {
     if (error) {
@@ -110,93 +224,21 @@ export default function TaskUI({
         <div className={descriptionClass}>
           Complete the following tasks<br />and increase PG
         </div>
-        <ul className={taskListClass}>
-          <li className={taskItemClass}>
-            <i className="fab fa-youtube"></i>
-            <span>Subscribe PG YouTube channel :</span>
-            <button
-              onClick={() => {
-                if (buttonStage1 === 'check') {
-                  handleButtonClick4();
-                } else if (buttonStage1 === 'claim') {
-                  handleClaim4();
-                }
-              }}
-              disabled={buttonStage1 === 'claimed' || isLoading4}
-              className={buttonClass}
-            >
-              {isLoading4 ? 'Claiming...' : buttonStage1 === 'check' ? '+100' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
-            </button>
-          </li>
-          <li className={taskItemClass}>
-            <i className="fab fa-telegram-plane"></i>
-            <span>Subscribe PG Telegram Channel :</span>
-            <button
-              onClick={() => {
-                if (buttonStage1 === 'check') {
-                  handleButtonClick6();
-                } else if (buttonStage1 === 'claim') {
-                  handleClaim6();
-                }
-              }}
-              disabled={buttonStage1 === 'claimed' || isLoading6}
-              className={buttonClass}
-            >
-              {isLoading6 ? 'Claiming...' : buttonStage1 === 'check' ? '+300' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
-            </button>
-          </li>
-          <li className={taskItemClass}>
-            <i className="fab fa-twitter"></i>
-            <span>Follow PG's X Handle :</span>
-            <button
-              onClick={() => {
-                if (buttonStage1 === 'check') {
-                  handleButtonClick5();
-                } else if (buttonStage1 === 'claim') {
-                  handleClaim5();
-                }
-              }}
-              disabled={buttonStage1 === 'claimed' || isLoading5}
-              className={buttonClass}
-            >
-              {isLoading5 ? 'Claiming...' : buttonStage1 === 'check' ? '+150' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
-            </button>
-          </li>
-          <li className={taskItemClass}>
-            <i className="fab fa-discord"></i>
-            <span>Join PG's Discord Server :</span>
-            <button
-              onClick={() => {
-                if (buttonStage7 === 'check') {
-                  handleButtonClick7();
-                } else if (buttonStage7 === 'claim') {
-                  handleClaim7();
-                }
-              }}
-              disabled={buttonStage7 === 'claimed' || isLoading7}
-              className={buttonClass}
-            >
-              {isLoading7 ? 'Claiming...' : buttonStage7 === 'check' ? '+150' : buttonStage7 === 'claim' ? 'Claim' : 'Claimed'}
-            </button>
-          </li>
-          <li className={taskItemClass}>
-            <i className="fab fa-instagram"></i>
-            <span>Follow PG Instagram Handle :</span>
-            <button
-              onClick={() => {
-                if (buttonStage8 === 'check') {
-                  handleButtonClick8();
-                } else if (buttonStage8 === 'claim') {
-                  handleClaim8();
-                }
-              }}
-              disabled={buttonStage8 === 'claimed' || isLoading8}
-              className={buttonClass}
-            >
-              {isLoading8 ? 'Claiming...' : buttonStage8 === 'check' ? '+150' : buttonStage8 === 'claim' ? 'Claim' : 'Claimed'}
-            </button>
-          </li>
-        </ul>
+        <div className={tabsContainerClass}>
+          <div 
+            className={tabClass(activeTab === 'handles')}
+            onClick={() => setActiveTab('handles')}
+          >
+            Handles
+          </div>
+          <div 
+            className={tabClass(activeTab === 'partners')}
+            onClick={() => setActiveTab('partners')}
+          >
+            Partners
+          </div>
+        </div>
+        {activeTab === 'handles' ? renderHandlesTasks() : renderPartnersTasks()}
       </>
     );
   };
