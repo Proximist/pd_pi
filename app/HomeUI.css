@@ -150,7 +150,11 @@
 }
 
 .farm-button:hover {
-    background-color: #23252b;
+    background-color: #272d39;
+}
+
+.dark-mode .farm-button:hover {
+    background-color: #b7b7b7;
 }
 
 .dark-mode.farm-button {
