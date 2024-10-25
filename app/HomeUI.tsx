@@ -134,20 +134,12 @@ export default function HomeUI({
   const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`
 
   const renderContent = () => {
-    if (isInitialLoading) {
-      return (
-        <div className="content-area">
-          <div className="loader"></div>
-        </div>
-      );
+    if (error) {
+      return <div className={errorClass}>{error}</div>;
     }
 
-    if (error) {
-      return (
-        <div className="content-area">
-          <div className="error">{error}</div>
-        </div>
-      );
+    if (!user) {
+      return <div className={loaderClass}></div>;
     }
 
     return (
