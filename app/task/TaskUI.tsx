@@ -11,48 +11,72 @@ interface TaskUIProps {
   buttonStage3: 'check' | 'claim' | 'claimed';
   buttonStage7: 'check' | 'claim' | 'claimed';
   buttonStage8: 'check' | 'claim' | 'claimed';
+  buttonStage9: 'check' | 'claim' | 'claimed';
+  buttonStage10: 'check' | 'claim' | 'claimed';
+  buttonStage11: 'check' | 'claim' | 'claimed';
   isLoading4: boolean;
   isLoading5: boolean;
   isLoading6: boolean;
   isLoading7: boolean;
   isLoading8: boolean;
+  isLoading9: boolean;
+  isLoading10: boolean;
+  isLoading11: boolean;
   notification: string;
   handleButtonClick4: () => void;
   handleButtonClick5: () => void;
   handleButtonClick6: () => void;
   handleButtonClick7: () => void;
   handleButtonClick8: () => void;
+  handleButtonClick9: () => void;
+  handleButtonClick10: () => void;
+  handleButtonClick11: () => void;
   handleClaim4: () => void;
   handleClaim5: () => void;
   handleClaim6: () => void;
   handleClaim7: () => void;
   handleClaim8: () => void;
+  handleClaim9: () => void;
+  handleClaim10: () => void;
+  handleClaim11: () => void;
 }
 
 export default function TaskUI({
   user,
   error,
-  buttonStage1,
-  buttonStage2,
-  buttonStage3,
+  buttonStage4,
+  buttonStage5,
+  buttonStage6,
   buttonStage7,
   buttonStage8,
+  buttonStage9,
+  buttonStage10,
+  buttonStage11,
   isLoading4,
   isLoading5,
   isLoading6,
   isLoading7,
   isLoading8,
+  isLoading9,
+  isLoading10,
+  isLoading11,
   notification,
   handleButtonClick4,
   handleButtonClick5,
   handleButtonClick6,
   handleButtonClick7,
   handleButtonClick8,
+  handleButtonClick9,
+  handleButtonClick10,
+  handleButtonClick11,
   handleClaim4,
   handleClaim5,
   handleClaim6,
   handleClaim7,
   handleClaim8,
+  handleClaim9,
+  handleClaim10,
+  handleClaim11,
 }: TaskUIProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [activeTab, setActiveTab] = useState('handles');
@@ -96,13 +120,13 @@ export default function TaskUI({
         <span>Subscribe PG YouTube channel :</span>
         <button
           onClick={() => {
-            if (buttonStage1 === 'check') handleButtonClick4();
-            else if (buttonStage1 === 'claim') handleClaim4();
+            if (buttonStage4 === 'check') handleButtonClick4();
+            else if (buttonStage4 === 'claim') handleClaim4();
           }}
-          disabled={buttonStage1 === 'claimed' || isLoading4}
+          disabled={buttonStage4 === 'claimed' || isLoading4}
           className={buttonClass}
         >
-          {isLoading4 ? 'Claiming...' : buttonStage1 === 'check' ? '+100' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+          {isLoading4 ? 'Claiming...' : buttonStage4 === 'check' ? '+100' : buttonStage4 === 'claim' ? 'Claim' : 'Claimed'}
         </button>
       </li>
       <li className={taskItemClass}>
@@ -110,13 +134,13 @@ export default function TaskUI({
         <span>Subscribe PG Telegram Channel :</span>
         <button
           onClick={() => {
-            if (buttonStage1 === 'check') handleButtonClick6();
-            else if (buttonStage1 === 'claim') handleClaim6();
+            if (buttonStage6 === 'check') handleButtonClick6();
+            else if (buttonStage6 === 'claim') handleClaim6();
           }}
-          disabled={buttonStage1 === 'claimed' || isLoading6}
+          disabled={buttonStage6 === 'claimed' || isLoading6}
           className={buttonClass}
         >
-          {isLoading6 ? 'Claiming...' : buttonStage1 === 'check' ? '+300' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+          {isLoading6 ? 'Claiming...' : buttonStage6 === 'check' ? '+300' : buttonStage6 === 'claim' ? 'Claim' : 'Claimed'}
         </button>
       </li>
       <li className={taskItemClass}>
@@ -124,13 +148,13 @@ export default function TaskUI({
         <span>Follow PG's X Handle :</span>
         <button
           onClick={() => {
-            if (buttonStage1 === 'check') handleButtonClick5();
-            else if (buttonStage1 === 'claim') handleClaim5();
+            if (buttonStage5 === 'check') handleButtonClick5();
+            else if (buttonStage5 === 'claim') handleClaim5();
           }}
-          disabled={buttonStage1 === 'claimed' || isLoading5}
+          disabled={buttonStage5 === 'claimed' || isLoading5}
           className={buttonClass}
         >
-          {isLoading5 ? 'Claiming...' : buttonStage1 === 'check' ? '+150' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+          {isLoading5 ? 'Claiming...' : buttonStage5 === 'check' ? '+150' : buttonStage5 === 'claim' ? 'Claim' : 'Claimed'}
         </button>
       </li>
       <li className={taskItemClass}>
@@ -168,30 +192,44 @@ export default function TaskUI({
     <ul className={taskListClass}>
       <li className={taskItemClass}>
         <i className="fab fa-twitch"></i>
-        <span>Follow Partner's Twitch :</span>
+        <span>Checkout Blum :</span>
         <button
           onClick={() => {
-            if (buttonStage1 === 'check') handleButtonClick4();
-            else if (buttonStage1 === 'claim') handleClaim4();
+            if (buttonStage9 === 'check') handleButtonClick9();
+            else if (buttonStage9 === 'claim') handleClaim9();
           }}
-          disabled={buttonStage1 === 'claimed' || isLoading4}
+          disabled={buttonStage9 === 'claimed' || isLoading9}
           className={buttonClass}
         >
-          {isLoading4 ? 'Claiming...' : buttonStage1 === 'check' ? '+100' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+          {isLoading9 ? 'Claiming...' : buttonStage9 === 'check' ? '+100' : buttonStage9 === 'claim' ? 'Claim' : 'Claimed'}
         </button>
       </li>
       <li className={taskItemClass}>
         <i className="fab fa-youtube"></i>
-        <span>Subscribe Partner's Channel :</span>
+        <span>Become a Major :</span>
         <button
           onClick={() => {
-            if (buttonStage1 === 'check') handleButtonClick6();
-            else if (buttonStage1 === 'claim') handleClaim6();
+            if (buttonStage10 === 'check') handleButtonClick10();
+            else if (buttonStage10 === 'claim') handleClaim10();
           }}
-          disabled={buttonStage1 === 'claimed' || isLoading6}
+          disabled={buttonStage10 === 'claimed' || isLoading10}
           className={buttonClass}
         >
-          {isLoading6 ? 'Claiming...' : buttonStage1 === 'check' ? '+300' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+          {isLoading6 ? 'Claiming...' : buttonStage10 === 'check' ? '+300' : buttonStage10 === 'claim' ? 'Claim' : 'Claimed'}
+        </button>
+      </li>
+      <li className={taskItemClass}>
+        <i className="fab fa-youtube"></i>
+        <span>Play Tomato :</span>
+        <button
+          onClick={() => {
+            if (buttonStage11 === 'check') handleButtonClick11();
+            else if (buttonStage11 === 'claim') handleClaim11();
+          }}
+          disabled={buttonStage11 === 'claimed' || isLoading11}
+          className={buttonClass}
+        >
+          {isLoading11 ? 'Claiming...' : buttonStage11 === 'check' ? '+300' : buttonStage11 === 'claim' ? 'Claim' : 'Claimed'}
         </button>
       </li>
     </ul>
