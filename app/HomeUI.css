@@ -444,11 +444,16 @@
 }
 
 .update-text {
-  color: black; /* Changed from #4a5568 */
+  color: black;
+  font-size: 1rem;
   text-align: center;
-  margin-bottom: 1rem; /* mb-4 */
-  font-size: 0.875rem; /* text-sm */ 
-  margin-bottom: 20px; /* Adds space below the text */
+  margin-top: 0.5rem;
+  font-style: italic;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.dark-mode .update-text {
+  color: #ffffff;
 }
 
 .flex-grow {
