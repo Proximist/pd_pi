@@ -444,23 +444,11 @@
 }
 
 .update-text {
-  color: black;
+  color: black; /* Changed from #4a5568 */
   text-align: center;
-  margin-bottom: 1rem;
-  font-size: 0.875rem;
-  margin-bottom: 20px;
-}
-
-.fade {
-  transition: opacity 1s ease-in-out;
-}
-
-.fade-out {
-  opacity: 0;
-}
-
-.fade-in {
-  opacity: 1;
+  margin-bottom: 1rem; /* mb-4 */
+  font-size: 0.875rem; /* text-sm */ 
+  margin-bottom: 20px; /* Adds space below the text */
 }
 
 .flex-grow {
