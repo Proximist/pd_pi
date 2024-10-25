@@ -449,7 +449,33 @@
   text-align: center;
   margin-top: 0.5rem;
   font-style: italic;
-  transition: opacity 0.3s ease-in-out;
+  opacity: 1;
+}
+
+.update-text.fade-in {
+  animation: fadeIn 1s ease-in forwards;
+}
+
+.update-text.fade-out {
+  animation: fadeOut 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .dark-mode .update-text {
