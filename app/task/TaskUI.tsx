@@ -131,7 +131,7 @@ export default function TaskUI({
       </li>
       <li className={taskItemClass}>
         <i className="fab fa-telegram-plane"></i>
-        <span>Subscribe PG Telegram Channel :</span>
+        <span>Join Our Telegram Channel :</span>
         <button
           onClick={() => {
             if (buttonStage6 === 'check') handleButtonClick6();
@@ -145,7 +145,7 @@ export default function TaskUI({
       </li>
       <li className={taskItemClass}>
         <i className="fab fa-twitter"></i>
-        <span>Follow PG's X Handle :</span>
+        <span>Follow Our X Handle :</span>
         <button
           onClick={() => {
             if (buttonStage5 === 'check') handleButtonClick5();
@@ -159,7 +159,7 @@ export default function TaskUI({
       </li>
       <li className={taskItemClass}>
         <i className="fab fa-discord"></i>
-        <span>Join PG's Discord Server :</span>
+        <span>Connect With Us On Discord:</span>
         <button
           onClick={() => {
             if (buttonStage7 === 'check') handleButtonClick7();
@@ -173,7 +173,7 @@ export default function TaskUI({
       </li>
       <li className={taskItemClass}>
         <i className="fab fa-instagram"></i>
-        <span>Follow PG Instagram Handle :</span>
+        <span>Follow to Instagram Handle :</span>
         <button
           onClick={() => {
             if (buttonStage8 === 'check') handleButtonClick8();
