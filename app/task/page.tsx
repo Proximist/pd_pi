@@ -142,7 +142,7 @@ export default function Home() {
   }
 
   const handleButtonClick10 = () => {
-    if (buttonStage9 === 'check') {
+    if (buttonStage10 === 'check') {
       window.open('https://t.me/major/start?startapp=1125596880', '_blank')
       setButtonStage10('claim')
     }
@@ -212,7 +212,7 @@ export default function Home() {
   const handleClaim9 = () => {
     if (buttonStage9 === 'claim') {
       setIsLoading9(true)
-      handleIncreasePoints(150, 'button8')
+      handleIncreasePoints(150, 'button9')
       setTimeout(() => {
         setButtonStage9('claimed')
         setIsLoading9(false)
@@ -223,7 +223,7 @@ export default function Home() {
   const handleClaim10 = () => {
     if (buttonStage10 === 'claim') {
       setIsLoading10(true)
-      handleIncreasePoints(150, 'button8')
+      handleIncreasePoints(150, 'button10')
       setTimeout(() => {
         setButtonStage10('claimed')
         setIsLoading10(false)
@@ -234,7 +234,7 @@ export default function Home() {
   const handleClaim11 = () => {
     if (buttonStage11 === 'claim') {
       setIsLoading11(true)
-      handleIncreasePoints(150, 'button8')
+      handleIncreasePoints(150, 'button11')
       setTimeout(() => {
         setButtonStage11('claimed')
         setIsLoading11(false)
