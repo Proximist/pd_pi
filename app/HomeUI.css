@@ -451,6 +451,18 @@
   margin-bottom: 20px;
 }
 
+.fade {
+  transition: opacity 1s ease-in-out;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
 .flex-grow {
   flex-grow: 1;
 }
