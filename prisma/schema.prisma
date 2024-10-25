@@ -22,6 +22,9 @@ model User {
   claimedButton6 Boolean @default(false)
   claimedButton7 Boolean @default(false)
   claimedButton8 Boolean @default(false)
+  claimblum      Boolean @default(false)
+  claimsajor     Boolean @default(false)
+  claimtomato    Boolean @default(false)
   invitedUsers  String[] @default([])
   invitedBy     String?  @default("")
   startFarming  DateTime?
