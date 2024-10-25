@@ -123,7 +123,7 @@ export default function Home() {
       if (data.success) {
         setUser({ ...user, points: data.points })
         setNotification(`Points increased successfully! (+${pointsToAdd})`)
-        setTimeout(() => setNotification(''), 3000)
+        setTimeout(() => setNotification(''), 30000)
       } else {
         setError('Failed to increase points')
       }
