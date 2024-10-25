@@ -157,8 +157,8 @@ export default function HomeUI({
           <p id="pixelDogsCount" className={`pixel-dogs-count ${isDarkMode ? 'dark-mode' : ''}`}>
             {user.points} PixelDogs
           </p>
-          <p id="updateText" className={`update-text fade fade-in ${isDarkMode ? 'dark-mode' : ''}`}>
-            Exciting updates are on the way :)
+          <p id="updateText" className="update-text fade fade-in">
+            Exciting updates are on the way:)
           </p>
           <div className={tasksClass}>
             <button className={`tasks-button ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Socials..!</button>
