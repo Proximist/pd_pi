@@ -21,22 +21,10 @@ export default function Invite() {
   const [inviteLink, setInviteLink] = useState('')
   const [invitedUsers, setInvitedUsers] = useState<string[]>([])
   const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isCopied, setIsCopied] = useState(false)
   const [buttonState, setButtonState] = useState('initial')
 
-  const preventDefaultHandler = (e: React.MouseEvent | React.TouchEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
   useEffect(() => {
-    // Add event listeners to prevent long press
-    const links = document.querySelectorAll('.footerContainer a');
-    links.forEach(element => {
-      element.addEventListener('contextmenu', preventDefaultHandler);
-      element.addEventListener('mousedown', preventDefaultHandler);
-      element.addEventListener('touchstart', preventDefaultHandler); // Add touchstart event
-    });
-
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
       const tg = window.Telegram.WebApp
       tg.ready()
@@ -75,15 +63,6 @@ export default function Invite() {
     } else {
       setError('This app should be opened in Telegram')
     }
-
-    // Cleanup event listeners
-    return () => {
-      links.forEach(element => {
-        element.removeEventListener('contextmenu', preventDefaultHandler);
-        element.removeEventListener('mousedown', preventDefaultHandler);
-        element.removeEventListener('touchstart', preventDefaultHandler); // Cleanup touchstart event
-      });
-    };
   }, [])
 
   const handleInvite = () => {
@@ -183,40 +162,21 @@ export default function Invite() {
           </>
         )}
       </div>
-      <div 
-        className={footerContainerClass}
-        onContextMenu={preventDefaultHandler}
-        onMouseDown={preventDefaultHandler}
-      >
+      <div className={footerContainerClass}>
         <Link href="/">
-          <a 
-            className={footerLinkClass}
-            onContextMenu={preventDefaultHandler}
-            onMouseDown={preventDefaultHandler}
-            draggable="false"
-          >
+          <a className={footerLinkClass}>
             <i className="fas fa-home"></i>
             <span>Home</span>
           </a>
         </Link>
         <Link href="/invite">
-          <a 
-            className={activeFooterLinkClass}
-            onContextMenu={preventDefaultHandler}
-            onMouseDown={preventDefaultHandler}
-            draggable="false"
-          >
+          <a className={activeFooterLinkClass}>
             <i className="fas fa-users"></i>
             <span>Friends</span>
           </a>
         </Link>
         <Link href="/task">
-          <a 
-            className={footerLinkClass}
-            onContextMenu={preventDefaultHandler}
-            onMouseDown={preventDefaultHandler}
-            draggable="false"
-          >
+          <a className={footerLinkClass}>
             <i className="fas fa-clipboard"></i>
             <span>Tasks</span>
           </a>
