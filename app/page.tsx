@@ -166,21 +166,21 @@ export default function Home() {
 
   const handleButtonClick1 = () => {
     if (buttonStage1 === 'check') {
-      window.open('https://youtu.be/xvFZjo5PgG0', '_blank')
+      window.open('https://www.youtube.com/@PixelDogsCoin', '_blank')
       setButtonStage1('claim')
     }
   }
 
   const handleButtonClick2 = () => {
     if (buttonStage2 === 'check') {
-      window.open('https://twitter.com', '_blank')
+      window.open('https://x.com/PixelDogs74328?t=0nP0JfU8kA8upUBSeDoNbg&s=09', '_blank')
       setButtonStage2('claim')
     }
   }
 
   const handleButtonClick3 = () => {
     if (buttonStage3 === 'check') {
-      window.open('https://telegram.org', '_blank')
+      window.open('https://t.me/pixel_dogs_x', '_blank')
       setButtonStage3('claim')
     }
   }
