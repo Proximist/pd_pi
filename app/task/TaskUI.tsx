@@ -248,7 +248,7 @@ export default function TaskUI({
       <>
         <div className={headerClass}>
           <div className={pointsClass}>
-            <span>₱ {user.points}</span>
+            <span>PD {user.points.toLocaleString()}</span>
           </div>
         </div>
         <div className={taskIconContainerClass}>
