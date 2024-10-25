@@ -268,7 +268,7 @@
   animation: claimPopAndFade 1s ease-out;
 }
 
-.dark-mode .farmingtext{
+.farmingtext{
   z-index: 1;
 }
 
