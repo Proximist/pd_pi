@@ -101,35 +101,35 @@ export default function Home() {
 
   const handleButtonClick4 = () => {
     if (buttonStage4 === 'check') {
-      window.open('https://youtu.be/xvFZjo5PgG0', '_blank')
+      window.open('https://www.youtube.com/@PixelDogsCoin', '_blank')
       setButtonStage4('claim')
     }
   }
 
   const handleButtonClick5 = () => {
     if (buttonStage5 === 'check') {
-      window.open('https://twitter.com', '_blank')
+      window.open('https://x.com/PixelDogs74328?t=0nP0JfU8kA8upUBSeDoNbg&s=09', '_blank')
       setButtonStage5('claim')
     }
   }
 
   const handleButtonClick6 = () => {
     if (buttonStage6 === 'check') {
-      window.open('https://telegram.org', '_blank')
+      window.open('https://t.me/pixel_dogs_x', '_blank')
       setButtonStage6('claim')
     }
   }
 
   const handleButtonClick7 = () => {
     if (buttonStage7 === 'check') {
-      window.open('https://discord.com', '_blank')
+      window.open('https://discord.gg/KsV7hFKaEh', '_blank')
       setButtonStage7('claim')
     }
   }
 
   const handleButtonClick8 = () => {
     if (buttonStage8 === 'check') {
-      window.open('https://tiktok.com', '_blank')
+      window.open('https://instagram.com', '_blank')
       setButtonStage8('claim')
     }
   }
