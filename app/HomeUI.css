@@ -384,11 +384,11 @@
 
 /* Dark mode styles */
 .dark-mode.home-container {
-  background-color: #1c1c1e;
+  background-color: #000;
 }
 
 .dark-mode.header-container {
-  background-color: #1c1c1e;
+  background-color: #000;
 }
 
 .dark-mode.tasks-container {
