@@ -256,6 +256,10 @@
   border: none;
 }
 
+.dark-mode .claimFarm {
+  color: #2e3748;
+}
+
 .claimFarm:active {
   transform: scale(0.96);
 }
@@ -264,11 +268,7 @@
   animation: claimPopAndFade 1s ease-out;
 }
 
-.dark-mode.claimFarm {
-  color: #2e3748;
-}
-
-.dark-mode.farmingtext{
+.dark-mode .farmingtext{
   z-index: 1;
 }
 
@@ -455,6 +455,10 @@
 .dark-mode .claim-button.disabled {
   background-color: #363636;
   color: #808080;
+}
+
+.dark-mode .loader {
+  color: #fff;
 }
 
 /* Preserve the farm button's green color but slightly darker in dark mode */
