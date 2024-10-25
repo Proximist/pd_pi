@@ -264,6 +264,14 @@
   animation: claimPopAndFade 1s ease-out;
 }
 
+.dark-mode.claimFarm {
+  color: #2e3748;
+}
+
+.dark-mode.farmingtext{
+  z-index: 1;
+}
+
 .claimFarm:active:before,
 .claimFarm:active:after {
   position: absolute;
