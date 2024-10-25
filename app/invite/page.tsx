@@ -76,7 +76,7 @@ export default function Invite() {
             setButtonState('initial')
             setNotification('')
           }, 300)
-        }, 500000)
+        }, 5000)
       }).catch(err => {
         console.error('Failed to copy: ', err)
         setNotification('Failed to copy invite link. Please try again.')
