@@ -14,7 +14,6 @@ interface HomeUIProps {
   farmingStatus: 'farm' | 'farming' | 'claim';
   isLoading: boolean;
   notification: string;
-  error: string | null;
   isInitialLoading: boolean;
   handleButtonClick1: () => void;
   handleButtonClick2: () => void;
@@ -27,13 +26,13 @@ interface HomeUIProps {
 
 export default function HomeUI({
   user,
+  error,
   buttonStage1,
   buttonStage2,
   buttonStage3,
   farmingStatus,
   isLoading,
   notification,
-  error,
   isInitialLoading,
   handleButtonClick1,
   handleButtonClick2,
@@ -133,6 +132,8 @@ export default function HomeUI({
   const footerContainerClass = `footerContainer ${isDarkMode ? 'dark-mode' : ''}`
   const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`
   const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`
+  const errorClass = `container mx-auto p-4 text-red-500 ${isDarkMode ? 'dark-mode' : ''}`;
+  const loaderClass = `loader ${isDarkMode ? 'dark-mode' : ''}`;
 
   const renderContent = () => {
     if (error) {
