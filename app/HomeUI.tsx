@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { toggleUpdateText } from './utils';
 import './HomeUI.css';
 import './globals.css';
+import { getRandomMessage } from './updateTextUtils';
 
 interface HomeUIProps {
   user: any;
@@ -47,13 +47,21 @@ export default function HomeUI({
   const [isSliding, setIsSliding] = useState(false);
   const [isClaimAnimating, setIsClaimAnimating] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [updateMessage, setUpdateMessage] = useState(getRandomMessage());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setUpdateMessage(getRandomMessage());
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
     document.head.appendChild(link);
-    toggleUpdateText();
 
     // Check Telegram theme
     if (window.Telegram?.WebApp) {
@@ -157,8 +165,8 @@ export default function HomeUI({
           <p id="pixelDogsCount" className={`pixel-dogs-count ${isDarkMode ? 'dark-mode' : ''}`}>
             {user.points} PixelDogs
           </p>
-          <p id="updateText" className="update-text fade fade-in">
-            Exciting updates are on the way:)
+          <p className={`update-text ${isDarkMode ? 'dark-mode' : ''}`}>
+            {updateMessage}
           </p>
           <div className={tasksClass}>
             <button className={`tasks-button ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Socials..!</button>
