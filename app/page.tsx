@@ -198,11 +198,11 @@ export default function Home() {
 
   const handleClaim2 = () => {
     if (buttonStage2 === 'claim') {
-      setIsLoading2(true)
+      setIsLoading1(true)
       handleIncreasePoints(3, 'button2')
       setTimeout(() => {
       setButtonStage2('claimed')
-      setIsLoading2(false)
+      setIsLoading1(false)
       }, 3000)
     }
   }
@@ -227,7 +227,7 @@ export default function Home() {
       farmingStatus={farmingStatus}
       isLoading={isLoading}
       isLoading1={isLoading1}
-      isLoading2={isLoading3}
+      isLoading2={isLoading2}
       notification={notification}
       error={error}
       isInitialLoading={!user}
