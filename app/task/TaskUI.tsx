@@ -215,7 +215,7 @@ export default function TaskUI({
           disabled={buttonStage10 === 'claimed' || isLoading10}
           className={buttonClass}
         >
-          {isLoading6 ? 'Claiming...' : buttonStage10 === 'check' ? '+300' : buttonStage10 === 'claim' ? 'Claim' : 'Claimed'}
+          {isLoading10 ? 'Claiming...' : buttonStage10 === 'check' ? '+300' : buttonStage10 === 'claim' ? 'Claim' : 'Claimed'}
         </button>
       </li>
       <li className={taskItemClass}>
