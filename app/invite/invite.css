@@ -137,9 +137,9 @@
 }
 
 .invitedSection {
-  background-color: rgba(243, 244, 246, 0.8);
-  border-radius: 0.5rem;
-  padding: 1rem;
+    background-color: #e3e3e3;
+    border-radius: .5rem;
+    padding: 1rem;
 }
 
 .dark-mode .invitedSection {
