@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
 
 .home-container {
   background-color: #f7fafc;
@@ -8,6 +8,8 @@
   justify-content: space-between;
   min-height: 100vh;
   position: relative;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 500;
 }
 
 .content-area {
