@@ -59,9 +59,9 @@ export default function Home() {
               setButtonStage6(data.user.claimedButton6 ? 'claimed' : 'check')
               setButtonStage7(data.user.claimedButton7 ? 'claimed' : 'check')
               setButtonStage8(data.user.claimedButton8 ? 'claimed' : 'check')
-              setButtonStage9(data.user.claimblum ? 'claimed' : 'check')
-              setButtonStage10(data.user.claimsajor ? 'claimed' : 'check')
-              setButtonStage11(data.user.claimtomato ? 'claimed' : 'check')
+              setButtonStage9(data.user.claimedButton9 ? 'claimed' : 'check')
+              setButtonStage10(data.user.claimedButton10 ? 'claimed' : 'check')
+              setButtonStage11(data.user.claimedButton11 ? 'claimed' : 'check')
             }
           })
           .catch(() => {
