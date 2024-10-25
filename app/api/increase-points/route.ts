@@ -28,13 +28,13 @@ export async function POST(req: NextRequest) {
         } else if (buttonId === 'button8') {
             claimedField = 'claimedButton8';
         } else if (buttonId === 'button9') {
-            claimedField = 'claimblum';
+            claimedField = 'claimedButton9';
         } else if (buttonId === 'button10') {
-            claimedField = 'claimsajor';
-        } else if (buttonId === 'button10') {
-            claimedField = 'claimtomato';
+            claimedField = 'claimedButton10';
+        } else if (buttonId === 'button11') {
+            claimedField = 'claimedButton11';
         }
-
+        
         const updateData: any = { 
             points: { increment: pointsToAdd },
         };
