@@ -11,9 +11,11 @@ interface TaskUIProps {
   buttonStage3: 'check' | 'claim' | 'claimed';
   buttonStage7: 'check' | 'claim' | 'claimed';
   buttonStage8: 'check' | 'claim' | 'claimed';
-  isLoading: boolean;
-  isLoading1: boolean;
-  isLoading2: boolean;
+  isLoading4: boolean;
+  isLoading5: boolean;
+  isLoading6: boolean;
+  isLoading7: boolean;
+  isLoading8: boolean;
   notification: string;
   handleButtonClick4: () => void;
   handleButtonClick5: () => void;
@@ -35,9 +37,11 @@ export default function TaskUI({
   buttonStage3,
   buttonStage7,
   buttonStage8,
-  isLoading,
-  isLoading1,
-  isLoading2,
+  isLoading4,
+  isLoading5,
+  isLoading6,
+  isLoading7,
+  isLoading8,
   notification,
   handleButtonClick4,
   handleButtonClick5,
@@ -121,7 +125,7 @@ export default function TaskUI({
               disabled={buttonStage1 === 'claimed' || isLoading}
               className={buttonClass}
             >
-              {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? '+200' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+              {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? '+100' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </li>
           <li className={taskItemClass}>
@@ -129,13 +133,16 @@ export default function TaskUI({
             <span>Subscribe PG Telegram Channel :</span>
             <button
               onClick={() => {
-                handleButtonClick6();
-                handleClaim6();
+                if (buttonStage1 === 'check') {
+                  handleButtonClick6();
+                } else if (buttonStage1 === 'claim') {
+                  handleClaim6();
+                }
               }}
-              disabled={buttonStage3 === 'claimed'}
+              disabled={buttonStage1 === 'claimed' || isLoading6}
               className={buttonClass}
             >
-              {buttonStage3 === 'check' ? '+200' : buttonStage3 === 'claim' ? 'Claim' : 'Claimed'}
+              {isLoading6 ? 'Claiming...' : buttonStage1 === 'check' ? '+300' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </li>
           <li className={taskItemClass}>
@@ -143,13 +150,16 @@ export default function TaskUI({
             <span>Follow PG's X Handle :</span>
             <button
               onClick={() => {
-                handleButtonClick5();
-                handleClaim5();
+                if (buttonStage1 === 'check') {
+                  handleButtonClick5();
+                } else if (buttonStage1 === 'claim') {
+                  handleClaim5();
+                }
               }}
-              disabled={buttonStage2 === 'claimed'}
+              disabled={buttonStage1 === 'claimed' || isLoading5}
               className={buttonClass}
             >
-              {buttonStage2 === 'check' ? '+200' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
+              {isLoading5 ? 'Claiming...' : buttonStage1 === 'check' ? '+150' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </li>
           <li className={taskItemClass}>
@@ -163,10 +173,10 @@ export default function TaskUI({
                   handleClaim7();
                 }
               }}
-              disabled={buttonStage7 === 'claimed' || isLoading1}
+              disabled={buttonStage7 === 'claimed' || isLoading7}
               className={buttonClass}
             >
-              {isLoading1 ? 'Claiming...' : buttonStage7 === 'check' ? '+200' : buttonStage7 === 'claim' ? 'Claim' : 'Claimed'}
+              {isLoading7 ? 'Claiming...' : buttonStage7 === 'check' ? '+150' : buttonStage7 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </li>
           <li className={taskItemClass}>
@@ -180,10 +190,10 @@ export default function TaskUI({
                   handleClaim8();
                 }
               }}
-              disabled={buttonStage8 === 'claimed' || isLoading2}
+              disabled={buttonStage8 === 'claimed' || isLoading8}
               className={buttonClass}
             >
-              {isLoading2 ? 'Claiming...' : buttonStage8 === 'check' ? '+200' : buttonStage8 === 'claim' ? 'Claim' : 'Claimed'}
+              {isLoading8 ? 'Claiming...' : buttonStage8 === 'check' ? '+150' : buttonStage8 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </li>
         </ul>
