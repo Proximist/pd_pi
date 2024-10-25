@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
 
 :root {
   --background: #ffffff;
@@ -74,6 +75,8 @@ body {
   height: 73px;
   box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
   z-index: 1000;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 300;
 }
 
 .dark-mode.footerContainer {
