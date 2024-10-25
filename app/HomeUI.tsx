@@ -53,8 +53,15 @@ export default function HomeUI({
     link.rel = 'stylesheet';
     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
     document.head.appendChild(link);
-    toggleUpdateText();
-
+    
+    // Wait for a moment to ensure element exists
+    setTimeout(() => {
+      const updateTextElement = document.getElementById('updateText');
+      if (updateTextElement) {
+        toggleUpdateText();
+      }
+    }, 100);
+    
     // Check Telegram theme
     if (window.Telegram?.WebApp) {
       const isDark = window.Telegram.WebApp.colorScheme === 'dark';
