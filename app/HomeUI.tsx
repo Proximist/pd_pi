@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import './HomeUI.css';
 import './globals.css';
-import { getRandomMessage } from './updateTextUtils';
+import { toggleUpdateText, getRandomMessage } from './updateTextUtils';
 
 interface HomeUIProps {
   user: any;
@@ -50,12 +50,8 @@ export default function HomeUI({
   const [updateMessage, setUpdateMessage] = useState(getRandomMessage());
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setUpdateMessage(getRandomMessage());
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, []);
+  toggleUpdateText('updateText');
+}, []);
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -165,7 +161,7 @@ export default function HomeUI({
           <p id="pixelDogsCount" className={`pixel-dogs-count ${isDarkMode ? 'dark-mode' : ''}`}>
             {user.points} PixelDogs
           </p>
-          <p className={`update-text ${isDarkMode ? 'dark-mode' : ''}`}>
+          <p id="updateText" className={`update-text fade-in ${isDarkMode ? 'dark-mode' : ''}`}>
             {updateMessage}
           </p>
           <div className={tasksClass}>
