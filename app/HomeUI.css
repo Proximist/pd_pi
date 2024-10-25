@@ -430,10 +430,6 @@
   color: #808080;
 }
 
-.dark-mode.notification-banner {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
 /* Preserve the farm button's green color but slightly darker in dark mode */
 .dark-mode.farm-button {
   background-color: #75736e;
