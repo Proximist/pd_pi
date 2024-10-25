@@ -246,9 +246,9 @@ export default function Home() {
     <TaskUI 
       user={user}
       error={error}
-      buttonStage1={buttonStage4}
-      buttonStage2={buttonStage5}
-      buttonStage3={buttonStage6}
+      buttonStage4={buttonStage4}
+      buttonStage5={buttonStage5}
+      buttonStage6={buttonStage6}
       buttonStage7={buttonStage7}
       buttonStage8={buttonStage8}
       buttonStage9={buttonStage9}
