@@ -22,6 +22,8 @@ export default function Home() {
   const [buttonStage3, setButtonStage3] = useState<'check' | 'claim' | 'claimed'>('check')
   const [farmingStatus, setFarmingStatus] = useState<'farm' | 'farming' | 'claim'>('farm')
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoading1, setIsLoading1] = useState(false)
+  const [isLoading2, setIsLoading2] = useState(false)
    const [isInitialLoading, setIsInitialLoading] = useState(true)
 
   useEffect(() => {
@@ -196,15 +198,23 @@ export default function Home() {
 
   const handleClaim2 = () => {
     if (buttonStage2 === 'claim') {
+      setIsLoading2(true)
       handleIncreasePoints(3, 'button2')
+      setTimeout(() => {
       setButtonStage2('claimed')
+      setIsLoading2(false)
+      }, 3000)
     }
   }
 
   const handleClaim3 = () => {
     if (buttonStage3 === 'claim') {
+      setIsLoading2(true)
       handleIncreasePoints(9, 'button3')
+      setTimeout(() => {
       setButtonStage3('claimed')
+      setIsLoading2(false)
+      }, 3000)
     }
   }
 
@@ -216,6 +226,8 @@ export default function Home() {
       buttonStage3={buttonStage3}
       farmingStatus={farmingStatus}
       isLoading={isLoading}
+      isLoading1={isLoading1}
+      isLoading2={isLoading3}
       notification={notification}
       error={error}
       isInitialLoading={!user}
