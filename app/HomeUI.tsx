@@ -13,6 +13,8 @@ interface HomeUIProps {
   buttonStage3: 'check' | 'claim' | 'claimed';
   farmingStatus: 'farm' | 'farming' | 'claim';
   isLoading: boolean;
+  isLoading1: boolean;
+  isLoading2: boolean;
   notification: string;
   isInitialLoading: boolean;
   handleButtonClick1: () => void;
@@ -32,6 +34,8 @@ export default function HomeUI({
   buttonStage3,
   farmingStatus,
   isLoading,
+  isLoading1,
+  isLoading2,
   notification,
   isInitialLoading,
   handleButtonClick1,
@@ -195,26 +199,32 @@ export default function HomeUI({
               <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Twitter!</p>
               <button
                 onClick={() => {
-                  handleButtonClick2();
-                  handleClaim2();
+                  if (buttonStage2 === 'check') {
+                    handleButtonClick2();
+                  } else if (buttonStage2 === 'claim') {
+                    handleClaim2();
+                  }
                 }}
-                disabled={buttonStage2 === 'claimed'}
-                className={`claim-button ${buttonStage2 === 'claimed' ? 'disabled' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
+                disabled={buttonStage2 === 'claimed' || isLoading1}
+                className={`claim-button ${buttonStage2 === 'claimed' || isLoading1 ? 'disabled' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
               >
-                {buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
+                {isLoading1 ? 'Claiming...' : buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
               </button>
             </div>
             <div className={`social-container ${isDarkMode ? 'dark-mode' : ''}`}>
               <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Join Our Telegram!</p>
               <button
                 onClick={() => {
-                  handleButtonClick3();
-                  handleClaim3();
+                  if (buttonStage3 === 'check') {
+                    handleButtonClick3();
+                  } else if (buttonStage3 === 'claim') {
+                    handleClaim3();
+                  }
                 }}
-                disabled={buttonStage3 === 'claimed'}
-                className={`claim-button ${buttonStage3 === 'claimed' ? 'disabled' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
+                disabled={buttonStage3 === 'claimed' || isLoading2}
+                className={`claim-button ${buttonStage3 === 'claimed' || isLoading2 ? 'disabled' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
               >
-                {buttonStage3 === 'check' ? 'Check' : buttonStage3 === 'claim' ? 'Claim' : 'Claimed'}
+                {isLoading2 ? 'Claiming...' : buttonStage3 === 'check' ? 'Check' : buttonStage3 === 'claim' ? 'Claim' : 'Claimed'}
               </button>
             </div>
           </div>
