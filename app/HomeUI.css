@@ -56,11 +56,11 @@
 }
 
 .tasks-container {
-  background-color: #f7fafc;
+  background-color: #d7d7d7;
   width: 85%;
   margin-top: 1rem;
   padding: 1.5rem;
-  border-radius: 0.5rem;
+  border-radius: 0.7rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -147,7 +147,7 @@
 }
 
 .dark-mode.farm-button {
-  background-color: #fff;
+  background-color: #e7e7e7;
   color: #2e3748;
 }
 
@@ -178,12 +178,7 @@
 
 .farm-button:disabled {
   cursor: not-allowed;
-  opacity: 0.7;
-}
-
-.dark-mode.farm-button:disabled {
-  background-color: #aaa8a4fa;
-  color: white;
+  opacity: 1;
 }
 
 .farm-button.farming {
@@ -419,11 +414,11 @@
 }
 
 .dark-mode.tasks-container {
-  background-color: #2d2d2d;
+  background-color: #1c1c1c;
 }
 
 .dark-mode.social-container {
-  background-color: #363636;
+  background-color: #2d2d2d;
 }
 
 .dark-mode .social-text {
@@ -439,7 +434,7 @@
 }
 
 .dark-mode .tasks-button {
-  background-color: #404040;
+  background-color: #2d2d2d;
   color: #ffffff;
 }
 
@@ -453,8 +448,8 @@
 }
 
 .dark-mode .claim-button.disabled {
-  background-color: #363636;
-  color: #808080;
+  background-color: #454545;
+  color: #858585;
 }
 
 .dark-mode .loader {
@@ -467,9 +462,9 @@
   opacity: 1;
   color: black;
   text-align: center;
-  margin-bottom: 1rem;
   font-size: 0.875rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
   transition: opacity 0.8s ease-in-out;
 }
 
