@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import './HomeUI.css';
 import './globals.css';
-import { toggleUpdateText, getRandomMessage } from './updateTextUtils';
+import { getRandomMessage } from './updateTextUtils';
 
 interface HomeUIProps {
   user: any;
@@ -48,10 +48,19 @@ export default function HomeUI({
   const [isClaimAnimating, setIsClaimAnimating] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [updateMessage, setUpdateMessage] = useState(getRandomMessage());
+  const [isTextFading, setIsTextFading] = useState(false);
 
   useEffect(() => {
-  toggleUpdateText('updateText');
-}, []);
+    const interval = setInterval(() => {
+      setIsTextFading(true);
+      setTimeout(() => {
+        setUpdateMessage(getRandomMessage());
+        setIsTextFading(false);
+      }, 800); // This matches the CSS transition duration
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -78,7 +87,7 @@ export default function HomeUI({
       const progressPercentage = Math.min((secondsElapsed / 30) * 100, 100);
       const remainingSeconds = Math.max(30 - secondsElapsed, 0);
 
-     // Update farming points as before
+      // Update farming points as before
       setFarmingPoints(secondsElapsed);
       setCurrentNumber(secondsElapsed);
 
@@ -94,7 +103,7 @@ export default function HomeUI({
           const newTime = new Date().getTime();
           const newSecondsElapsed = Math.floor((newTime - startTime) / 1000);
           const newProgressPercentage = Math.min((newSecondsElapsed / 30) * 100, 100);
-           const newRemainingSeconds = Math.max(30 - newSecondsElapsed, 0);
+          const newRemainingSeconds = Math.max(30 - newSecondsElapsed, 0);
           
           setFarmingPoints(prev => prev + 1);
           setCurrentNumber(prev => prev + 1);
@@ -161,7 +170,7 @@ export default function HomeUI({
           <p id="pixelDogsCount" className={`pixel-dogs-count ${isDarkMode ? 'dark-mode' : ''}`}>
             {user.points} PixelDogs
           </p>
-          <p id="updateText" className={`update-text fade-in ${isDarkMode ? 'dark-mode' : ''}`}>
+          <p className={`update-text ${isTextFading ? 'fade-out' : 'fade-in'} ${isDarkMode ? 'dark-mode' : ''}`}>
             {updateMessage}
           </p>
           <div className={tasksClass}>
@@ -226,9 +235,9 @@ export default function HomeUI({
                   {farmingPoints}
                 </span>
               </div>
-               <span className="countdown-timer">
-      {Math.max(30 - Math.floor((new Date().getTime() - new Date(user?.startFarming).getTime()) / 1000), 0)}s
-    </span>
+              <span className="countdown-timer">
+                {Math.max(30 - Math.floor((new Date().getTime() - new Date(user?.startFarming).getTime()) / 1000), 0)}s
+              </span>
             </>
           ) : (
             <span className="claimFarm">Claim Farm</span>
