@@ -168,7 +168,7 @@ export default function HomeUI({
             />
           </div>
           <p id="pixelDogsCount" className={`pixel-dogs-count ${isDarkMode ? 'dark-mode' : ''}`}>
-            {user.points} PixelDogs
+            {user.points.toLocaleString()} PixelDogs
           </p>
           <p className={`update-text ${isTextFading ? 'fade-out' : 'fade-in'} ${isDarkMode ? 'dark-mode' : ''}`}>
             {updateMessage}
