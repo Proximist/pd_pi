@@ -6,9 +6,9 @@ import '../globals.css'
 interface TaskUIProps {
   user: any;
   error: string | null;
-  buttonStage1: 'check' | 'claim' | 'claimed';
-  buttonStage2: 'check' | 'claim' | 'claimed';
-  buttonStage3: 'check' | 'claim' | 'claimed';
+  buttonStage4: 'check' | 'claim' | 'claimed';
+  buttonStage5: 'check' | 'claim' | 'claimed';
+  buttonStage6: 'check' | 'claim' | 'claimed';
   buttonStage7: 'check' | 'claim' | 'claimed';
   buttonStage8: 'check' | 'claim' | 'claimed';
   buttonStage9: 'check' | 'claim' | 'claimed';
