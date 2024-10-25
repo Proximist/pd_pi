@@ -21,9 +21,11 @@ export default function Home() {
   const [buttonStage3, setButtonStage3] = useState<'check' | 'claim' | 'claimed'>('check')
   const [buttonStage7, setButtonStage7] = useState<'check' | 'claim' | 'claimed'>('check')
   const [buttonStage8, setButtonStage8] = useState<'check' | 'claim' | 'claimed'>('check')
-  const [isLoading, setIsLoading] = useState(false)
-  const [isLoading1, setIsLoading1] = useState(false)
-  const [isLoading2, setIsLoading2] = useState(false)
+  const [isLoading4, setIsLoading4] = useState(false)
+  const [isLoading5, setIsLoading5] = useState(false)
+  const [isLoading6, setIsLoading6] = useState(false)
+  const [isLoading7, setIsLoading7] = useState(false)
+  const [isLoading8, setIsLoading8] = useState(false)
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
@@ -125,47 +127,54 @@ export default function Home() {
 
   const handleClaim4 = () => {
     if (buttonStage1 === 'claim') {
-      setIsLoading(true)
+      setIsLoading4(true)
       handleIncreasePoints(100, 'button4')
       setTimeout(() => {
         setButtonStage1('claimed')
-        setIsLoading(false)
+        setIsLoading4(false)
       }, 3000)
     }
   }
 
   const handleClaim5 = () => {
     if (buttonStage2 === 'claim') {
+      setIsLoading5(true)
       handleIncreasePoints(150, 'button5')
+      setTimeout(() => {
       setButtonStage2('claimed')
-    }
+      setIsLoading5(false)
+    }, 3000)
   }
+}
 
   const handleClaim6 = () => {
     if (buttonStage3 === 'claim') {
+      setIsLoading6(true)
       handleIncreasePoints(300, 'button6')
+      setTimeout(() => {
       setButtonStage3('claimed')
-    }
+      setIsLoading6(false)
+    }, 3000)
   }
-
+}
   const handleClaim7 = () => {
     if (buttonStage7 === 'claim') {
-      setIsLoading1(true)
+      setIsLoading7(true)
       handleIncreasePoints(150, 'button7')
       setTimeout(() => {
         setButtonStage7('claimed')
-        setIsLoading1(false)
+        setIsLoading7(false)
       }, 3000)
     }
   }
 
   const handleClaim8 = () => {
     if (buttonStage8 === 'claim') {
-      setIsLoading2(true)
+      setIsLoading8(true)
       handleIncreasePoints(150, 'button8')
       setTimeout(() => {
         setButtonStage8('claimed')
-        setIsLoading2(false)
+        setIsLoading8(false)
       }, 3000)
     }
   }
@@ -179,9 +188,11 @@ export default function Home() {
       buttonStage3={buttonStage3}
       buttonStage7={buttonStage7}
       buttonStage8={buttonStage8}
-      isLoading={isLoading}
-      isLoading1={isLoading1}
-      isLoading2={isLoading2}
+      isLoading4={isLoading4}
+      isLoading5={isLoading5}
+      isLoading6={isLoading6}
+      isLoading7={isLoading7}
+      isLoading8={isLoading8}
       notification={notification}
       handleButtonClick4={handleButtonClick4}
       handleButtonClick5={handleButtonClick5}
