@@ -21,6 +21,7 @@ export default function Invite() {
   const [inviteLink, setInviteLink] = useState('')
   const [invitedUsers, setInvitedUsers] = useState<string[]>([])
   const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isCopied, setIsCopied] = useState(false)
   const [buttonState, setButtonState] = useState('initial')
 
   useEffect(() => {
@@ -112,12 +113,12 @@ export default function Invite() {
             <div className={headerClass}>
               <div className="iconContainer">
                 <svg className="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="11" stroke="currentColor" strokeWidth="2" />
-                  <circle cx="12" cy="12" r="4" fill="currentColor" />
+                  <circle cx="12" cy="12" r="11" stroke="currentColor" strokeWidth="2"/>
+                  <circle cx="12" cy="12" r="4" fill="currentColor"/>
                 </svg>
                 <svg className="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="11" stroke="currentColor" strokeWidth="2" />
-                  <circle cx="12" cy="12" r="4" fill="currentColor" />
+                  <circle cx="12" cy="12" r="11" stroke="currentColor" strokeWidth="2"/>
+                  <circle cx="12" cy="12" r="4" fill="currentColor"/>
                 </svg>
               </div>
               <p className={titleClass}>
@@ -126,7 +127,10 @@ export default function Invite() {
             </div>
 
             {/* Invite Button */}
-            <button onClick={handleInvite} className={inviteButtonClass}>
+            <button 
+              onClick={handleInvite} 
+              className={inviteButtonClass}
+            >
               <span className="buttonText">Copy Invite Link</span>
               <span className="buttonIcon">
                 <i className="fas fa-copy"></i> Copied
@@ -134,14 +138,14 @@ export default function Invite() {
             </button>
 
             {/* Invited Section */}
-            <div className="invitedby" invitedBy={`@${user?.inviterInfo.username || user?.inviterId}`}>
+            <div className="invitedby" data-invitedby={`@${user?.inviterInfo?.username || user?.inviterId}`}>
               <div className={invitedSectionClass}>
                 <div className={invitedHeaderClass}>
                   <svg className="invitedIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
-                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
-                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" 
+                          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" 
+                          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                   <h2 className={invitedTitleClass}>Invited Friends: {invitedUsers.length}</h2>
                 </div>
@@ -183,10 +187,10 @@ export default function Invite() {
             <span>Friends</span>
           </a>
         </Link>
-        <Link href="/task">
+        <Link href="/rewards">
           <a className={footerLinkClass}>
-            <i className="fas fa-clipboard"></i>
-            <span>Tasks</span>
+            <i className="fas fa-gift"></i>
+            <span>Rewards</span>
           </a>
         </Link>
       </div>
