@@ -50,7 +50,7 @@ export default function Invite() {
               setError(data.error)
             } else {
               setUser(data.user)
-              setInviteLink(http://t.me/pixel_dogs_bot/Pixel_dogs_web/start?startapp=${data.user.telegramId})
+              setInviteLink(`http://t.me/pixel_dogs_bot/Pixel_dogs_web/start?startapp=${data.user.telegramId}`)
               setInvitedUsers(data.user.invitedUsers || [])
             }
           })
@@ -85,19 +85,19 @@ export default function Invite() {
   }
 
   // Add dark mode classes to elements
-  const containerClass = container ${isDarkMode ? 'dark-mode' : ''}
-  const contentClass = content ${isDarkMode ? 'dark-mode' : ''}
-  const headerClass = header ${isDarkMode ? 'dark-mode' : ''}
-  const titleClass = title ${isDarkMode ? 'dark-mode' : ''}
-  const inviteButtonClass = inviteButton ${buttonState} ${isDarkMode ? 'dark-mode' : ''}
-  const invitedSectionClass = invitedSection ${isDarkMode ? 'dark-mode' : ''}
-  const invitedHeaderClass = invitedHeader ${isDarkMode ? 'dark-mode' : ''}
-  const invitedTitleClass = invitedTitle ${isDarkMode ? 'dark-mode' : ''}
-  const emptyStateClass = emptyState ${isDarkMode ? 'dark-mode' : ''}
-  const notificationClass = notification ${isDarkMode ? 'dark-mode' : ''}
-  const footerContainerClass = footerContainer ${isDarkMode ? 'dark-mode' : ''}
-  const footerLinkClass = footerLink ${isDarkMode ? 'dark-mode' : ''}
-  const activeFooterLinkClass = footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}
+  const containerClass = `container ${isDarkMode ? 'dark-mode' : ''}`
+  const contentClass = `content ${isDarkMode ? 'dark-mode' : ''}`
+  const headerClass = `header ${isDarkMode ? 'dark-mode' : ''}`
+  const titleClass = `title ${isDarkMode ? 'dark-mode' : ''}`
+  const inviteButtonClass = `inviteButton ${buttonState} ${isDarkMode ? 'dark-mode' : ''}`
+  const invitedSectionClass = `invitedSection ${isDarkMode ? 'dark-mode' : ''}`
+  const invitedHeaderClass = `invitedHeader ${isDarkMode ? 'dark-mode' : ''}`
+  const invitedTitleClass = `invitedTitle ${isDarkMode ? 'dark-mode' : ''}`
+  const emptyStateClass = `emptyState ${isDarkMode ? 'dark-mode' : ''}`
+  const notificationClass = `notification ${isDarkMode ? 'dark-mode' : ''}`
+  const footerContainerClass = `footerContainer ${isDarkMode ? 'dark-mode' : ''}`
+  const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`
+  const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`
 
   return (
     <div className={containerClass}>
@@ -134,6 +134,7 @@ export default function Invite() {
                 <i className="fas fa-copy"></i> Copied
               </span>
             </button>
+
             <div className={invitedSectionClass}>
               <div className={invitedHeaderClass}>
                 <svg className="invitedIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -161,7 +162,6 @@ export default function Invite() {
           </>
         )}
       </div>
-  
       <div className={footerContainerClass}>
         <Link href="/">
           <a className={footerLinkClass}>
