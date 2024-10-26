@@ -559,8 +559,9 @@
   }
   50% {
     transform: scale(1.1);
-    color: #4a90e2;
-  }
+    color: white; /* Set text color to white */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6); /* Add glow effect */
+}
   100% {
     transform: scale(1);
   }
