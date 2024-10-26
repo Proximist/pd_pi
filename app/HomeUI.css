@@ -500,14 +500,13 @@
 
 
 /* Base styles for the number container */
+/* Base styles for the number container */
 .number-container {
   display: flex;
   align-items: center;
   font-size: 1.5em;
   line-height: 1;
   height: 1.5em;
-  overflow: visible;
-  position: relative;
 }
 
 /* Integer part styling */
@@ -523,23 +522,39 @@
   margin: 0 1px;
 }
 
-/* Decimal part container */
-.decimal-part {
+/* Decimal part wrapper */
+.decimal-part-wrapper {
   position: relative;
-  min-width: 1ch;
+  width: 1ch;
   height: 1.5em;
   overflow: hidden;
-  display: inline-block;
 }
 
-/* Number slide animation */
-@keyframes slideNumber {
+/* Decimal number slide animation */
+.decimal-number {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: slideUp 0.4s cubic-bezier(0.1, 0.7, 0.3, 1) forwards;
+}
+
+.decimal-number-exit {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: slideUpExit 0.4s cubic-bezier(0.1, 0.7, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
   0% {
     transform: translateY(100%);
     opacity: 0;
-  }
-  20% {
-    opacity: 1;
   }
   100% {
     transform: translateY(0);
@@ -547,9 +562,15 @@
   }
 }
 
-/* Apply animation to new numbers */
-.decimal-part {
-  animation: slideNumber 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+@keyframes slideUpExit {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
 }
 
 /* Pulse animation for integer changes */
@@ -559,6 +580,7 @@
   }
   50% {
     transform: scale(1.1);
+    color: #4a90e2;
   }
   100% {
     transform: scale(1);
@@ -569,34 +591,22 @@
   animation: pulseNumber 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Container for farming points display */
+.farming-points {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 4ch;
+  margin: 0 8px;
+}
+
 /* Dark mode support */
 .dark-mode .number-container {
   color: #ffffff;
 }
 
-.dark-mode .integer-part.pulse {
-  animation: pulseNumber 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Responsive font sizes */
-@media (max-width: 768px) {
-  .number-container {
-    font-size: 1.25em;
-  }
-}
-
-/* Optional: Add smooth transition for all number changes */
+/* Ensure proper alignment */
 .integer-part,
-.decimal-part,
-.decimal-separator {
-  transition: color 0.3s ease;
-}
-
-/* Ensure numbers are properly aligned */
-.integer-part,
-.decimal-part {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.decimal-number {
   line-height: 1.5;
 }
