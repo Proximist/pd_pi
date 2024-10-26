@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
                 push: `@${userData.username || userData.id}`
               },
               points: {
-                increment: 1000
+                increment: 2500
               }
             }
           });
