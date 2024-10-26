@@ -117,7 +117,7 @@ export default function TaskUI({
     <ul className={taskListClass}>
       <li className={taskItemClass}>
         <i className="fab fa-youtube"></i>
-        <span>Subscribe PG YouTube channel :</span>
+        <span>Subscribe to Our YouTube channel :</span>
         <button
           onClick={() => {
             if (buttonStage4 === 'check') handleButtonClick4();
@@ -191,7 +191,11 @@ export default function TaskUI({
   const renderPartnersTasks = () => (
     <ul className={taskListClass}>
       <li className={taskItemClass}>
-        <i className="fab fa-twitch"></i>
+        <img
+          src="/icons/blum.png"
+          alt="Blum"
+          className="task-icon-img"
+        />
         <span>Checkout Blum :</span>
         <button
           onClick={() => {
