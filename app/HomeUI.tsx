@@ -87,30 +87,31 @@ export default function HomeUI({
     if (farmingStatus === 'farming' && user?.startFarming) {
       const startTime = new Date(user.startFarming).getTime();
       const currentTime = new Date().getTime();
-      const secondsElapsed = Math.floor((currentTime - startTime) / 1000);
-      const progressPercentage = Math.min((secondsElapsed / 3600) * 100, 100); // 3600 seconds for 60 minutes
-      const remainingSeconds = Math.max(3600 - secondsElapsed, 0); // 3600 seconds for 60 minutes
+      const actualSecondsElapsed = Math.floor((currentTime - startTime) / 1000);
+      
+      // Calculate adjusted seconds to reach 350 in 1 hour
+      const adjustedSeconds = Math.floor((actualSecondsElapsed / 3600) * 350);
+      const progressPercentage = Math.min((actualSecondsElapsed / 3600) * 100, 100);
+      const remainingSeconds = Math.max(3600 - actualSecondsElapsed, 0);
 
-      // Update farming points as before
-      setFarmingPoints(secondsElapsed);
-      setCurrentNumber(secondsElapsed);
+      setFarmingPoints(adjustedSeconds);
+      setCurrentNumber(adjustedSeconds);
 
-      // Update progress bar
       const buttonElement = document.querySelector('.farm-button') as HTMLElement;
       if (buttonElement) {
         buttonElement.style.setProperty('--progress-percentage', `${progressPercentage}%`);
       }
-
+      
       interval = setInterval(() => {
         setIsSliding(true);
         setTimeout(() => {
           const newTime = new Date().getTime();
-          const newSecondsElapsed = Math.floor((newTime - startTime) / 1000);
-          const newProgressPercentage = Math.min((newSecondsElapsed / 3600) * 100, 100);
-          const newRemainingSeconds = Math.max(3600 - newSecondsElapsed, 0);
+          const newActualSecondsElapsed = Math.floor((newTime - startTime) / 1000);
+          const newAdjustedSeconds = Math.floor((newActualSecondsElapsed / 3600) * 350);
+          const newProgressPercentage = Math.min((newActualSecondsElapsed / 3600) * 100, 100);
           
-          setFarmingPoints(prev => prev + 1);
-          setCurrentNumber(prev => prev + 1);
+          setFarmingPoints(newAdjustedSeconds);
+          setCurrentNumber(newAdjustedSeconds);
           setIsSliding(false);
           
           // Update progress bar
