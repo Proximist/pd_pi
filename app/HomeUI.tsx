@@ -147,6 +147,19 @@ export default function HomeUI({
     return points.toFixed(1);
   };
 
+  const AnimatedNumber: React.FC<{ value: number }> = ({ value }) => {
+  const integerPart = Math.floor(value);
+  const decimalPart = (value % 1).toFixed(1).substring(2);
+    
+    return (
+    <div className="number-container">
+      <span className="integer-part">{integerPart}</span>
+      <span className="decimal-separator">.</span>
+      <span className="decimal-part">{decimalPart}</span>
+    </div>
+  );
+};
+
   const renderContent = () => {
     if (error) {
       return <div className={errorClass}>{error}</div>;
@@ -236,9 +249,7 @@ export default function HomeUI({
             <>
               <span className="farmingtext">Farming</span>
               <div className="farming-points">
-                <span className={`farming-points-number ${isSliding ? 'sliding-out' : ''}`} key={currentNumber}>
-                  {formatFarmingPoints(farmingPoints)}
-                </span>
+                <AnimatedNumber value={farmingPoints} />
               </div>
               <span className="countdown-timer">
                 {(() => {
