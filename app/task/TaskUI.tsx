@@ -209,7 +209,11 @@ export default function TaskUI({
         </button>
       </li>
       <li className={taskItemClass}>
-        <i className="fab fa-youtube"></i>
+       <img
+          src="https://i.imgur.com/z5Pek5z.png"
+          alt="major"
+          className="task-icon-img"
+        />
         <span>Become a Major :</span>
         <button
           onClick={() => {
@@ -223,7 +227,11 @@ export default function TaskUI({
         </button>
       </li>
       <li className={taskItemClass}>
-        <i className="fab fa-youtube"></i>
+       <img
+          src="https://i.imgur.com/JKWR6DY.png"
+          alt="tomato"
+          className="task-icon-img"
+        />
         <span>Play Tomato :</span>
         <button
           onClick={() => {
