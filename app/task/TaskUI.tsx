@@ -126,7 +126,7 @@ export default function TaskUI({
           disabled={buttonStage4 === 'claimed' || isLoading4}
           className={buttonClass}
         >
-          {isLoading4 ? 'Claiming...' : buttonStage4 === 'check' ? '+100' : buttonStage4 === 'claim' ? 'Claim' : 'Claimed'}
+          {isLoading4 ? 'Claiming...' : buttonStage4 === 'check' ? '+250' : buttonStage4 === 'claim' ? 'Claim' : 'Claimed'}
         </button>
       </li>
       <li className={taskItemClass}>
@@ -140,7 +140,7 @@ export default function TaskUI({
           disabled={buttonStage6 === 'claimed' || isLoading6}
           className={buttonClass}
         >
-          {isLoading6 ? 'Claiming...' : buttonStage6 === 'check' ? '+300' : buttonStage6 === 'claim' ? 'Claim' : 'Claimed'}
+          {isLoading6 ? 'Claiming...' : buttonStage6 === 'check' ? '+250' : buttonStage6 === 'claim' ? 'Claim' : 'Claimed'}
         </button>
       </li>
       <li className={taskItemClass}>
@@ -154,7 +154,7 @@ export default function TaskUI({
           disabled={buttonStage5 === 'claimed' || isLoading5}
           className={buttonClass}
         >
-          {isLoading5 ? 'Claiming...' : buttonStage5 === 'check' ? '+150' : buttonStage5 === 'claim' ? 'Claim' : 'Claimed'}
+          {isLoading5 ? 'Claiming...' : buttonStage5 === 'check' ? '+250' : buttonStage5 === 'claim' ? 'Claim' : 'Claimed'}
         </button>
       </li>
       <li className={taskItemClass}>
@@ -168,7 +168,7 @@ export default function TaskUI({
           disabled={buttonStage7 === 'claimed' || isLoading7}
           className={buttonClass}
         >
-          {isLoading7 ? 'Claiming...' : buttonStage7 === 'check' ? '+150' : buttonStage7 === 'claim' ? 'Claim' : 'Claimed'}
+          {isLoading7 ? 'Claiming...' : buttonStage7 === 'check' ? '+250' : buttonStage7 === 'claim' ? 'Claim' : 'Claimed'}
         </button>
       </li>
       <li className={taskItemClass}>
@@ -182,7 +182,7 @@ export default function TaskUI({
           disabled={buttonStage8 === 'claimed' || isLoading8}
           className={buttonClass}
         >
-          {isLoading8 ? 'Claiming...' : buttonStage8 === 'check' ? '+150' : buttonStage8 === 'claim' ? 'Claim' : 'Claimed'}
+          {isLoading8 ? 'Claiming...' : buttonStage8 === 'check' ? '+250' : buttonStage8 === 'claim' ? 'Claim' : 'Claimed'}
         </button>
       </li>
     </ul>
@@ -205,7 +205,7 @@ export default function TaskUI({
           disabled={buttonStage9 === 'claimed' || isLoading9}
           className={buttonClass}
         >
-          {isLoading9 ? 'Claiming...' : buttonStage9 === 'check' ? '+100' : buttonStage9 === 'claim' ? 'Claim' : 'Claimed'}
+          {isLoading9 ? 'Claiming...' : buttonStage9 === 'check' ? '+500' : buttonStage9 === 'claim' ? 'Claim' : 'Claimed'}
         </button>
       </li>
       <li className={taskItemClass}>
@@ -223,7 +223,7 @@ export default function TaskUI({
           disabled={buttonStage10 === 'claimed' || isLoading10}
           className={buttonClass}
         >
-          {isLoading10 ? 'Claiming...' : buttonStage10 === 'check' ? '+300' : buttonStage10 === 'claim' ? 'Claim' : 'Claimed'}
+          {isLoading10 ? 'Claiming...' : buttonStage10 === 'check' ? '+500' : buttonStage10 === 'claim' ? 'Claim' : 'Claimed'}
         </button>
       </li>
       <li className={taskItemClass}>
@@ -241,7 +241,7 @@ export default function TaskUI({
           disabled={buttonStage11 === 'claimed' || isLoading11}
           className={buttonClass}
         >
-          {isLoading11 ? 'Claiming...' : buttonStage11 === 'check' ? '+300' : buttonStage11 === 'claim' ? 'Claim' : 'Claimed'}
+          {isLoading11 ? 'Claiming...' : buttonStage11 === 'check' ? '+500' : buttonStage11 === 'claim' ? 'Claim' : 'Claimed'}
         </button>
       </li>
     </ul>
