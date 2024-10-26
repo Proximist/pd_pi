@@ -498,6 +498,7 @@
 
 
 
+
 /* Base styles for the number container */
 .number-container {
   display: flex;
@@ -505,36 +506,34 @@
   font-size: 1.5em;
   line-height: 1;
   height: 1.5em;
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
 }
 
-/* Integer part - stays stable */
+/* Integer part styling */
 .integer-part {
+  display: inline-block;
   margin-right: 2px;
+  transition: transform 0.3s ease;
 }
 
 /* Decimal separator */
 .decimal-separator {
-  opacity: 0.8;
+  opacity: 1;
+  margin: 0 1px;
 }
 
 /* Decimal part container */
 .decimal-part {
   position: relative;
-  width: 1ch;
+  min-width: 1ch;
   height: 1.5em;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
 }
 
-/* Animation for the decimal part */
-.decimal-part {
-  animation: fadeUpNumber 1s ease;
-}
-
-@keyframes fadeUpNumber {
+/* Number slide animation */
+@keyframes slideNumber {
   0% {
     transform: translateY(100%);
     opacity: 0;
@@ -548,24 +547,58 @@
   }
 }
 
-/* Optional: Add a subtle pulse effect when the integer changes */
-.integer-part.pulse {
-  animation: pulse 0.3s ease;
+/* Apply animation to new numbers */
+.decimal-part {
+  animation: slideNumber 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes pulse {
+/* Pulse animation for integer changes */
+@keyframes pulseNumber {
   0% {
     transform: scale(1);
   }
   50% {
     transform: scale(1.1);
+    color: #4a90e2;
   }
   100% {
     transform: scale(1);
   }
 }
 
+.integer-part.pulse {
+  animation: pulseNumber 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
 /* Dark mode support */
 .dark-mode .number-container {
   color: #ffffff;
+}
+
+.dark-mode .integer-part.pulse {
+  animation: pulseNumber 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Responsive font sizes */
+@media (max-width: 768px) {
+  .number-container {
+    font-size: 1.25em;
+  }
+}
+
+/* Optional: Add smooth transition for all number changes */
+.integer-part,
+.decimal-part,
+.decimal-separator {
+  transition: color 0.3s ease;
+}
+
+/* Ensure numbers are properly aligned */
+.integer-part,
+.decimal-part {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.5;
 }
