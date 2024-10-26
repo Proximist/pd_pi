@@ -121,7 +121,7 @@ export default function Invite() {
                 </svg>
               </div>
               <p className={titleClass}>
-                Invite your friends and earn 1,000 points for each one you bring!
+                Invite your friends and earn 2,500 points for each one you bring!
               </p>
             </div>
 
