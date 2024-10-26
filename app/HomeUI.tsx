@@ -88,8 +88,8 @@ export default function HomeUI({
       const startTime = new Date(user.startFarming).getTime();
       const currentTime = new Date().getTime();
       const secondsElapsed = Math.floor((currentTime - startTime) / 1000);
-      const progressPercentage = Math.min((secondsElapsed / 30) * 100, 100);
-      const remainingSeconds = Math.max(30 - secondsElapsed, 0);
+      const progressPercentage = Math.min((secondsElapsed / 3600) * 100, 100); // 3600 seconds for 60 minutes
+      const remainingSeconds = Math.max(3600 - secondsElapsed, 0); // 3600 seconds for 60 minutes
 
       // Update farming points as before
       setFarmingPoints(secondsElapsed);
@@ -106,8 +106,8 @@ export default function HomeUI({
         setTimeout(() => {
           const newTime = new Date().getTime();
           const newSecondsElapsed = Math.floor((newTime - startTime) / 1000);
-          const newProgressPercentage = Math.min((newSecondsElapsed / 30) * 100, 100);
-          const newRemainingSeconds = Math.max(30 - newSecondsElapsed, 0);
+          const newProgressPercentage = Math.min((newSecondsElapsed / 3600) * 100, 100);
+          const newRemainingSeconds = Math.max(3600 - newSecondsElapsed, 0);
           
           setFarmingPoints(prev => prev + 1);
           setCurrentNumber(prev => prev + 1);
