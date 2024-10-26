@@ -552,18 +552,20 @@
   animation: slideNumber 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Pulse animation for integer changes */
+/* Pulse animation for integer changes with white glow */
 @keyframes pulseNumber {
   0% {
     transform: scale(1);
+    text-shadow: none;
   }
   50% {
     transform: scale(1.1);
-    color: white; /* Set text color to white */
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6); /* Add glow effect */
-}
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                 0 0 20px rgba(255, 255, 255, 0.4);
+  }
   100% {
     transform: scale(1);
+    text-shadow: none;
   }
 }
 
@@ -571,6 +573,14 @@
   animation: pulseNumber 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Container for farming points display */
+.farming-points {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 4ch;
+  margin: 0 8px;
+}
 
 /* Dark mode support */
 .dark-mode .number-container {
