@@ -14,8 +14,8 @@
 }
 
 .task-icon-img {
-  width: 1.5rem;  /* equivalent to w-6 */
-  height: 1.5rem; /* equivalent to h-6 */
+  width: 34px;
+  height: 34px; 
   margin-right: 0.5rem; /* equivalent to mr-2 */
   object-fit: contain;
 }
