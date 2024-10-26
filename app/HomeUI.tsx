@@ -246,8 +246,17 @@ export default function HomeUI({
                 </span>
               </div>
               <span className="countdown-timer">
-                {Math.max(30 - Math.floor((new Date().getTime() - new Date(user?.startFarming).getTime()) / 1000), 0)}s
-              </span>
+  {(() => {
+    const remainingTime = Math.max(3600 - Math.floor((new Date().getTime() - new Date(user?.startFarming).getTime()) / 1000), 0);
+    const hours = Math.floor(remainingTime / 3600);
+    const minutes = Math.floor((remainingTime % 3600) / 60);
+    const seconds = remainingTime % 60;
+
+    if (hours > 0) return `${hours} hr ${minutes} min`;
+    if (minutes > 0) return `${minutes} min`;
+    return `${seconds}s`;
+  })()}
+</span>
             </>
           ) : (
             <span className="claimFarm">Claim Farm</span>
