@@ -99,9 +99,9 @@ export default function Home() {
       const now = new Date()
       const startTime = new Date(userData.startFarming)
       const timeDiff = now.getTime() - startTime.getTime()
-      if (timeDiff < 30000) { // Less than 30 seconds
+      if (timeDiff < 60 * 60 * 1000) { // Less than 60 seconds
         setFarmingStatus('farming')
-        setTimeout(() => setFarmingStatus('claim'), 30000 - timeDiff)
+        setTimeout(() => setFarmingStatus('claim'), 60 * 60 * 1000 - timeDiff) // 60 minutes
       } else {
         setFarmingStatus('claim')
       }
@@ -151,13 +151,13 @@ export default function Home() {
         // Update the local user state with new startFarming timestamp
         setUser({ ...user, startFarming: new Date().toISOString() })
         setFarmingStatus('farming')
-        setTimeout(() => setFarmingStatus('claim'), 30000)
+        setTimeout(() => setFarmingStatus('claim'), 60 * 60 * 1000) // 60 minutes
       }
     } catch (error) {
       console.error('Error starting farming:', error)
     }
   } else if (farmingStatus === 'claim') {
-    handleIncreasePoints(200, 'farmButton')
+    handleIncreasePoints(350, 'farmButton')
     setTimeout(() => {
       setFarmingStatus('farm')
     }, 600)
