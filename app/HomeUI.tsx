@@ -60,7 +60,7 @@ export default function HomeUI({
       setTimeout(() => {
         setUpdateMessage(getRandomMessage());
         setIsTextFading(false);
-      }, 800); // This matches the CSS transition duration
+      }, 800);
     }, 10000);
 
     return () => clearInterval(interval);
@@ -72,12 +72,9 @@ export default function HomeUI({
     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
     document.head.appendChild(link);
 
-    // Check Telegram theme
     if (window.Telegram?.WebApp) {
       const isDark = window.Telegram.WebApp.colorScheme === 'dark';
       setIsDarkMode(isDark);
-
-      // Add theme classes to body
       document.body.classList.toggle('dark-mode', isDark);
     }
   }, []);
@@ -86,45 +83,38 @@ export default function HomeUI({
     let interval: NodeJS.Timeout;
     if (farmingStatus === 'farming' && user?.startFarming) {
       const startTime = new Date(user.startFarming).getTime();
-      const currentTime = new Date().getTime();
-      const actualSecondsElapsed = Math.floor((currentTime - startTime) / 1000);
-      
-      // Calculate adjusted seconds to reach 350 in 1 hour
-      const adjustedSeconds = Math.floor((actualSecondsElapsed / 3600) * 350);
-      const progressPercentage = Math.min((actualSecondsElapsed / 3600) * 100, 100);
-      const remainingSeconds = Math.max(3600 - actualSecondsElapsed, 0);
+      const updateFarmingProgress = () => {
+        const currentTime = new Date().getTime();
+        const actualSecondsElapsed = (currentTime - startTime) / 1000;
+        
+        // Calculate adjusted points to reach 350 in 1 hour with 1 decimal place
+        const adjustedPoints = (actualSecondsElapsed / 3600) * 350;
+        const roundedPoints = Math.min(Math.round(adjustedPoints * 10) / 10, 350);
+        const progressPercentage = Math.min((actualSecondsElapsed / 3600) * 100, 100);
+        
+        setFarmingPoints(roundedPoints);
+        setCurrentNumber(roundedPoints);
 
-      setFarmingPoints(adjustedSeconds);
-      setCurrentNumber(adjustedSeconds);
+        const buttonElement = document.querySelector('.farm-button') as HTMLElement;
+        if (buttonElement) {
+          buttonElement.style.setProperty('--progress-percentage', `${progressPercentage}%`);
+        }
+      };
 
-      const buttonElement = document.querySelector('.farm-button') as HTMLElement;
-      if (buttonElement) {
-        buttonElement.style.setProperty('--progress-percentage', `${progressPercentage}%`);
-      }
+      // Initial update
+      updateFarmingProgress();
       
       interval = setInterval(() => {
         setIsSliding(true);
         setTimeout(() => {
-          const newTime = new Date().getTime();
-          const newActualSecondsElapsed = Math.floor((newTime - startTime) / 1000);
-          const newAdjustedSeconds = Math.floor((newActualSecondsElapsed / 3600) * 350);
-          const newProgressPercentage = Math.min((newActualSecondsElapsed / 3600) * 100, 100);
-          
-          setFarmingPoints(newAdjustedSeconds);
-          setCurrentNumber(newAdjustedSeconds);
+          updateFarmingProgress();
           setIsSliding(false);
-          
-          // Update progress bar
-          if (buttonElement) {
-            buttonElement.style.setProperty('--progress-percentage', `${newProgressPercentage}%`);
-          }
         }, 500);
       }, 1000);
     } else {
       setFarmingPoints(0);
       setCurrentNumber(0);
 
-      // Reset progress bar
       const buttonElement = document.querySelector('.farm-button') as HTMLElement;
       if (buttonElement) {
         buttonElement.style.setProperty('--progress-percentage', '0%');
@@ -141,7 +131,7 @@ export default function HomeUI({
     }, 1000);
   };
 
-  // Add dark mode classes to elements
+  // Class names with dark mode
   const containerClass = `home-container ${isDarkMode ? 'dark-mode' : ''}`;
   const headerClass = `header-container ${isDarkMode ? 'dark-mode' : ''}`;
   const tasksClass = `tasks-container ${isDarkMode ? 'dark-mode' : ''}`;
@@ -152,6 +142,10 @@ export default function HomeUI({
   const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`
   const errorClass = `container mx-auto p-4 text-red-500 ${isDarkMode ? 'dark-mode' : ''}`;
   const loaderClass = `loader ${isDarkMode ? 'dark-mode' : ''}`;
+
+  const formatFarmingPoints = (points: number) => {
+    return points.toFixed(1);
+  };
 
   const renderContent = () => {
     if (error) {
@@ -243,21 +237,21 @@ export default function HomeUI({
               <span className="farmingtext">Farming</span>
               <div className="farming-points">
                 <span className={`farming-points-number ${isSliding ? 'sliding-out' : ''}`} key={currentNumber}>
-                  {farmingPoints}
+                  {formatFarmingPoints(farmingPoints)}
                 </span>
               </div>
               <span className="countdown-timer">
-  {(() => {
-    const remainingTime = Math.max(3600 - Math.floor((new Date().getTime() - new Date(user?.startFarming).getTime()) / 1000), 0);
-    const hours = Math.floor(remainingTime / 3600);
-    const minutes = Math.floor((remainingTime % 3600) / 60);
-    const seconds = remainingTime % 60;
+                {(() => {
+                  const remainingTime = Math.max(3600 - Math.floor((new Date().getTime() - new Date(user?.startFarming).getTime()) / 1000), 0);
+                  const hours = Math.floor(remainingTime / 3600);
+                  const minutes = Math.floor((remainingTime % 3600) / 60);
+                  const seconds = remainingTime % 60;
 
-    if (hours > 0) return `${hours} hr ${minutes} min`;
-    if (minutes > 0) return `${minutes} min`;
-    return `${seconds}s`;
-  })()}
-</span>
+                  if (hours > 0) return `${hours} hr ${minutes} min`;
+                  if (minutes > 0) return `${minutes} min`;
+                  return `${seconds}s`;
+                })()}
+              </span>
             </>
           ) : (
             <span className="claimFarm">Claim Farm</span>
