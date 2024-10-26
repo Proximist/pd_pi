@@ -28,24 +28,43 @@ interface HomeUIProps {
 
 const AnimatedNumber: React.FC<{ value: number }> = ({ value }) => {
   const prevIntegerRef = useRef(Math.floor(value));
+  const prevDecimalRef = useRef((value % 1).toFixed(1).substring(2));
+  const [decimalKey, setDecimalKey] = useState(0);
+  
   const integerPart = Math.floor(value);
   const decimalPart = (value % 1).toFixed(1).substring(2);
   const [isPulsing, setIsPulsing] = useState(false);
   
   useEffect(() => {
+    // Handle integer changes
     if (prevIntegerRef.current !== integerPart) {
       setIsPulsing(true);
       const timer = setTimeout(() => setIsPulsing(false), 300);
       prevIntegerRef.current = integerPart;
       return () => clearTimeout(timer);
     }
-  }, [integerPart]);
+    
+    // Handle decimal changes
+    if (prevDecimalRef.current !== decimalPart) {
+      setDecimalKey(prev => prev + 1);
+      prevDecimalRef.current = decimalPart;
+    }
+  }, [integerPart, decimalPart]);
 
   return (
     <div className="number-container">
-      <span className={`integer-part ${isPulsing ? 'pulse' : ''}`}>{integerPart}</span>
+      <span className={`integer-part ${isPulsing ? 'pulse' : ''}`}>
+        {integerPart}
+      </span>
       <span className="decimal-separator">.</span>
-      <span className="decimal-part">{decimalPart}</span>
+      <div className="decimal-part-wrapper">
+        <div 
+          key={decimalKey}
+          className="decimal-number"
+        >
+          {decimalPart}
+        </div>
+      </div>
     </div>
   );
 };
