@@ -98,6 +98,7 @@ export default function Invite() {
   const footerContainerClass = `footerContainer ${isDarkMode ? 'dark-mode' : ''}`
   const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`
   const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`
+  const invitedByClass = `invitedBy ${isDarkMode ? 'dark-mode' : ''}`
 
   return (
     <div className={containerClass}>
@@ -134,6 +135,12 @@ export default function Invite() {
                 <i className="fas fa-copy"></i> Copied
               </span>
             </button>
+
+            {user.invitedBy && (
+              <div className={invitedByClass}>
+                Invited by: {user.invitedBy}
+              </div>
+            )}
 
             <div className={invitedSectionClass}>
               <div className={invitedHeaderClass}>
