@@ -192,7 +192,7 @@ export default function TaskUI({
     <ul className={taskListClass}>
       <li className={taskItemClass}>
         <img
-          src="/icons/blum.png"
+          src="https://i.imgur.com/F13Hj7a.jpeg"
           alt="Blum"
           className="task-icon-img"
         />
