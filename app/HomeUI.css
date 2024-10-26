@@ -504,7 +504,7 @@
 .number-container {
   display: flex;
   align-items: center;
-  font-size: 1.5em;
+  font-size: 20px;
   line-height: 1;
   height: 1.5em;
 }
@@ -589,15 +589,6 @@
 
 .integer-part.pulse {
   animation: pulseNumber 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Container for farming points display */
-.farming-points {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 4ch;
-  margin: 0 8px;
 }
 
 /* Dark mode support */
