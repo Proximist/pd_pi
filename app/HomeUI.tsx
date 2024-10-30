@@ -310,6 +310,5 @@ export default function HomeUI({
         </Link>
       </div>
       </div>
-    </div>
   );
 }
