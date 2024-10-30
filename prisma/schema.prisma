@@ -35,6 +35,6 @@ model User {
 }
 
 model CountdownConfig {
-  id      Int      @id @default(autoincrement())
+  id      String   @id @map("_id")
   endDate DateTime
 }
