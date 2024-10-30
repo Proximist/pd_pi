@@ -20,9 +20,9 @@ export async function POST(request: NextRequest) {
   try {
     const { countdownEndDate } = await request.json();
     await prisma.countdownConfig.upsert({
-      where: { id: 1 },
+      where: { id: '1' },
       update: { endDate: new Date(countdownEndDate) },
-      create: { endDate: new Date(countdownEndDate) },
+      create: { id: '1', endDate: new Date(countdownEndDate) },
     });
     return NextResponse.json({ success: true });
   } catch (error) {
