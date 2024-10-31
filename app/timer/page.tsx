@@ -34,7 +34,7 @@ const Timer: React.FC = () => {
             setCountdownEndDate(newCountdownEndDate);
 
             // Save the new countdown end date to the server
-            fetch('/api/countdown-end-date', {
+            fetch('/api/countdown', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
