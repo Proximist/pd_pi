@@ -1,151 +1,227 @@
-/* Base styles */
-:root {
-  --primary-color: #2a2a72;
-  --secondary-color: #009ffd;
-  --text-color: #333;
-  --error-color: #ff4444;
-  --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-}
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
 
-/* Container styles */
-.timer-container {
+.container {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  height: 100vh;
+  background-color: #f0f0f0;
+  color: black;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  background-size: 30px 30px;
+  background-position: -5px -5px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--gradient);
-  font-family: 'Arial', sans-serif;
-  position: relative;
-  overflow: hidden;
 }
 
-/* Animated background */
-.timer-container::before {
-  content: '';
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-  animation: rotate 20s linear infinite;
-}
-
-/* Timer display styles */
-.timer-display {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 2rem 3rem;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  position: relative;
-  overflow: hidden;
-  transform: translateY(0);
-  animation: float 6s ease-in-out infinite;
-}
-
-.timer-text {
-  font-size: 2rem;
-  font-weight: bold;
-  color: var(--text-color);
-  text-align: center;
-  position: relative;
-  z-index: 2;
-  animation: pulse 2s ease-in-out infinite;
+.container.dark-mode {
+  background-color: #000;
+  color: white;
 }
 
 /* Loader styles */
 .loader {
-  width: 60px;
-  height: 60px;
-  border: 4px solid rgba(255, 255, 255, 0.3);
+  width: 48px;
+  height: 48px;
+  border: 5px solid #fff;
+  border-bottom-color: transparent;
   border-radius: 50%;
-  border-top-color: #fff;
-  animation: spin 1s ease-in-out infinite;
+  animation: rotation 1s linear infinite;
 }
 
-/* Error message styles */
-.error-message {
-  background: rgba(255, 255, 255, 0.95);
-  color: var(--error-color);
-  padding: 1rem 2rem;
-  border-radius: 10px;
+.dark-mode .loader {
+  border-color: #fff;
+  border-bottom-color: transparent;
+}
+
+@keyframes rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Timer display styles */
+.timer-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .timer-display {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Timer unit container */
+.timer-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Slot machine style number display */
+.timer-slot {
+  background: #e3e3e3;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  min-width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .timer-slot {
+  background: rgb(81 81 81 / 0.8);
+}
+
+/* Number animation */
+.timer-number {
+  font-size: 2.5rem;
   font-weight: bold;
-  animation: shake 0.5s ease-in-out;
+  position: relative;
+  animation: slotMachine 0.3s ease-in-out;
+  transform-origin: center center;
 }
 
-/* Animations */
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
+@keyframes slotMachine {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
   }
   50% {
-    transform: translateY(-20px);
+    transform: translateY(20%);
   }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Timer labels */
+.timer-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #666;
+}
+
+.dark-mode .timer-label {
+  color: #999;
+}
+
+/* Timer separators */
+.timer-separator {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-top: -2rem;
+  animation: pulse 1s infinite;
+  color: #666;
+}
+
+.dark-mode .timer-separator {
+  color: #999;
 }
 
 @keyframes pulse {
   0%, 100% {
-    transform: scale(1);
+    opacity: 1;
   }
   50% {
-    transform: scale(1.05);
+    opacity: 0.5;
   }
 }
 
-@keyframes rotate {
+/* Error message styles */
+.error-message {
+  background: rgba(255, 82, 82, 0.1);
+  color: #ff5252;
+  padding: 1rem 2rem;
+  border-radius: 0.8rem;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  animation: slideIn 0.3s ease-out;
+}
+
+.dark-mode .error-message {
+  background: rgba(255, 82, 82, 0.2);
+}
+
+@keyframes slideIn {
   from {
-    transform: rotate(0deg);
+    transform: translateY(-20px);
+    opacity: 0;
   }
   to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes shake {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  10%, 30%, 50%, 70%, 90% {
-    transform: translateX(-5px);
-  }
-  20%, 40%, 60%, 80% {
-    transform: translateX(5px);
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .timer-text {
-    font-size: 1.5rem;
-    padding: 1rem 1.5rem;
+  .timer-slot {
+    min-width: 60px;
+    height: 60px;
+    padding: 0.75rem;
   }
-  
+
+  .timer-number {
+    font-size: 2rem;
+  }
+
+  .timer-separator {
+    font-size: 2rem;
+  }
+
+  .timer-label {
+    font-size: 0.8rem;
+  }
+
   .timer-display {
-    padding: 1.5rem 2rem;
-    margin: 0 1rem;
+    padding: 1.5rem;
+    gap: 5px;
   }
 }
 
-/* Hover effects */
-.timer-display:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-}
+@media (max-width: 480px) {
+  .timer-slot {
+    min-width: 50px;
+    height: 50px;
+    padding: 0.5rem;
+  }
 
-/* Glass morphism effect */
-.timer-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  z-index: 1;
+  .timer-number {
+    font-size: 1.5rem;
+  }
+
+  .timer-separator {
+    font-size: 1.5rem;
+  }
+
+  .timer-label {
+    font-size: 0.7rem;
+  }
+
+  .timer-display {
+    padding: 1rem;
+    gap: 3px;
+  }
 }
