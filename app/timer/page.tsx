@@ -23,7 +23,7 @@ const Timer: React.FC = () => {
       tg.ready();
 
       // Fetch the countdown end date from the server
-      fetch('/api/countdown-end-date')
+      fetch('/api/countdown')
         .then((res) => res.json())
         .then((data) => {
           if (data.countdownEndDate) {
