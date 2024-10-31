@@ -12,8 +12,53 @@ declare global {
   }
 }
 
+// Helper function to create digit transitions
+const createTransitionDigits = (currentNumber: number, previousNumber: number) => {
+  if (previousNumber === currentNumber) return [currentNumber];
+  const digits = [];
+  let start = previousNumber;
+  while (start !== currentNumber) {
+    start = start - 1;
+    if (start < 0) start = 59; // Reset for minutes/seconds
+    digits.push(start);
+    if (digits.length > 5) break; // Limit animation frames
+  }
+  return digits;
+};
+
+const TimerDigit = ({ value, previous }: { value: number; previous: number }) => {
+  const digits = createTransitionDigits(value, previous);
+  
+  return (
+    <div className="digit-wrapper">
+      {digits.map((digit, index) => (
+        <div 
+          key={index} 
+          className="timer-number"
+          style={{ 
+            animationDelay: `${index * 0.1}s`,
+            transform: `translateY(${(digits.length - 1 - index) * -100}%)`
+          }}
+        >
+          {String(digit).padStart(2, '0')}
+        </div>
+      ))}
+      <div 
+        className="timer-number current"
+        style={{ 
+          animationDelay: `${digits.length * 0.1}s`,
+          transform: 'translateY(0)'
+        }}
+      >
+        {String(value).padStart(2, '0')}
+      </div>
+    </div>
+  );
+};
+
 const Timer: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [previousTime, setPreviousTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isInitialLoading, setIsInitialLoading] = useState<boolean>(true);
   const [countdownEndDate, setCountdownEndDate] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -68,6 +113,7 @@ const Timer: React.FC = () => {
         return;
       }
 
+      setPreviousTime(timeLeft);
       setTimeLeft({
         days: Math.floor(distance / (1000 * 60 * 60 * 24)),
         hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
@@ -79,7 +125,7 @@ const Timer: React.FC = () => {
     updateTimer();
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
-  }, [countdownEndDate]);
+  }, [countdownEndDate, timeLeft]);
 
   const containerClass = `container ${isDarkMode ? 'dark-mode' : ''}`;
 
@@ -99,28 +145,28 @@ const Timer: React.FC = () => {
         <div className="timer-display">
           <div className="timer-unit">
             <div className="timer-slot">
-              <div className="timer-number">{String(timeLeft.days).padStart(2, '0')}</div>
+              <TimerDigit value={timeLeft.days} previous={previousTime.days} />
             </div>
             <div className="timer-label">Days</div>
           </div>
           <div className="timer-separator">:</div>
           <div className="timer-unit">
             <div className="timer-slot">
-              <div className="timer-number">{String(timeLeft.hours).padStart(2, '0')}</div>
+              <TimerDigit value={timeLeft.hours} previous={previousTime.hours} />
             </div>
             <div className="timer-label">Hours</div>
           </div>
           <div className="timer-separator">:</div>
           <div className="timer-unit">
             <div className="timer-slot">
-              <div className="timer-number">{String(timeLeft.minutes).padStart(2, '0')}</div>
+              <TimerDigit value={timeLeft.minutes} previous={previousTime.minutes} />
             </div>
             <div className="timer-label">Minutes</div>
           </div>
           <div className="timer-separator">:</div>
           <div className="timer-unit">
             <div className="timer-slot">
-              <div className="timer-number">{String(timeLeft.seconds).padStart(2, '0')}</div>
+              <TimerDigit value={timeLeft.seconds} previous={previousTime.seconds} />
             </div>
             <div className="timer-label">Seconds</div>
           </div>
