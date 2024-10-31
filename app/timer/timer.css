@@ -27,26 +27,6 @@
   color: white;
 }
 
-/* Loader styles */
-.loader {
-  width: 48px;
-  height: 48px;
-  border: 5px solid #fff;
-  border-bottom-color: transparent;
-  border-radius: 50%;
-  animation: rotation 1s linear infinite;
-}
-
-.dark-mode .loader {
-  border-color: #fff;
-  border-bottom-color: transparent;
-}
-
-@keyframes rotation {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 /* Timer display styles */
 .timer-display {
   display: flex;
