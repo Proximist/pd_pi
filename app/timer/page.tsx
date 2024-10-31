@@ -13,19 +13,21 @@ declare global {
 }
 
 const Timer: React.FC = () => {
-  const [timeLeft, setTimeLeft] = useState<string>('');
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isInitialLoading, setIsInitialLoading] = useState<boolean>(true);
   const [countdownEndDate, setCountdownEndDate] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
+      const tg = window.Telegram.WebApp;
+      tg.ready();
+      setIsDarkMode(tg.colorScheme === 'dark');
+    }
+
     const initializeTimer = async () => {
       try {
-        if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-          const tg = window.Telegram.WebApp;
-          tg.ready();
-        }
-
         const response = await fetch('/api/countdown');
         const data = await response.json();
 
@@ -62,16 +64,16 @@ const Timer: React.FC = () => {
       const distance = countdownEndDate.getTime() - now;
 
       if (distance < 0) {
-        setTimeLeft('Countdown completed!');
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
         return;
       }
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      setTimeLeft(`${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`);
+      setTimeLeft({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000)
+      });
     };
 
     updateTimer();
@@ -79,22 +81,49 @@ const Timer: React.FC = () => {
     return () => clearInterval(interval);
   }, [countdownEndDate]);
 
+  const containerClass = `container ${isDarkMode ? 'dark-mode' : ''}`;
+
   if (error) {
     return (
-      <div className="timer-container">
+      <div className={containerClass}>
         <div className="error-message">{error}</div>
       </div>
     );
   }
 
   return (
-    <div className="timer-container">
+    <div className={containerClass}>
       {isInitialLoading ? (
         <div className="loader"></div>
       ) : (
         <div className="timer-display">
-          <div className="timer-text">{timeLeft}</div>
-          <div className="timer-background"></div>
+          <div className="timer-unit">
+            <div className="timer-slot">
+              <div className="timer-number">{String(timeLeft.days).padStart(2, '0')}</div>
+            </div>
+            <div className="timer-label">Days</div>
+          </div>
+          <div className="timer-separator">:</div>
+          <div className="timer-unit">
+            <div className="timer-slot">
+              <div className="timer-number">{String(timeLeft.hours).padStart(2, '0')}</div>
+            </div>
+            <div className="timer-label">Hours</div>
+          </div>
+          <div className="timer-separator">:</div>
+          <div className="timer-unit">
+            <div className="timer-slot">
+              <div className="timer-number">{String(timeLeft.minutes).padStart(2, '0')}</div>
+            </div>
+            <div className="timer-label">Minutes</div>
+          </div>
+          <div className="timer-separator">:</div>
+          <div className="timer-unit">
+            <div className="timer-slot">
+              <div className="timer-number">{String(timeLeft.seconds).padStart(2, '0')}</div>
+            </div>
+            <div className="timer-label">Seconds</div>
+          </div>
         </div>
       )}
     </div>
