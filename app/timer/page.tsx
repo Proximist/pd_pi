@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { WebApp } from '@twa-dev/types';
+import './timer.css';
 
 declare global {
   interface Window {
@@ -73,28 +74,28 @@ const Timer: React.FC = () => {
       setTimeLeft(`${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`);
     };
 
-    // Update immediately
     updateTimer();
-
-    // Then update every second
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
   }, [countdownEndDate]);
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-red-500">{error}</div>
+      <div className="timer-container">
+        <div className="error-message">{error}</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="timer-container">
       {isInitialLoading ? (
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+        <div className="loader"></div>
       ) : (
-        <div className="text-2xl font-bold text-gray-900">{timeLeft}</div>
+        <div className="timer-display">
+          <div className="timer-text">{timeLeft}</div>
+          <div className="timer-background"></div>
+        </div>
       )}
     </div>
   );
