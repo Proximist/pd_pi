@@ -28,6 +28,7 @@ interface HomeUIProps {
   setMenuOpen: (open: boolean) => void;
   showNotification: boolean;
   mounted: boolean;
+  showIntro: boolean;
   handleMenuItemClick: (item: string) => void;
   handleBuyPi: () => void;
 }
@@ -97,6 +98,7 @@ export default function HomeUI({
   menuOpen,
   setMenuOpen,
   showNotification,
+  showIntro,
   mounted,
   handleMenuItemClick,
   handleBuyPi,
@@ -200,6 +202,18 @@ export default function HomeUI({
   const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`;
   const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`;
   const errorClass = `container mx-auto p-4 text-red-500 ${isDarkMode ? 'dark-mode' : ''}`;
+
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+        <div className="loading-spinner"></div>
+      </div>
+    )
+  }
+
+  if (showIntro) {
+    return <IntroPage telegramId={user.telegramId} />
+  }
 
     return (
       <div className={`min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 ${mounted ? 'fade-in' : ''}`}>
