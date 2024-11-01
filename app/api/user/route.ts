@@ -32,7 +32,20 @@ export async function POST(req: NextRequest) {
         invitedBy: true,
         startFarming: true,
         isOnline: true,
-        currentTime: true
+        currentTime: true,
+        level: true,
+        piAmount: true,
+        transactionStatus: true,
+        introSeen: true,
+        paymentMethod: true,
+        paymentAddress: true,
+        isUpload: true,
+        imageUrl: true,
+        savedImages: true,
+        finalpis: true,
+        baseprice: true,
+        piaddress: true,// New field for Pi wallet address
+        istransaction: true,
       }
     });
 
@@ -78,7 +91,9 @@ export async function POST(req: NextRequest) {
               firstName: userData.first_name || '',
               lastName: userData.last_name || '',
               isOnline: true,
-              currentTime: new Date()
+              currentTime: new Date(),
+              level: 1,
+              transactionStatus: []
             }
           });
         }
@@ -90,7 +105,9 @@ export async function POST(req: NextRequest) {
             firstName: userData.first_name || '',
             lastName: userData.last_name || '',
             isOnline: true,
-            currentTime: new Date()
+            currentTime: new Date(),
+            level: 1,
+            transactionStatus: []
           }
         });
       }
