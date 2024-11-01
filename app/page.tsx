@@ -268,7 +268,6 @@ export default function Home() {
       menuOpen={menuOpen}
       setMenuOpen={setMenuOpen}
       showIntro={showIntro}
-      setShowIntro={setShowIntro}
       showNotification={showNotification}
       mounted={mounted}
       handleMenuItemClick={handleMenuItemClick}
