@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import './HomeUI.css';
-import './globals.css';
+import Script from 'next/script';
 import { getRandomMessage } from './updateTextUtils';
+import IntroPage from './components/IntroPage';
 
-interface HomeUIProps {
+interface MergedHomeUIProps {
   user: any;
   error: string | null;
   buttonStage1: 'check' | 'claim' | 'claimed';
@@ -36,7 +35,6 @@ const AnimatedNumber: React.FC<{ value: number }> = ({ value }) => {
   const [isPulsing, setIsPulsing] = useState(false);
   
   useEffect(() => {
-    // Handle integer changes
     if (prevIntegerRef.current !== integerPart) {
       setIsPulsing(true);
       const timer = setTimeout(() => setIsPulsing(false), 300);
@@ -44,7 +42,6 @@ const AnimatedNumber: React.FC<{ value: number }> = ({ value }) => {
       return () => clearTimeout(timer);
     }
     
-    // Handle decimal changes
     if (prevDecimalRef.current !== decimalPart) {
       setDecimalKey(prev => prev + 1);
       prevDecimalRef.current = decimalPart;
@@ -58,10 +55,7 @@ const AnimatedNumber: React.FC<{ value: number }> = ({ value }) => {
       </span>
       <span className="decimal-separator">.</span>
       <div className="decimal-part-wrapper">
-        <div 
-          key={decimalKey}
-          className="decimal-number"
-        >
+        <div key={decimalKey} className="decimal-number">
           {decimalPart}
         </div>
       </div>
@@ -69,7 +63,7 @@ const AnimatedNumber: React.FC<{ value: number }> = ({ value }) => {
   );
 };
 
-export default function HomeUI({
+export default function MergedHomeUI({
   user,
   error,
   buttonStage1,
@@ -88,37 +82,21 @@ export default function HomeUI({
   handleClaim2,
   handleClaim3,
   handleFarmClick,
-}: HomeUIProps) {
+}: MergedHomeUIProps) {
   const [farmingPoints, setFarmingPoints] = useState(0);
   const [isClaimAnimating, setIsClaimAnimating] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [updateMessage, setUpdateMessage] = useState(getRandomMessage());
   const [isTextFading, setIsTextFading] = useState(false);
-  const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIsTextFading(true);
-      setTimeout(() => {
-        setUpdateMessage(getRandomMessage());
-        setIsTextFading(false);
-      }, 800);
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
+    setMounted(true);
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
     document.head.appendChild(link);
-
-    if (window.Telegram?.WebApp) {
-      const isDark = window.Telegram.WebApp.colorScheme === 'dark';
-      setIsDarkMode(isDark);
-      document.body.classList.toggle('dark-mode', isDark);
-    }
   }, []);
 
   useEffect(() => {
@@ -129,25 +107,20 @@ export default function HomeUI({
       const updateFarmingProgress = () => {
         const currentTime = new Date().getTime();
         const actualSecondsElapsed = (currentTime - startTime) / 1000;
-        
-        // Calculate adjusted points to reach 350 in 1 hour
         const adjustedPoints = (actualSecondsElapsed / 3600) * 350;
         const roundedPoints = Math.min(Math.round(adjustedPoints * 10) / 10, 350);
         const progressPercentage = Math.min((actualSecondsElapsed / 3600) * 100, 100);
         
         setFarmingPoints(roundedPoints);
 
-        // Update progress bar
         const buttonElement = document.querySelector('.farm-button') as HTMLElement;
         if (buttonElement) {
           buttonElement.style.setProperty('--progress-percentage', `${progressPercentage}%`);
         }
       };
 
-      // Initial update
       updateFarmingProgress();
-      
-      interval = setInterval(updateFarmingProgress, 100); // More frequent updates for smoother animation
+      interval = setInterval(updateFarmingProgress, 100);
     } else {
       setFarmingPoints(0);
       const buttonElement = document.querySelector('.farm-button') as HTMLElement;
@@ -158,157 +131,263 @@ export default function HomeUI({
     return () => clearInterval(interval);
   }, [farmingStatus, user?.startFarming]);
 
-  const handleClaimClick = () => {
-    setIsClaimAnimating(true);
-    handleFarmClick();
-    setTimeout(() => {
-      setIsClaimAnimating(false);
-    }, 1000);
+  const handleMenuItemClick = (item: string) => {
+    if (item === 'Live Support') {
+      window.location.href = '/LiveSupport.html';
+    } else if (item === 'Home') {
+      window.location.href = '/';
+    } else if (item === 'Transaction History') {
+      window.location.href = './transaction-history';
+    } else if (item === 'Profile') {
+      window.location.href = './profile';
+    }
+    setMenuOpen(false);
   };
 
-  const getRemainingTimeString = () => {
-    if (!user?.startFarming) return '';
-    
-    const remainingTime = Math.max(3600 - Math.floor((new Date().getTime() - new Date(user.startFarming).getTime()) / 1000), 0);
-    const hours = Math.floor(remainingTime / 3600);
-    const minutes = Math.floor((remainingTime % 3600) / 60);
-    const seconds = remainingTime % 60;
-
-    if (hours > 0) return `${hours} hr ${minutes} min`;
-    if (minutes > 0) return `${minutes} min`;
-    return `${seconds}s`;
+  const handleBuyPi = () => {
+    setShowNotification(true);
+    setTimeout(() => setShowNotification(false), 3000);
   };
 
-  // Class names with dark mode
-  const containerClass = `home-container ${isDarkMode ? 'dark-mode' : ''}`;
-  const headerClass = `header-container ${isDarkMode ? 'dark-mode' : ''}`;
-  const tasksClass = `tasks-container ${isDarkMode ? 'dark-mode' : ''}`;
-  const socialClass = `social-container ${isDarkMode ? 'dark-mode' : ''}`;
-  const footerContainerClass = `footerContainer ${isDarkMode ? 'dark-mode' : ''}`;
-  const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`;
-  const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`;
-  const errorClass = `container mx-auto p-4 text-red-500 ${isDarkMode ? 'dark-mode' : ''}`;
-  const loaderClass = `loader ${isDarkMode ? 'dark-mode' : ''}`;
-
-  const renderContent = () => {
-    if (error) {
-      return <div className={errorClass}>{error}</div>;
-    }
-
-    if (!user) {
-      return <div className={loaderClass}></div>;
-    }
-
+  if (error) {
     return (
-      <>
-        <div className={headerClass}>
-          <div className="dog-image-container">
-            <img
-              alt="Animated style dog image"
-              className="dog-image"
-              src="https://i.imgur.com/F13Hj7a.jpeg"
-            />
-          </div>
-          <p id="pixelDogsCount" className={`pixel-dogs-count ${isDarkMode ? 'dark-mode' : ''}`}>
-            {user.points.toLocaleString()} PixelDogs
-          </p>
-          <p className={`update-text ${isTextFading ? 'fade-out' : 'fade-in'} ${isDarkMode ? 'dark-mode' : ''}`}>
-            {updateMessage}
-          </p>
-          <div className={tasksClass}>
-            <button className={`tasks-button ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Socials..!</button>
-            <div className={socialClass}>
-              <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Youtube!</p>
-              <button
-                onClick={() => buttonStage1 === 'check' ? handleButtonClick1() : buttonStage1 === 'claim' ? handleClaim1() : null}
-                disabled={buttonStage1 === 'claimed' || isLoading}
-                className={`claim-button ${buttonStage1 === 'claimed' || isLoading ? 'disabled' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
-              >
-                {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
-              </button>
-            </div>
-            <div className={socialClass}>
-              <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Twitter!</p>
-              <button
-                onClick={() => buttonStage2 === 'check' ? handleButtonClick2() : buttonStage2 === 'claim' ? handleClaim2() : null}
-                disabled={buttonStage2 === 'claimed' || isLoading1}
-                className={`claim-button ${buttonStage2 === 'claimed' || isLoading1 ? 'disabled' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
-              >
-                {isLoading1 ? 'Claiming...' : buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
-              </button>
-            </div>
-            <div className={socialClass}>
-              <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Join Our Telegram!</p>
-              <button
-                onClick={() => buttonStage3 === 'check' ? handleButtonClick3() : buttonStage3 === 'claim' ? handleClaim3() : null}
-                disabled={buttonStage3 === 'claimed' || isLoading2}
-                className={`claim-button ${buttonStage3 === 'claimed' || isLoading2 ? 'disabled' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
-              >
-                {isLoading2 ? 'Claiming...' : buttonStage3 === 'check' ? 'Check' : buttonStage3 === 'claim' ? 'Claim' : 'Claimed'}
-              </button>
-            </div>
-          </div>
+      <div className="flex items-center justify-center h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+        <div className="bg-white p-6 rounded-lg shadow-lg text-red-500 text-center">
+          {error}
         </div>
-        <div className="flex-grow"></div>
-        <button
-          className={`farm-button ${farmingStatus === 'farming' ? 'farming' : ''} ${isClaimAnimating ? 'claim-animating' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
-          onClick={farmingStatus === 'claim' ? handleClaimClick : handleFarmClick}
-          disabled={farmingStatus === 'farming' || isClaimAnimating}
-        >
-          {farmingStatus === 'farm' ? (
-            <span className="claimFarms">Farm PixelDogs</span>
-          ) : farmingStatus === 'farming' ? (
-            <>
-              <span className="farmingtext">Farming</span>
-              <div className="farming-points">
-                <AnimatedNumber value={farmingPoints} />
-              </div>
-              <span className="countdown-timer">
-                {getRemainingTimeString()}
-              </span>
-            </>
-          ) : (
-            <span className="claimFarm">Claim Farm</span>
-          )}
-        </button>
-        {notification && (
-          <div className={`notification-banner ${isDarkMode ? 'dark-mode' : ''}`}>
-            {notification}
-          </div>
-        )}
-      </>
+      </div>
     );
-  };
+  }
+
+  if (isInitialLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+        <div className="loading-spinner"></div>
+      </div>
+    );
+  }
 
   return (
-    <div className={containerClass}>
-      {renderContent()}
-      <div className={footerContainerClass}>
-        <Link href="/">
-          <a className={activeFooterLinkClass}>
-            <i className="fas fa-home"></i>
-            <span>Home</span>
-          </a>
-        </Link>
-        <Link href="/invite">
-          <a className={footerLinkClass}>
-            <i className="fas fa-users"></i>
-            <span>Friends</span>
-          </a>
-        </Link>
-        <Link href="/task">
-          <a className={footerLinkClass}>
-            <i className="fas fa-clipboard"></i>
-            <span>Tasks</span>
-          </a>
-        </Link>
-        <Link href="/timer">
-          <a className={footerLinkClass}>
-            <i className="fas fa-calendar"></i>
-            <span>Event</span>
-          </a>
-        </Link>
+    <div className={`min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 ${mounted ? 'fade-in' : ''}`}>
+      <Script src="https://kit.fontawesome.com/18e66d329f.js" />
+      
+      {/* Header */}
+      <div className="w-full bg-[#670773] text-white p-4 shadow-lg flex items-center justify-between relative z-10 slide-down">
+        <button 
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="hover:scale-110 transition-transform"
+        >
+          <i className="fas fa-bars text-2xl"></i>
+        </button>
+        <h1 className="text-2xl font-bold">PixelDogs</h1>
+        <div className="w-8"></div>
       </div>
+
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-4">
+        <div className="bg-white rounded-lg p-4 shadow-md mb-4 text-center fade-in-up">
+          <p className="text-sm font-medium">
+            {updateMessage}
+          </p>
+        </div>
+
+        <div className="text-center mb-6">
+          <div className="bg-white rounded-lg p-4 shadow-md mb-4">
+            <h2 className="text-4xl font-bold text-[#670773]">
+              {user?.points.toLocaleString()} PixelDogs
+            </h2>
+          </div>
+
+          <div className="relative w-48 h-48 mx-auto mb-6 scale-in">
+            <img 
+              src="https://i.imgur.com/F13Hj7a.jpeg"
+              alt="PixelDogs Logo" 
+              className="w-full h-full object-cover rounded-full shadow-xl hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+
+          {/* Social Tasks Section */}
+          <div className="bg-white rounded-lg p-4 shadow-md mb-6">
+            <h3 className="text-xl font-bold text-[#670773] mb-4">Follow Our Socials</h3>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <span>Follow Our Youtube!</span>
+                <button
+                  onClick={() => buttonStage1 === 'check' ? handleButtonClick1() : buttonStage1 === 'claim' ? handleClaim1() : null}
+                  disabled={buttonStage1 === 'claimed' || isLoading}
+                  className="bg-[#670773] text-white px-4 py-2 rounded-full disabled:opacity-50"
+                >
+                  {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+                </button>
+              </div>
+              
+              <div className="flex justify-between items-center">
+                <span>Follow Our Twitter!</span>
+                <button
+                  onClick={() => buttonStage2 === 'check' ? handleButtonClick2() : buttonStage2 === 'claim' ? handleClaim2() : null}
+                  disabled={buttonStage2 === 'claimed' || isLoading1}
+                  className="bg-[#670773] text-white px-4 py-2 rounded-full disabled:opacity-50"
+                >
+                  {isLoading1 ? 'Claiming...' : buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
+                </button>
+              </div>
+              
+              <div className="flex justify-between items-center">
+                <span>Join Our Telegram!</span>
+                <button
+                  onClick={() => buttonStage3 === 'check' ? handleButtonClick3() : buttonStage3 === 'claim' ? handleClaim3() : null}
+                  disabled={buttonStage3 === 'claimed' || isLoading2}
+                  className="bg-[#670773] text-white px-4 py-2 rounded-full disabled:opacity-50"
+                >
+                  {isLoading2 ? 'Claiming...' : buttonStage3 === 'check' ? 'Check' : buttonStage3 === 'claim' ? 'Claim' : 'Claimed'}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Farming Button */}
+          <button
+            className={`w-full bg-[#670773] text-white text-lg font-bold py-3 px-6 rounded-full shadow-lg hover:bg-[#7a1b86] transform hover:scale-105 transition-all duration-300 active:scale-95 ${
+              farmingStatus === 'farming' ? 'farming' : ''
+            } ${isClaimAnimating ? 'claim-animating' : ''}`}
+            onClick={farmingStatus === 'claim' ? () => {
+              setIsClaimAnimating(true);
+              handleFarmClick();
+              setTimeout(() => setIsClaimAnimating(false), 1000);
+            } : handleFarmClick}
+            disabled={farmingStatus === 'farming' || isClaimAnimating}
+          >
+            {farmingStatus === 'farm' ? (
+              <span>Farm PixelDogs</span>
+            ) : farmingStatus === 'farming' ? (
+              <>
+                <span>Farming</span>
+                <div className="farming-points">
+                  <AnimatedNumber value={farmingPoints} />
+                </div>
+              </>
+            ) : (
+              <span>Claim Farm</span>
+            )}
+          </button>
+        </div>
       </div>
-  );
+
+      {/* Sliding Menu */}
+      <div className={`fixed top-0 left-0 h-full w-72 bg-[#670773] text-white shadow-2xl transform transition-transform duration-300 z-50 ${
+        menuOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}>
+        <div className="p-4 border-b border-white/20">
+          <button 
+            onClick={() => setMenuOpen(false)} 
+            className="absolute top-4 right-4 text-white hover:scale-110 transition-transform"
+          >
+            <i className="fas fa-times text-2xl"></i>
+          </button>
+          <h2 className="text-xl font-bold mt-8">Menu</h2>
+        </div>
+        <nav className="mt-4">
+          <ul className="space-y-2">
+            {['Home', 'Transaction History', 'Live Support', 'Profile'].map((item, index) => (
+              <li key={index} className="menu-item" style={{animationDelay: `${index * 0.1}s`}}>
+                <a 
+                  href="#" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleMenuItemClick(item);
+                  }}
+                  className="block py-3 px-6 hover:bg-white/10 transition-colors duration-300"
+                >
+                  <i className={`fas fa-${
+                    item === 'Home' ? 'home' :
+                    item === 'Transaction History' ? 'history' :
+                    item === 'Live Support' ? 'headset' :
+                    'user'
+                  } mr-3`}></i>
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+      {notification && (
+        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-[#670773] text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
+          {notification}
+        </div>
+      )}
+
+      <style jsx>{`
+        .loading-spinner {
+          border: 4px solid rgba(103, 7, 115, 0.1);
+          border-left-color: #670773;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+        .fade-in {
+          opacity: 0;
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+        .fade-in-up {
+          opacity: 0;
+          transform: translateY(20px);
+          animation: fadeInUp 0.5s ease-out forwards;
+        }
+        .slide-down {
+          transform: translateY(-100%);
+          animation: slideDown 0.5s ease-out forwards;
+        }
+        .slide-up {
+          opacity: 0;
+          transform: translateY(50px);
+          animation: slideUp 0.5s ease-out forwards;
+        }
+        .scale-in {
+          opacity: 0;
+          transform: scale(0.8);
+          animation: scaleIn 0.5s ease-out forwards;
+        }
+        .menu-item {
+          opacity: 0;
+          animation: slideIn 0.3s ease-out forwards;
+        }
+        @keyframes fadeIn {
+          to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes slideDown {
+          to { transform: translateY(0); }
+        }
+        @keyframes slideUp {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes scaleIn {
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        @keyframes slideIn {
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+      `}</style>
+    </div>
+  )
 }
