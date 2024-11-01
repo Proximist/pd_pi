@@ -97,6 +97,12 @@ export default function HomeUI({
   handleClaim2,
   handleClaim3,
   handleFarmClick,
+  menuOpen,
+  setMenuOpen,
+  showNotification,
+  mounted,
+  handleMenuItemClick,
+  handleBuyPi,
 }: HomeUIProps) {
   const [farmingPoints, setFarmingPoints] = useState(0);
   const [isClaimAnimating, setIsClaimAnimating] = useState(false);
