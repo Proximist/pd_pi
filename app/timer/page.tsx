@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import { WebApp } from '@twa-dev/types';
 import Link from 'next/link';
-import '../globals.css'
 import './timer.css';
+import '../globals.css'
+
 
 declare global {
   interface Window {
@@ -90,7 +91,7 @@ const Timer: React.FC = () => {
   const footerContainerClass = `footerContainer ${isDarkMode ? 'dark-mode' : ''}`;
   const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`;
   const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`;
-  const loaderClass = `loader ${isDarkMode ? 'dark-mode' : ''}`;
+  const loaderClass = `timer-loader ${isDarkMode ? 'dark-mode' : ''}`;
 
   const renderContent = () => {
     if (error) {
