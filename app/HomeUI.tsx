@@ -259,7 +259,6 @@ export default function HomeUI({
               Buy Pi
             </button>
           </div>
-          {renderContent()}
         </div>
         </div>
         {/* Add the sliding menu */}
