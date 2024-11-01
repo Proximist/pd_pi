@@ -210,6 +210,10 @@
   }
 }
 
-.loader {
+.timer-loader {
+  color: #fff;
+}
+
+.dark-mode .timer-loader {
   color: #fff;
 }
