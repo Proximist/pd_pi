@@ -209,3 +209,7 @@
     gap: 3px;
   }
 }
+
+.loader {
+  color: #fff;
+}
