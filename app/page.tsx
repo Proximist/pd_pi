@@ -40,6 +40,8 @@ export default function Home() {
         window.location.href = './transaction-history'
       } else if (item === 'Profile') {
         window.location.href = './profile'
+      } else if  (item === 'Invite & Earn') {
+        window.location.href = './invite'
       }
       setMenuOpen(false)
     }
@@ -265,6 +267,8 @@ export default function Home() {
       handleFarmClick={handleFarmClick}
       menuOpen={menuOpen}
       setMenuOpen={setMenuOpen}
+      showIntro={showIntro}
+      setShowIntro={setShowIntro}
       showNotification={showNotification}
       mounted={mounted}
       handleMenuItemClick={handleMenuItemClick}
