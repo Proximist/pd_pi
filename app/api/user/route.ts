@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
         baseprice: true,
         piaddress: true,
         istransaction: true,
-        totalPisold: true, // Add this line to select the new field
+        totalPisold: true,
       }
     });
 
@@ -101,7 +101,7 @@ export async function POST(req: NextRequest) {
               currentTime: new Date(),
               level: 1,
               transactionStatus: [],
-              totalPisold: 0 // Initialize for new users
+              totalPisold: 0
             }
           });
 
@@ -127,7 +127,7 @@ export async function POST(req: NextRequest) {
               currentTime: new Date(),
               level: 1,
               transactionStatus: [],
-              totalPisold: 0 // Initialize for new users
+              totalPisold: 0
             }
           });
         }
@@ -142,24 +142,39 @@ export async function POST(req: NextRequest) {
             currentTime: new Date(),
             level: 1,
             transactionStatus: [],
-            totalPisold: 0 // Initialize for new users
+            totalPisold: 0
           }
         });
       }
-    } else {
-      // Calculate total Pi sold from completed transactions
-      const totalPisold = calculateTotalPiSold(user.transactionStatus, user.piAmount);
-      
-      // Update user's online status, current time, and totalPisold
-      user = await prisma.user.update({
-        where: { telegramId: userData.id },
-        data: {
-          isOnline: true,
-          currentTime: new Date(),
-          totalPisold: totalPisold // Update the totalPisold
-        }
-      });
     }
+
+    // Fetch totalPisold data for all invited users
+    const invitedUsersData = await Promise.all(
+      user.invitedUsers.map(async (invitedUsername: string) => {
+        // Remove @ symbol if present for the query
+        const username = invitedUsername.startsWith('@') ? invitedUsername.substring(1) : invitedUsername;
+        
+        const invitedUser = await prisma.user.findFirst({
+          where: { username },
+          select: { username: true, totalPisold: true }
+        });
+
+        return {
+          username: invitedUsername,
+          totalPisold: invitedUser?.totalPisold || 0
+        };
+      })
+    );
+
+    // Update user's online status and current time
+    user = await prisma.user.update({
+      where: { telegramId: userData.id },
+      data: {
+        isOnline: true,
+        currentTime: new Date(),
+        totalPisold: calculateTotalPiSold(user.transactionStatus, user.piAmount)
+      }
+    });
 
     let inviterInfo = null;
     if (inviterId) {
@@ -194,7 +209,6 @@ export async function POST(req: NextRequest) {
           const newStatuses = [...user.transactionStatus]
           newStatuses[index] = status
           
-          // Update totalPisold when transaction status changes
           const updatedUser = await prisma.user.update({
               where: { telegramId: userData.id },
               data: { 
@@ -234,6 +248,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       ...user,
       user,
+      invitedUsersData, // Include the invited users data with their totalPisold
       ...metrics,
       status: user.transactionStatus,
       inviterInfo,
