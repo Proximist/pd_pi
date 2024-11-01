@@ -50,6 +50,7 @@ export default function Home() {
   }
 
   useEffect(() => {
+    setMounted(true)
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
       const tg = window.Telegram.WebApp
       tg.ready()
