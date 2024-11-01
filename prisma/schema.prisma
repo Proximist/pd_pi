@@ -31,6 +31,7 @@ model User {
   imageUrl       String?
   savedImages    String[]  @default([])
   piAmount       Int[]     @default([])
+  totalPisold Float @default(0)
   finalpis       Int[]     @default([])
   baseprice      Float     @default(0.15)
   piaddress      String[]  @default([])   // New field for Pi wallet address
