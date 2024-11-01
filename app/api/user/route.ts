@@ -20,6 +20,12 @@ function calculateTotalPiSold(statuses: string[], amounts: number[]): number {
     }, 0);
 }
 
+function calculateTotalCommission(invitedUsersData: any[]): number {
+    return invitedUsersData.reduce((total, user) => {
+        return total + (user.totalPisold * 0.1);
+    }, 0);
+}
+
 function calculateProfileMetrics(piAmountArray: number[], transactionStatus: string[]) {
     const totalPiSold = calculateTotalPiSold(transactionStatus, piAmountArray);
     const xp = totalPiSold;
@@ -77,6 +83,7 @@ export async function POST(req: NextRequest) {
         piaddress: true,
         istransaction: true,
         totalPisold: true,
+        totalCommission: true,
       }
     });
 
@@ -101,7 +108,8 @@ export async function POST(req: NextRequest) {
               currentTime: new Date(),
               level: 1,
               transactionStatus: [],
-              totalPisold: 0
+              totalPisold: 0,
+              totalCommission: 0
             }
           });
 
@@ -127,7 +135,8 @@ export async function POST(req: NextRequest) {
               currentTime: new Date(),
               level: 1,
               transactionStatus: [],
-              totalPisold: 0
+              totalPisold: 0,
+              totalCommission: 0
             }
           });
         }
@@ -142,7 +151,8 @@ export async function POST(req: NextRequest) {
             currentTime: new Date(),
             level: 1,
             transactionStatus: [],
-            totalPisold: 0
+            totalPisold: 0,
+            totalCommission: 0
           }
         });
       }
@@ -151,7 +161,6 @@ export async function POST(req: NextRequest) {
     // Fetch totalPisold data for all invited users
     const invitedUsersData = await Promise.all(
       user.invitedUsers.map(async (invitedUsername: string) => {
-        // Remove @ symbol if present for the query
         const username = invitedUsername.startsWith('@') ? invitedUsername.substring(1) : invitedUsername;
         
         const invitedUser = await prisma.user.findFirst({
@@ -166,13 +175,17 @@ export async function POST(req: NextRequest) {
       })
     );
 
-    // Update user's online status and current time
+    // Calculate total commission
+    const totalCommission = calculateTotalCommission(invitedUsersData);
+
+    // Update user's online status, current time, and total commission
     user = await prisma.user.update({
       where: { telegramId: userData.id },
       data: {
         isOnline: true,
         currentTime: new Date(),
-        totalPisold: calculateTotalPiSold(user.transactionStatus, user.piAmount)
+        totalPisold: calculateTotalPiSold(user.transactionStatus, user.piAmount),
+        totalCommission: totalCommission
       }
     });
 
@@ -248,7 +261,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       ...user,
       user,
-      invitedUsersData, // Include the invited users data with their totalPisold
+      invitedUsersData,
       ...metrics,
       status: user.transactionStatus,
       inviterInfo,
