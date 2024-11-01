@@ -86,13 +86,6 @@ export default function Invite() {
     }
   }
 
-  // Calculate total commission (10% of total Pi sold by invited users)
-  const calculateTotalCommission = () => {
-    return invitedUsers.reduce((total, user) => {
-      return total + (user.totalPisold * 0.1)
-    }, 0)
-  }
-
   const darkModeClasses = isDarkMode ? 'dark' : ''
 
   return (
@@ -151,7 +144,7 @@ export default function Invite() {
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg text-center">
                   <p className="text-2xl font-bold text-[#670773] dark:text-purple-400">
-                    {calculateTotalCommission().toFixed(1)}
+                    {user?.totalCommission?.toFixed(1) || '0.0'}
                   </p>
                   <p className="text-gray-600 dark:text-gray-300">Total Pi Commission</p>
                 </div>
