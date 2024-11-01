@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import './HomeUI.css';
-import './globals.css';
+import Script from 'next/script'
 import { getRandomMessage } from './updateTextUtils';
 
 interface HomeUIProps {
@@ -24,6 +23,12 @@ interface HomeUIProps {
   handleClaim2: () => void;
   handleClaim3: () => void;
   handleFarmClick: () => void;
+  menuOpen: boolean;
+  setMenuOpen: (open: boolean) => void;
+  showNotification: boolean;
+  mounted: boolean;
+  handleMenuItemClick: (item: string) => void;
+  handleBuyPi: () => void;
 }
 
 const AnimatedNumber: React.FC<{ value: number }> = ({ value }) => {
@@ -88,6 +93,12 @@ export default function HomeUI({
   handleClaim2,
   handleClaim3,
   handleFarmClick,
+  menuOpen,
+  setMenuOpen,
+  showNotification,
+  mounted,
+  handleMenuItemClick,
+  handleBuyPi,
 }: HomeUIProps) {
   const [farmingPoints, setFarmingPoints] = useState(0);
   const [isClaimAnimating, setIsClaimAnimating] = useState(false);
@@ -195,120 +206,181 @@ export default function HomeUI({
       return <div className={errorClass}>{error}</div>;
     }
 
-    if (!user) {
+    if (!user) {  
       return <div className={loaderClass}></div>;
     }
 
     return (
-      <>
-        <div className={headerClass}>
-          <div className="dog-image-container">
-            <img
-              alt="Animated style dog image"
-              className="dog-image"
-              src="https://i.imgur.com/F13Hj7a.jpeg"
+    <div className={`min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 ${mounted ? 'fade-in' : ''}`}>
+      <Script src="https://kit.fontawesome.com/18e66d329f.js"/>
+      
+      {/* Header */}
+      <div className="w-full bg-[#670773] text-white p-4 shadow-lg flex items-center justify-between relative z-10 slide-down">
+        <button 
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="hover:scale-110 transition-transform"
+        >
+          <i className="fas fa-bars text-2xl"></i>
+        </button>
+        <h1 className="text-2xl font-bold">Pi Trader Official</h1>
+        <div className="w-8"></div>
+      </div>
+
+      {/* Notification */}
+      {showNotification && (
+        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-[#670773] text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
+          This feature will be available soon
+        </div>
+      )}
+
+      {/* Main Content - More Compact Layout */}
+      <div className="container mx-auto px-4 py-4">
+        <div className="bg-white rounded-lg p-4 shadow-md mb-4 text-center fade-in-up">
+          <p className="text-[#670773] text-sm font-medium">
+            Pi Coin has not launched. This is the premarket price set by our team and does not represent Official data
+          </p>
+        </div>
+
+        <div className="text-center mb-6">
+          <div className="bg-white rounded-lg p-4 shadow-md mb-4">
+            <h2 className="text-4xl font-bold text-[#670773]">
+              ~$0.41/Pi
+            </h2>
+          </div>
+
+          <div className="relative w-48 h-48 mx-auto mb-6 scale-in">
+            <img 
+              src="https://i.imgur.com/2E3jTAp.png" 
+              alt="Pi Coin" 
+              className="w-full h-full object-cover rounded-full shadow-xl hover:scale-105 transition-transform duration-300"
             />
           </div>
-          <p id="pixelDogsCount" className={`pixel-dogs-count ${isDarkMode ? 'dark-mode' : ''}`}>
-            {user.points.toLocaleString()} PixelDogs
-          </p>
-          <p className={`update-text ${isTextFading ? 'fade-out' : 'fade-in'} ${isDarkMode ? 'dark-mode' : ''}`}>
-            {updateMessage}
-          </p>
-          <div className={tasksClass}>
-            <button className={`tasks-button ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Socials..!</button>
-            <div className={socialClass}>
-              <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Youtube!</p>
-              <button
-                onClick={() => buttonStage1 === 'check' ? handleButtonClick1() : buttonStage1 === 'claim' ? handleClaim1() : null}
-                disabled={buttonStage1 === 'claimed' || isLoading}
-                className={`claim-button ${buttonStage1 === 'claimed' || isLoading ? 'disabled' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
-              >
-                {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+
+          <div className="flex flex-col gap-3 items-center slide-up">
+            <Link href="/PaymentMethods" className="w-full max-w-xs">
+              <button className="w-full bg-[#670773] text-white text-lg font-bold py-3 px-6 rounded-full shadow-lg hover:bg-[#7a1b86] transform hover:scale-105 transition-all duration-300 active:scale-95">
+                Sell Your Pi
               </button>
-            </div>
-            <div className={socialClass}>
-              <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Follow Our Twitter!</p>
-              <button
-                onClick={() => buttonStage2 === 'check' ? handleButtonClick2() : buttonStage2 === 'claim' ? handleClaim2() : null}
-                disabled={buttonStage2 === 'claimed' || isLoading1}
-                className={`claim-button ${buttonStage2 === 'claimed' || isLoading1 ? 'disabled' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
-              >
-                {isLoading1 ? 'Claiming...' : buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
-              </button>
-            </div>
-            <div className={socialClass}>
-              <p className={`social-text ${isDarkMode ? 'dark-mode' : ''}`}>Join Our Telegram!</p>
-              <button
-                onClick={() => buttonStage3 === 'check' ? handleButtonClick3() : buttonStage3 === 'claim' ? handleClaim3() : null}
-                disabled={buttonStage3 === 'claimed' || isLoading2}
-                className={`claim-button ${buttonStage3 === 'claimed' || isLoading2 ? 'disabled' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
-              >
-                {isLoading2 ? 'Claiming...' : buttonStage3 === 'check' ? 'Check' : buttonStage3 === 'claim' ? 'Claim' : 'Claimed'}
-              </button>
-            </div>
+            </Link>
+            <button 
+              onClick={handleBuyPi}
+              className="w-full max-w-xs bg-white text-[#670773] text-lg font-bold py-3 px-6 rounded-full shadow-lg border-2 border-[#670773] hover:bg-[#670773] hover:text-white transform hover:scale-105 transition-all duration-300 active:scale-95"
+            >
+              Buy Pi
+            </button>
           </div>
         </div>
-        <div className="flex-grow"></div>
-        <button
-          className={`farm-button ${farmingStatus === 'farming' ? 'farming' : ''} ${isClaimAnimating ? 'claim-animating' : ''} ${isDarkMode ? 'dark-mode' : ''}`}
-          onClick={farmingStatus === 'claim' ? handleClaimClick : handleFarmClick}
-          disabled={farmingStatus === 'farming' || isClaimAnimating}
-        >
-          {farmingStatus === 'farm' ? (
-            <span className="claimFarms">Farm PixelDogs</span>
-          ) : farmingStatus === 'farming' ? (
-            <>
-              <span className="farmingtext">Farming</span>
-              <div className="farming-points">
-                <AnimatedNumber value={farmingPoints} />
-              </div>
-              <span className="countdown-timer">
-                {getRemainingTimeString()}
-              </span>
-            </>
-          ) : (
-            <span className="claimFarm">Claim Farm</span>
-          )}
-        </button>
-        {notification && (
-          <div className={`notification-banner ${isDarkMode ? 'dark-mode' : ''}`}>
-            {notification}
-          </div>
-        )}
-      </>
-    );
-  };
+      </div>
 
-  return (
-    <div className={containerClass}>
-      {renderContent()}
-      <div className={footerContainerClass}>
-        <Link href="/">
-          <a className={activeFooterLinkClass}>
-            <i className="fas fa-home"></i>
-            <span>Home</span>
-          </a>
-        </Link>
-        <Link href="/invite">
-          <a className={footerLinkClass}>
-            <i className="fas fa-users"></i>
-            <span>Friends</span>
-          </a>
-        </Link>
-        <Link href="/task">
-          <a className={footerLinkClass}>
-            <i className="fas fa-clipboard"></i>
-            <span>Tasks</span>
-          </a>
-        </Link>
-        <Link href="/timer">
-          <a className={footerLinkClass}>
-            <i className="fas fa-calendar"></i>
-            <span>Event</span>
-          </a>
-        </Link>
+      {/* Sliding Menu */}
+      <div className={`fixed top-0 left-0 h-full w-72 bg-[#670773] text-white shadow-2xl transform transition-transform duration-300 z-50 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="p-4 border-b border-white/20">
+          <button 
+            onClick={() => setMenuOpen(false)} 
+            className="absolute top-4 right-4 text-white hover:scale-110 transition-transform"
+          >
+            <i className="fas fa-times text-2xl"></i>
+          </button>
+          <h2 className="text-xl font-bold mt-8">Menu</h2>
+        </div>
+        <nav className="mt-4">
+          <ul className="space-y-2">
+            {['Home', 'Transaction History', 'Live Support', 'Profile'].map((item, index) => (
+              <li key={index} className="menu-item" style={{animationDelay: `${index * 0.1}s`}}>
+                <a 
+                  href="#" 
+                  onClick={(e) => {
+                    e.preventDefault()
+                    handleMenuItemClick(item)
+                  }}
+                  className="block py-3 px-6 hover:bg-white/10 transition-colors duration-300"
+                >
+                  <i className={`fas fa-${
+                    item === 'Home' ? 'home' :
+                    item === 'Transaction History' ? 'history' :
+                    item === 'Live Support' ? 'headset' :
+                    item === 'Profile' ? 'user' :
+                    item === 'Invite & Earn' ? 'gift' :
+                    'tools'
+                  } mr-3`}></i>
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
-      </div>
-  );
+
+      <style jsx>{`
+        .loading-spinner {
+          border: 4px solid rgba(103, 7, 115, 0.1);
+          border-left-color: #670773;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+        .fade-in {
+          opacity: 0;
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+        .fade-in-up {
+          opacity: 0;
+          transform: translateY(20px);
+          animation: fadeInUp 0.5s ease-out forwards;
+        }
+        .slide-down {
+          transform: translateY(-100%);
+          animation: slideDown 0.5s ease-out forwards;
+        }
+        .slide-up {
+          opacity: 0;
+          transform: translateY(50px);
+          animation: slideUp 0.5s ease-out forwards;
+        }
+        .scale-in {
+          opacity: 0;
+          transform: scale(0.8);
+          animation: scaleIn 0.5s ease-out forwards;
+        }
+        .menu-item {
+          opacity: 0;
+          animation: slideIn 0.3s ease-out forwards;
+        }
+        @keyframes fadeIn {
+          to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes slideDown {
+          to { transform: translateY(0); }
+        }
+        @keyframes slideUp {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes scaleIn {
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        @keyframes slideIn {
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+      `}</style>
+    </div>
+  )
 }
