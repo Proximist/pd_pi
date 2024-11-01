@@ -383,4 +383,5 @@ export default function HomeUI({
       `}</style>
     </div>
   )
+  }
 }
