@@ -223,14 +223,15 @@ export async function POST(req: NextRequest) {
     const metrics = calculateProfileMetrics(user.piAmount);
 
     return NextResponse.json({
-      ...user,
-      ...metrics,
-      status: user.transactionStatus,
-      inviterInfo,
-      farmingStatus
-  })
-  } catch (error) {
-      console.error('Error processing user data:', error)
-      return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
-  }
-  }
+    ...user,          // spreads all user properties
+    user,            // includes the whole user object
+    ...metrics,
+    status: user.transactionStatus,
+    inviterInfo,
+    farmingStatus
+});
+} catch (error) {
+    console.error('Error processing user data:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+}
+}
