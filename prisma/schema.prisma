@@ -14,17 +14,6 @@ model User {
   firstName     String?
   lastName      String?
   points        Int      @default(0)
-  claimedButton1 Boolean @default(false)
-  claimedButton2 Boolean @default(false)
-  claimedButton3 Boolean @default(false)
-  claimedButton4 Boolean @default(false)
-  claimedButton5 Boolean @default(false)
-  claimedButton6 Boolean @default(false)
-  claimedButton7 Boolean @default(false)
-  claimedButton8 Boolean @default(false)
-  claimedButton9 Boolean @default(false)
-  claimedButton10 Boolean @default(false)
-  claimedButton11 Boolean @default(false)
   invitedUsers  String[] @default([])
   invitedBy     String?  @default("")
   startFarming  DateTime?
