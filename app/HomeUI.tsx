@@ -3,9 +3,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Script from 'next/script';
 import IntroPage from './components/IntroPage';
-import './HomeUI.css';
-import './globals.css';
-
 import { getRandomMessage } from './updateTextUtils';
 
 interface HomeUIProps {
@@ -97,12 +94,6 @@ export default function HomeUI({
   handleClaim2,
   handleClaim3,
   handleFarmClick,
-  menuOpen,
-  setMenuOpen,
-  showNotification,
-  mounted,
-  handleMenuItemClick,
-  handleBuyPi,
 }: HomeUIProps) {
   const [farmingPoints, setFarmingPoints] = useState(0);
   const [isClaimAnimating, setIsClaimAnimating] = useState(false);
@@ -203,16 +194,6 @@ export default function HomeUI({
   const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`;
   const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`;
   const errorClass = `container mx-auto p-4 text-red-500 ${isDarkMode ? 'dark-mode' : ''}`;
-  const loaderClass = `loader ${isDarkMode ? 'dark-mode' : ''}`;
-
-  const renderContent = () => {
-    if (error) {
-      return <div className={errorClass}>{error}</div>;
-    }
-
-    if (!user) {
-      return <div className={loaderClass}></div>;
-    }
 
     return (
       <div className={`min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 ${mounted ? 'fade-in' : ''}`}>
@@ -315,10 +296,4 @@ export default function HomeUI({
         </div>
       </div>
     );
-  }
-
-  return (
-    <div className={containerClass}>
-      </div>
-  );
 }
