@@ -35,7 +35,7 @@ model User {
   totalPoints   Int       @default(0)
   invitePoints  Int       @default(0)
   level          Int       @default(1)
-  introSeen      Boolean   @default(true)
+  introSeen      Boolean   @default(false)
   paymentMethod  String[]  @default([])  // Changed to array
   paymentAddress String[]  @default([])  // Changed to array
   isUpload       Boolean   @default(false)
