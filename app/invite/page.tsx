@@ -3,8 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { WebApp } from '@twa-dev/types'
-import './invite.css'
-import '../globals.css'
+import Script from 'next/script'
 
 declare global {
   interface Window {
@@ -21,10 +20,10 @@ export default function Invite() {
   const [inviteLink, setInviteLink] = useState('')
   const [invitedUsers, setInvitedUsers] = useState<string[]>([])
   const [isDarkMode, setIsDarkMode] = useState(false)
-  const [isCopied, setIsCopied] = useState(false)
-  const [buttonState, setButtonState] = useState('initial')
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
       const tg = window.Telegram.WebApp
       tg.ready()
@@ -32,7 +31,7 @@ export default function Invite() {
       setIsDarkMode(isDark)
 
       // Add theme classes to body
-      document.body.classList.toggle('dark-mode', isDark)
+      document.body.classList.toggle('dark:bg-gray-900', isDark)
 
       const initDataUnsafe = tg.initDataUnsafe || {}
 
@@ -65,135 +64,126 @@ export default function Invite() {
     }
   }, [])
 
-  const handleInvite = () => {
+  const handleInvite = async () => {
     if (inviteLink) {
-      navigator.clipboard.writeText(inviteLink).then(() => {
-        setButtonState('copied')
-        setNotification('Invite link copied to clipboard!')
-        setTimeout(() => {
-          setButtonState('fadeOut')
-          setTimeout(() => {
-            setButtonState('initial')
-            setNotification('')
-          }, 300)
-        }, 5000)
-      }).catch(err => {
-        console.error('Failed to copy: ', err)
-        setNotification('Failed to copy invite link. Please try again.')
-      })
+      try {
+        await navigator.clipboard.writeText(inviteLink)
+        setNotification('Invite link copied successfully!')
+        setTimeout(() => setNotification(''), 3000)
+      } catch (err) {
+        setNotification('Failed to copy invite link')
+        setTimeout(() => setNotification(''), 3000)
+      }
     }
   }
 
-  // Add dark mode classes to elements
-  const containerClass = `container ${isDarkMode ? 'dark-mode' : ''}`
-  const contentClass = `content ${isDarkMode ? 'dark-mode' : ''}`
-  const headerClass = `header ${isDarkMode ? 'dark-mode' : ''}`
-  const titleClass = `title ${isDarkMode ? 'dark-mode' : ''}`
-  const inviteButtonClass = `inviteButton ${buttonState} ${isDarkMode ? 'dark-mode' : ''}`
-  const invitedSectionClass = `invitedSection ${isDarkMode ? 'dark-mode' : ''}`
-  const invitedHeaderClass = `invitedHeader ${isDarkMode ? 'dark-mode' : ''}`
-  const invitedTitleClass = `invitedTitle ${isDarkMode ? 'dark-mode' : ''}`
-  const emptyStateClass = `emptyState ${isDarkMode ? 'dark-mode' : ''}`
-  const notificationClass = `notification ${isDarkMode ? 'dark-mode' : ''}`
-  const footerContainerClass = `footerContainer ${isDarkMode ? 'dark-mode' : ''}`
-  const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`
-  const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`
-  const invitedByClass = `invitedBy ${isDarkMode ? 'dark-mode' : ''}`
+  const darkModeClasses = isDarkMode ? 'dark' : ''
 
   return (
-    <div className={containerClass}>
-      <div className="backgroundShapes"></div>
-      <div className={contentClass}>
+    <div className={`min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 ${darkModeClasses} ${mounted ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}>
+      <Script src="https://kit.fontawesome.com/18e66d329f.js" />
+      
+      <div className="min-h-screen">
+        {/* Header */}
+        <div className="w-full bg-[#670773] text-white p-4 shadow-lg flex items-center justify-between relative z-10">
+          <Link href="/" className="hover:scale-110 transition-transform">
+            <i className="fas fa-arrow-left text-2xl"></i>
+          </Link>
+          <h1 className="text-2xl font-bold">Invite & Earn</h1>
+          <div className="w-8"></div>
+        </div>
+
         {error ? (
-          <div className="error">{error}</div>
+          <div className="flex items-center justify-center p-6">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg text-red-500 text-center">
+              {error}
+            </div>
+          </div>
         ) : !user ? (
-          <div className="loader"></div>
+          <div className="flex items-center justify-center h-64">
+            <div className="w-10 h-10 border-4 border-[#670773] border-t-transparent rounded-full animate-spin"></div>
+          </div>
         ) : (
-          <>
-            <div className={headerClass}>
-              <div className="iconContainer">
-                <svg className="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="11" stroke="currentColor" strokeWidth="2"/>
-                  <circle cx="12" cy="12" r="4" fill="currentColor"/>
-                </svg>
-                <svg className="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="11" stroke="currentColor" strokeWidth="2"/>
-                  <circle cx="12" cy="12" r="4" fill="currentColor"/>
-                </svg>
+          <div className="container mx-auto px-4 py-6">
+            {/* Main Card */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md mb-6 transform transition-all duration-300">
+              <div className="text-center mb-6">
+                <i className="fas fa-gift text-5xl text-[#670773] dark:text-purple-400 mb-4"></i>
+                <h2 className="text-2xl font-bold text-[#670773] dark:text-purple-400 mb-2">
+                  Earn 2,500 Points
+                </h2>
+                <p className="text-gray-600 dark:text-gray-300">
+                  For each friend who joins using your invite link
+                </p>
               </div>
-              <p className={titleClass}>
-                Invite your friends and earn 2,500 points for each one you bring!
-              </p>
-            </div>
 
-            <button 
-              onClick={handleInvite} 
-              className={inviteButtonClass}
-            >
-              <span className="buttonText">Copy Invite Link</span>
-              <span className="buttonIcon">
-                <i className="fas fa-copy"></i> Copied
-              </span>
-            </button>
+              <button
+                onClick={handleInvite}
+                className="w-full bg-[#670773] hover:bg-[#7a1b86] text-white text-lg font-bold py-3 px-6 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 active:scale-95 mb-6"
+              >
+                <i className="fas fa-copy mr-2"></i>
+                Copy Invite Link
+              </button>
 
-            {user.invitedBy && (
-              <div className={invitedByClass}>
-                Invited by: {user.invitedBy}
-              </div>
-            )}
-
-            <div className={invitedSectionClass}>
-              <div className={invitedHeaderClass}>
-                <svg className="invitedIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <h2 className={invitedTitleClass}>Invited Friends : {invitedUsers.length}</h2>
-              </div>
-              {invitedUsers.length > 0 ? (
-                <ul className="invitedList">
-                  {invitedUsers.map((user, index) => (
-                    <li key={index}>{user}</li>
-                  ))}
-                </ul>
-              ) : (
-                <div className={emptyStateClass}>
-                  <p className="emptyStateText">The Invite List is empty</p>
+              {/* Stats */}
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg text-center">
+                  <p className="text-2xl font-bold text-[#670773] dark:text-purple-400">
+                    {invitedUsers.length}
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-300">Friends Invited</p>
                 </div>
-              )}
+                <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg text-center">
+                  <p className="text-2xl font-bold text-[#670773] dark:text-purple-400">
+                    {invitedUsers.length * 2500}
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-300">Total Points</p>
+                </div>
+              </div>
+
+              {/* Invited Friends List */}
+              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                <div className="flex items-center mb-4">
+                  <i className="fas fa-users text-[#670773] dark:text-purple-400 text-xl mr-2"></i>
+                  <h3 className="text-lg font-bold text-[#670773] dark:text-purple-400">
+                    Invited Friends
+                  </h3>
+                </div>
+                
+                {invitedUsers.length > 0 ? (
+                  <div className="space-y-2">
+                    {invitedUsers.map((user, index) => (
+                      <div key={index} className="bg-white dark:bg-gray-600 p-3 rounded-lg flex items-center">
+                        <i className="fas fa-user-circle text-[#670773] dark:text-purple-400 mr-3"></i>
+                        <span className="dark:text-gray-200">{user}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center text-gray-500 dark:text-gray-400 py-4">
+                    <p>No friends invited yet</p>
+                  </div>
+                )}
+              </div>
             </div>
 
-            {notification && (
-              <div className={notificationClass}>{notification}</div>
+            {/* Invited By Section */}
+            {user.invitedBy && (
+              <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md text-center">
+                <p className="text-gray-600 dark:text-gray-300">
+                  Invited by: <span className="font-bold text-[#670773] dark:text-purple-400">{user.invitedBy}</span>
+                </p>
+              </div>
             )}
-          </>
+          </div>
         )}
-      </div>
-      <div className={footerContainerClass}>
-        <Link href="/">
-          <a className={footerLinkClass}>
-            <i className="fas fa-home"></i>
-            <span>Home</span>
-          </a>
-        </Link>
-        <Link href="/invite">
-          <a className={activeFooterLinkClass}>
-            <i className="fas fa-users"></i>
-            <span>Friends</span>
-          </a>
-        </Link>
-        <Link href="/task">
-          <a className={footerLinkClass}>
-            <i className="fas fa-clipboard"></i>
-            <span>Tasks</span>
-          </a>
-        </Link>
-         <Link href="/timer">
-          <a className={footerLinkClass}>
-            <i className="fas fa-calendar"></i>
-            <span>Event</span>
-          </a>
-        </Link>
+
+        {/* Notification */}
+        {notification && (
+          <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-[#670773] text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
+            {notification}
+          </div>
+        )}
       </div>
     </div>
   )
