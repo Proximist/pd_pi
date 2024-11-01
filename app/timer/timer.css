@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
 
-.container {
+.timer-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -23,7 +23,7 @@
   justify-content: center;
 }
 
-.container.dark-mode {
+.timer-container.dark-mode {
   color: white;
 }
 
