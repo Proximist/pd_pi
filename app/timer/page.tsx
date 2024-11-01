@@ -89,6 +89,7 @@ const Timer: React.FC = () => {
   const footerContainerClass = `footerContainer ${isDarkMode ? 'dark-mode' : ''}`;
   const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`;
   const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`;
+  const loaderClass = `timer-loader ${isDarkMode ? 'dark-mode' : ''}`;
 
   const renderContent = () => {
     if (error) {
@@ -96,7 +97,7 @@ const Timer: React.FC = () => {
     }
 
     if (!countdownEndDate) {
-      return <div className="loader"></div>;
+      return <div className={loaderClass}></div>;
     }
 
     return (
