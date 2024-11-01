@@ -13,14 +13,23 @@ declare global {
   }
 }
 
+interface InvitedUserData {
+  username: string;
+  totalPisold: number;
+}
+
 export default function Invite() {
   const [user, setUser] = useState<any>(null)
   const [error, setError] = useState<string | null>(null)
   const [notification, setNotification] = useState('')
   const [inviteLink, setInviteLink] = useState('')
-  const [invitedUsers, setInvitedUsers] = useState<string[]>([])
+  const [invitedUsers, setInvitedUsers] = useState<InvitedUserData[]>([])
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [mounted, setMounted] = useState(false)
+
+  const calculateTotalCommission = () => {
+    return invitedUsers.reduce((total, user) => total + (user.totalPisold * 0.1), 0);
+  };
 
   useEffect(() => {
     setMounted(true)
@@ -30,7 +39,6 @@ export default function Invite() {
       const isDark = tg.colorScheme === 'dark'
       setIsDarkMode(isDark)
 
-      // Add theme classes to body
       document.body.classList.toggle('dark:bg-gray-900', isDark)
 
       const initDataUnsafe = tg.initDataUnsafe || {}
@@ -50,7 +58,12 @@ export default function Invite() {
             } else {
               setUser(data.user)
               setInviteLink(`https://t.me/gimmexcbot/Hcisjid/start?startapp=${data.user.telegramId}`)
-              setInvitedUsers(data.user.invitedUsers || [])
+              // Transform the invitedUsers array to include totalPisold
+              const usersWithPi = (data.user.invitedUsers || []).map((username: string) => ({
+                username,
+                totalPisold: data.invitedUsersPi?.[username] || 0
+              }));
+              setInvitedUsers(usersWithPi)
             }
           })
           .catch(() => {
@@ -84,7 +97,6 @@ export default function Invite() {
       <Script src="https://kit.fontawesome.com/18e66d329f.js" />
       
       <div className="min-h-screen">
-        {/* Header */}
         <div className="w-full bg-[#670773] text-white p-4 shadow-lg flex items-center justify-between relative z-10">
           <Link href="/" className="hover:scale-110 transition-transform">
             <i className="fas fa-arrow-left text-2xl"></i>
@@ -105,7 +117,6 @@ export default function Invite() {
           </div>
         ) : (
           <div className="container mx-auto px-4 py-6">
-            {/* Main Card */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md mb-6 transform transition-all duration-300">
               <div className="text-center mb-6">
                 <i className="fas fa-gift text-5xl text-[#670773] dark:text-purple-400 mb-4"></i>
@@ -125,7 +136,6 @@ export default function Invite() {
                 Copy Invite Link
               </button>
 
-              {/* Stats */}
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg text-center">
                   <p className="text-2xl font-bold text-[#670773] dark:text-purple-400">
@@ -135,13 +145,12 @@ export default function Invite() {
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg text-center">
                   <p className="text-2xl font-bold text-[#670773] dark:text-purple-400">
-                    {invitedUsers.length * 2500}
+                    {calculateTotalCommission().toFixed(1)}
                   </p>
-                  <p className="text-gray-600 dark:text-gray-300">Total Points</p>
+                  <p className="text-gray-600 dark:text-gray-300">Total Pi Commission</p>
                 </div>
               </div>
 
-              {/* Invited Friends List */}
               <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                 <div className="flex items-center mb-4">
                   <i className="fas fa-users text-[#670773] dark:text-purple-400 text-xl mr-2"></i>
@@ -153,9 +162,14 @@ export default function Invite() {
                 {invitedUsers.length > 0 ? (
                   <div className="space-y-2">
                     {invitedUsers.map((user, index) => (
-                      <div key={index} className="bg-white dark:bg-gray-600 p-3 rounded-lg flex items-center">
-                        <i className="fas fa-user-circle text-[#670773] dark:text-purple-400 mr-3"></i>
-                        <span className="dark:text-gray-200">{user}</span>
+                      <div key={index} className="bg-white dark:bg-gray-600 p-3 rounded-lg flex items-center justify-between">
+                        <div className="flex items-center">
+                          <i className="fas fa-user-circle text-[#670773] dark:text-purple-400 mr-3"></i>
+                          <span className="dark:text-gray-200">{user.username}</span>
+                        </div>
+                        <span className="text-[#670773] dark:text-purple-400 font-medium">
+                          {(user.totalPisold * 0.1).toFixed(1)} Pi
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -167,7 +181,6 @@ export default function Invite() {
               </div>
             </div>
 
-            {/* Invited By Section */}
             {user.invitedBy && (
               <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md text-center">
                 <p className="text-gray-600 dark:text-gray-300">
@@ -178,7 +191,6 @@ export default function Invite() {
           </div>
         )}
 
-        {/* Notification */}
         {notification && (
           <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-[#670773] text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
             {notification}
