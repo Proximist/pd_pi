@@ -85,7 +85,7 @@ const Timer: React.FC = () => {
     return () => clearInterval(interval);
   }, [countdownEndDate]);
 
-  const containerClass = `container ${isDarkMode ? 'dark-mode' : ''}`;
+  const containerClass = `timer-container ${isDarkMode ? 'dark-mode' : ''}`;
   const footerContainerClass = `footerContainer ${isDarkMode ? 'dark-mode' : ''}`;
   const footerLinkClass = `footerLink ${isDarkMode ? 'dark-mode' : ''}`;
   const activeFooterLinkClass = `footerLink activeFooterLink ${isDarkMode ? 'dark-mode' : ''}`;
