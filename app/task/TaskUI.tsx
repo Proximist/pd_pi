@@ -300,19 +300,19 @@ export default function TaskUI({
         <Link href="/">
           <a className={footerLinkClass}>
             <i className="fas fa-home"></i>
-            <p className="text-sm">Home</p>
+            <span>Home</span>
           </a>
         </Link>
         <Link href="/invite">
           <a className={footerLinkClass}>
             <i className="fas fa-users"></i>
-            <p className="text-sm">Friends</p>
+            <span>Friends</span>
           </a>
         </Link>
         <Link href="/task">
           <a className={activeFooterLinkClass}>
             <i className="fas fa-clipboard"></i>
-            <p className="text-sm">Tasks</p>
+            <span>Tasks</span>
           </a>
         </Link>
          <Link href="/timer">
