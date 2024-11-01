@@ -32,6 +32,21 @@ model User {
   currentTime   DateTime? @updatedAt
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  totalPoints   Int       @default(0)
+  invitePoints  Int       @default(0)
+  level          Int       @default(1)
+  introSeen      Boolean   @default(true)
+  paymentMethod  String[]  @default([])  // Changed to array
+  paymentAddress String[]  @default([])  // Changed to array
+  isUpload       Boolean   @default(false)
+  imageUrl       String?
+  savedImages    String[]  @default([])
+  piAmount       Int[]     @default([])
+  finalpis       Int[]     @default([])
+  baseprice      Float     @default(0.15)
+  piaddress      String[]  @default([])   // New field for Pi wallet address
+  istransaction  Boolean   @default(false)
+  transactionStatus String[] @default(["processing"])
 }
 
 model CountdownConfig {
