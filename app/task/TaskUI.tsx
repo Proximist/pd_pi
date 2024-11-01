@@ -299,20 +299,26 @@ export default function TaskUI({
       <div className={footerContainerClass}>
         <Link href="/">
           <a className={footerLinkClass}>
-            <i className="fas fa-home text-2xl"></i>
+            <i className="fas fa-home"></i>
             <p className="text-sm">Home</p>
           </a>
         </Link>
         <Link href="/invite">
           <a className={footerLinkClass}>
-            <i className="fas fa-users text-2xl"></i>
+            <i className="fas fa-users"></i>
             <p className="text-sm">Friends</p>
           </a>
         </Link>
         <Link href="/task">
           <a className={activeFooterLinkClass}>
-            <i className="fas fa-clipboard text-2xl"></i>
+            <i className="fas fa-clipboard"></i>
             <p className="text-sm">Tasks</p>
+          </a>
+        </Link>
+         <Link href="/timer">
+          <a className={footerLinkClass}>
+            <i className="fas fa-calendar"></i>
+            <span>Event</span>
           </a>
         </Link>
       </div>
