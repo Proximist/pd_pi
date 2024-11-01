@@ -188,6 +188,12 @@ export default function Invite() {
             <span>Tasks</span>
           </a>
         </Link>
+         <Link href="/timer">
+          <a className={footerLinkClass}>
+            <i className="fas fa-calendar"></i>
+            <span>Event</span>
+          </a>
+        </Link>
       </div>
     </div>
   )
