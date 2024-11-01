@@ -24,7 +24,30 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const [isLoading1, setIsLoading1] = useState(false)
   const [isLoading2, setIsLoading2] = useState(false)
-   const [isInitialLoading, setIsInitialLoading] = useState(true)
+  const [isInitialLoading, setIsInitialLoading] = useState(true)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [showIntro, setShowIntro] = useState(true)
+  const [mounted, setMounted] = useState(false)
+  const [showNotification, setShowNotification] = useState(false)
+
+  // Add these new handlers after existing handlers:
+  const handleMenuItemClick = (item: string) => {
+      if (item === 'Live Support') {
+        window.location.href = '/LiveSupport.html'
+      } else if (item === 'Home') {
+        window.location.href = '/'
+      } else if (item === 'Transaction History') {
+        window.location.href = './transaction-history'
+      } else if (item === 'Profile') {
+        window.location.href = './profile'
+      }
+      setMenuOpen(false)
+    }
+
+  const handleBuyPi = () => {
+  setShowNotification(true)
+  setTimeout(() => setShowNotification(false), 3000)
+  }
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
@@ -52,6 +75,7 @@ export default function Home() {
               setButtonStage2(data.user.claimedButton2 ? 'claimed' : 'check')
               setButtonStage3(data.user.claimedButton3 ? 'claimed' : 'check')
               checkFarmingStatus(data.user)
+              setShowIntro(!data.introSeen) // Add this line
             }
           })
           .catch(() => {
@@ -238,6 +262,12 @@ export default function Home() {
       handleClaim2={handleClaim2}
       handleClaim3={handleClaim3}
       handleFarmClick={handleFarmClick}
+      menuOpen={menuOpen}
+      setMenuOpen={setMenuOpen}
+      showNotification={showNotification}
+      mounted={mounted}
+      handleMenuItemClick={handleMenuItemClick}
+      handleBuyPi={handleBuyPi}
     />
   )
 }
