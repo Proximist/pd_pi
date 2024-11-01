@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { WebApp } from '@twa-dev/types';
 import Link from 'next/link';
+import '../globals.css'
 import './timer.css';
 
 declare global {
