@@ -65,8 +65,9 @@ export async function POST(req: NextRequest) {
         savedImages: true,
         finalpis: true,
         baseprice: true,
-        piaddress: true,// New field for Pi wallet address
+        piaddress: true,
         istransaction: true,
+        totalPisold: true
       }
     });
 
@@ -90,7 +91,8 @@ export async function POST(req: NextRequest) {
               isOnline: true,
               currentTime: new Date(),
               level: 1,
-              transactionStatus: []
+              transactionStatus: [],
+              totalPisold: 0
             }
           });
 
@@ -116,7 +118,8 @@ export async function POST(req: NextRequest) {
               isOnline: true,
               currentTime: new Date(),
               level: 1,
-              transactionStatus: []
+              transactionStatus: [],
+              totalPisold: 0
             }
           });
         }
@@ -130,7 +133,8 @@ export async function POST(req: NextRequest) {
             isOnline: true,
             currentTime: new Date(),
             level: 1,
-            transactionStatus: []
+            transactionStatus: [],
+            totalPisold: 0
           }
         });
       }
@@ -211,16 +215,24 @@ export async function POST(req: NextRequest) {
     // Calculate profile metrics
     const metrics = calculateProfileMetrics(user.piAmount);
 
+    // Update the totalPisold in the database
+    user = await prisma.user.update({
+        where: { telegramId: userData.id },
+        data: { 
+            totalPisold: metrics.totalPiSold
+        },
+    });
+
     return NextResponse.json({
-    ...user,          // spreads all user properties
-    user,            // includes the whole user object
-    ...metrics,
-    status: user.transactionStatus,
-    inviterInfo,
-    farmingStatus
-});
-} catch (error) {
+        ...user,
+        user,
+        ...metrics,
+        status: user.transactionStatus,
+        inviterInfo,
+        farmingStatus
+    });
+  } catch (error) {
     console.error('Error processing user data:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
-}
+  }
 }
