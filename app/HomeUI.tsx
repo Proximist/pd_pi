@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import Script from 'next/script'
+import Script from 'next/script';
+import IntroPage from './components/IntroPage';
+import './HomeUI.css';
+import './globals.css';
+
 import { getRandomMessage } from './updateTextUtils';
 
 interface HomeUIProps {
@@ -93,12 +97,6 @@ export default function HomeUI({
   handleClaim2,
   handleClaim3,
   handleFarmClick,
-  menuOpen,
-  setMenuOpen,
-  showNotification,
-  mounted,
-  handleMenuItemClick,
-  handleBuyPi,
 }: HomeUIProps) {
   const [farmingPoints, setFarmingPoints] = useState(0);
   const [isClaimAnimating, setIsClaimAnimating] = useState(false);
@@ -206,35 +204,34 @@ export default function HomeUI({
       return <div className={errorClass}>{error}</div>;
     }
 
-    if (!user) {  
+    if (!user) {
       return <div className={loaderClass}></div>;
     }
 
     return (
-    <div className={`min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 ${mounted ? 'fade-in' : ''}`}>
-      <Script src="https://kit.fontawesome.com/18e66d329f.js"/>
-      
-      {/* Header */}
-      <div className="w-full bg-[#670773] text-white p-4 shadow-lg flex items-center justify-between relative z-10 slide-down">
-        <button 
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="hover:scale-110 transition-transform"
-        >
-          <i className="fas fa-bars text-2xl"></i>
-        </button>
-        <h1 className="text-2xl font-bold">Pi Trader Official</h1>
-        <div className="w-8"></div>
-      </div>
-
-      {/* Notification */}
-      {showNotification && (
-        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-[#670773] text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
-          This feature will be available soon
+      <div className={`min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 ${mounted ? 'fade-in' : ''}`}>
+        <Script src="https://kit.fontawesome.com/18e66d329f.js"/>
+        {/* Header */}
+        <div className="w-full bg-[#670773] text-white p-4 shadow-lg flex items-center justify-between relative z-10 slide-down">
+          <button 
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="hover:scale-110 transition-transform"
+          >
+            <i className="fas fa-bars text-2xl"></i>
+          </button>
+          <h1 className="text-2xl font-bold">Pi Trader Official</h1>
+          <div className="w-8"></div>
         </div>
-      )}
-
-      {/* Main Content - More Compact Layout */}
-      <div className="container mx-auto px-4 py-4">
+    
+        {/* Keep the existing notification component but add the new Pi notification */}
+        {showNotification && (
+          <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-[#670773] text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
+            This feature will be available soon
+          </div>
+        )}
+    
+        {/* Main content container */}
+        <div className="container mx-auto px-4 py-4">
         <div className="bg-white rounded-lg p-4 shadow-md mb-4 text-center fade-in-up">
           <p className="text-[#670773] text-sm font-medium">
             Pi Coin has not launched. This is the premarket price set by our team and does not represent Official data
@@ -269,11 +266,11 @@ export default function HomeUI({
               Buy Pi
             </button>
           </div>
+          {renderContent()}
         </div>
-      </div>
-
-      {/* Sliding Menu */}
-      <div className={`fixed top-0 left-0 h-full w-72 bg-[#670773] text-white shadow-2xl transform transition-transform duration-300 z-50 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        </div>
+        {/* Add the sliding menu */}
+        <div className={`fixed top-0 left-0 h-full w-72 bg-[#670773] text-white shadow-2xl transform transition-transform duration-300 z-50 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="p-4 border-b border-white/20">
           <button 
             onClick={() => setMenuOpen(false)} 
@@ -309,79 +306,13 @@ export default function HomeUI({
             ))}
           </ul>
         </nav>
+        </div>
       </div>
-
-      <style jsx>{`
-        .loading-spinner {
-          border: 4px solid rgba(103, 7, 115, 0.1);
-          border-left-color: #670773;
-          border-radius: 50%;
-          width: 40px;
-          height: 40px;
-          animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-        .fade-in {
-          opacity: 0;
-          animation: fadeIn 0.5s ease-out forwards;
-        }
-        .fade-in-up {
-          opacity: 0;
-          transform: translateY(20px);
-          animation: fadeInUp 0.5s ease-out forwards;
-        }
-        .slide-down {
-          transform: translateY(-100%);
-          animation: slideDown 0.5s ease-out forwards;
-        }
-        .slide-up {
-          opacity: 0;
-          transform: translateY(50px);
-          animation: slideUp 0.5s ease-out forwards;
-        }
-        .scale-in {
-          opacity: 0;
-          transform: scale(0.8);
-          animation: scaleIn 0.5s ease-out forwards;
-        }
-        .menu-item {
-          opacity: 0;
-          animation: slideIn 0.3s ease-out forwards;
-        }
-        @keyframes fadeIn {
-          to { opacity: 1; }
-        }
-        @keyframes fadeInUp {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes slideDown {
-          to { transform: translateY(0); }
-        }
-        @keyframes slideUp {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes scaleIn {
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        @keyframes slideIn {
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-      `}</style>
-    </div>
-  )
+    );
   }
+
+  return (
+    <div className={containerClass}>
+      </div>
+  );
 }
