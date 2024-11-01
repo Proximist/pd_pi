@@ -48,6 +48,7 @@ export default function Home() {
             } else {
               setUser(data.user)
               setInviterInfo(data.inviterInfo)
+              setShowIntro(!data.introSeen)
               setButtonStage1(data.user.claimedButton1 ? 'claimed' : 'check')
               setButtonStage2(data.user.claimedButton2 ? 'claimed' : 'check')
               setButtonStage3(data.user.claimedButton3 ? 'claimed' : 'check')
