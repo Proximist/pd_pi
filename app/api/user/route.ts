@@ -99,7 +99,9 @@ export async function POST(req: NextRequest) {
               lastName: userData.last_name || '',
               invitedBy: `@${inviterInfo.username || inviterId}`,
               isOnline: true,
-              currentTime: new Date()
+              currentTime: new Date(),
+              level: 1,
+              transactionStatus: []
             }
           });
 
@@ -220,9 +222,15 @@ export async function POST(req: NextRequest) {
     // Calculate profile metrics
     const metrics = calculateProfileMetrics(user.piAmount);
 
-    return NextResponse.json({ user, inviterInfo, farmingStatus });
+    return NextResponse.json({
+      ...user,
+      ...metrics,
+      status: user.transactionStatus,
+      inviterInfo,
+      farmingStatus
+  })
   } catch (error) {
-    console.error('Error processing user data:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+      console.error('Error processing user data:', error)
+      return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
-}
+  }
