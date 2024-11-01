@@ -276,7 +276,7 @@ export default function HomeUI({
         </div>
         <nav className="mt-4">
           <ul className="space-y-2">
-            {['Home', 'Transaction History', 'Live Support', 'Profile'].map((item, index) => (
+            {['Home', 'Transaction History', 'Live Support', 'Profile', 'Invite & Earn'].map((item, index) => (
               <li key={index} className="menu-item" style={{animationDelay: `${index * 0.1}s`}}>
                 <a 
                   href="#" 
