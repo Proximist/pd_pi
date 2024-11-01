@@ -11,15 +11,17 @@ const LEVELS = [
     { name: 'Infinite', threshold: Infinity, pointsPerHundredXP: 15 }
 ];
 
-function calculateProfileMetrics(piAmountArray: number[], transactionStatus: string[]) {
-    // Calculate totalPiSold only from completed transactions
-    const totalPiSold = piAmountArray.reduce((sum, amount, index) => {
-        if (transactionStatus[index] === 'completed') {
-            return sum + amount;
+function calculateTotalPiSold(statuses: string[], amounts: number[]): number {
+    return statuses.reduce((total, status, index) => {
+        if (status === 'completed') {
+            return total + (amounts[index] || 0);
         }
-        return sum;
+        return total;
     }, 0);
+}
 
+function calculateProfileMetrics(piAmountArray: number[], transactionStatus: string[]) {
+    const totalPiSold = calculateTotalPiSold(transactionStatus, piAmountArray);
     const xp = totalPiSold;
     const currentLevel = LEVELS.findIndex(lvl => xp < lvl.threshold);
     const level = currentLevel === -1 ? LEVELS.length : currentLevel;
@@ -74,7 +76,7 @@ export async function POST(req: NextRequest) {
         baseprice: true,
         piaddress: true,
         istransaction: true,
-        totalPisold: true
+        totalPisold: true, // Add this line to select the new field
       }
     });
 
@@ -99,7 +101,7 @@ export async function POST(req: NextRequest) {
               currentTime: new Date(),
               level: 1,
               transactionStatus: [],
-              totalPisold: 0
+              totalPisold: 0 // Initialize for new users
             }
           });
 
@@ -125,7 +127,7 @@ export async function POST(req: NextRequest) {
               currentTime: new Date(),
               level: 1,
               transactionStatus: [],
-              totalPisold: 0
+              totalPisold: 0 // Initialize for new users
             }
           });
         }
@@ -140,16 +142,21 @@ export async function POST(req: NextRequest) {
             currentTime: new Date(),
             level: 1,
             transactionStatus: [],
-            totalPisold: 0
+            totalPisold: 0 // Initialize for new users
           }
         });
       }
     } else {
+      // Calculate total Pi sold from completed transactions
+      const totalPisold = calculateTotalPiSold(user.transactionStatus, user.piAmount);
+      
+      // Update user's online status, current time, and totalPisold
       user = await prisma.user.update({
         where: { telegramId: userData.id },
         data: {
           isOnline: true,
-          currentTime: new Date()
+          currentTime: new Date(),
+          totalPisold: totalPisold // Update the totalPisold
         }
       });
     }
@@ -162,6 +169,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // Handle new transaction initiation
     if (userData.newTransaction) {
       if (!canInitiateNewTransaction(user.transactionStatus)) {
           return NextResponse.json({ 
@@ -179,30 +187,26 @@ export async function POST(req: NextRequest) {
       })
     }
 
+    // Handle transaction status update if provided
     if (userData.updateTransactionStatus) {
       const { index, status } = userData.updateTransactionStatus
       if (index >= 0 && ['processing', 'completed', 'failed'].includes(status)) {
           const newStatuses = [...user.transactionStatus]
           newStatuses[index] = status
-
-          // Calculate new totalPisold when transaction status changes
-          const newTotalPisold = user.piAmount.reduce((sum, amount, i) => {
-              if (i === index ? status === 'completed' : newStatuses[i] === 'completed') {
-                  return sum + amount;
-              }
-              return sum;
-          }, 0);
-
-          user = await prisma.user.update({
+          
+          // Update totalPisold when transaction status changes
+          const updatedUser = await prisma.user.update({
               where: { telegramId: userData.id },
               data: { 
                   transactionStatus: newStatuses,
-                  totalPisold: newTotalPisold
+                  totalPisold: calculateTotalPiSold(newStatuses, user.piAmount)
               },
           })
+          user = updatedUser;
       }
     }
 
+    // Handle level update if requested
     if (userData.updateLevel) {
       user = await prisma.user.update({
           where: { telegramId: userData.id },
@@ -212,6 +216,7 @@ export async function POST(req: NextRequest) {
       })
     }
 
+    // Check farming status
     let farmingStatus = 'farm';
     if (user.startFarming) {
       const now = new Date();
@@ -223,31 +228,16 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Calculate profile metrics with both piAmount and transactionStatus
+    // Calculate profile metrics
     const metrics = calculateProfileMetrics(user.piAmount, user.transactionStatus);
 
-    // Update totalPisold with completed transactions only
-    const currentTotalPisold = user.piAmount.reduce((sum, amount, index) => {
-        if (user.transactionStatus[index] === 'completed') {
-            return sum + amount;
-        }
-        return sum;
-    }, 0);
-
-    user = await prisma.user.update({
-        where: { telegramId: userData.id },
-        data: { 
-            totalPisold: currentTotalPisold
-        },
-    });
-
     return NextResponse.json({
-        ...user,
-        user,
-        ...metrics,
-        status: user.transactionStatus,
-        inviterInfo,
-        farmingStatus
+      ...user,
+      user,
+      ...metrics,
+      status: user.transactionStatus,
+      inviterInfo,
+      farmingStatus
     });
   } catch (error) {
     console.error('Error processing user data:', error)
