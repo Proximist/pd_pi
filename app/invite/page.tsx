@@ -13,6 +13,7 @@ declare global {
   }
 }
 
+// Add interface for invited user data
 interface InvitedUserData {
   username: string;
   totalPisold: number;
@@ -26,10 +27,6 @@ export default function Invite() {
   const [invitedUsers, setInvitedUsers] = useState<InvitedUserData[]>([])
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [mounted, setMounted] = useState(false)
-
-  const calculateTotalCommission = () => {
-    return invitedUsers.reduce((total, user) => total + (user.totalPisold * 0.1), 0);
-  };
 
   useEffect(() => {
     setMounted(true)
@@ -58,12 +55,11 @@ export default function Invite() {
             } else {
               setUser(data.user)
               setInviteLink(`https://t.me/gimmexcbot/Hcisjid/start?startapp=${data.user.telegramId}`)
-              // Transform the invitedUsers array to include totalPisold
-              const usersWithPi = (data.user.invitedUsers || []).map((username: string) => ({
+              // Convert invited users data to include totalPisold
+              setInvitedUsers(data.invitedUsersData || data.user.invitedUsers.map((username: string) => ({
                 username,
-                totalPisold: data.invitedUsersPi?.[username] || 0
-              }));
-              setInvitedUsers(usersWithPi)
+                totalPisold: 0
+              })))
             }
           })
           .catch(() => {
@@ -90,6 +86,13 @@ export default function Invite() {
     }
   }
 
+  // Calculate total commission (10% of total Pi sold by invited users)
+  const calculateTotalCommission = () => {
+    return invitedUsers.reduce((total, user) => {
+      return total + (user.totalPisold * 0.1)
+    }, 0)
+  }
+
   const darkModeClasses = isDarkMode ? 'dark' : ''
 
   return (
@@ -97,6 +100,7 @@ export default function Invite() {
       <Script src="https://kit.fontawesome.com/18e66d329f.js" />
       
       <div className="min-h-screen">
+        {/* Header */}
         <div className="w-full bg-[#670773] text-white p-4 shadow-lg flex items-center justify-between relative z-10">
           <Link href="/" className="hover:scale-110 transition-transform">
             <i className="fas fa-arrow-left text-2xl"></i>
@@ -117,6 +121,7 @@ export default function Invite() {
           </div>
         ) : (
           <div className="container mx-auto px-4 py-6">
+            {/* Main Card */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md mb-6 transform transition-all duration-300">
               <div className="text-center mb-6">
                 <i className="fas fa-gift text-5xl text-[#670773] dark:text-purple-400 mb-4"></i>
@@ -136,6 +141,7 @@ export default function Invite() {
                 Copy Invite Link
               </button>
 
+              {/* Stats */}
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg text-center">
                   <p className="text-2xl font-bold text-[#670773] dark:text-purple-400">
@@ -151,6 +157,7 @@ export default function Invite() {
                 </div>
               </div>
 
+              {/* Invited Friends List */}
               <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                 <div className="flex items-center mb-4">
                   <i className="fas fa-users text-[#670773] dark:text-purple-400 text-xl mr-2"></i>
@@ -181,6 +188,7 @@ export default function Invite() {
               </div>
             </div>
 
+            {/* Invited By Section */}
             {user.invitedBy && (
               <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md text-center">
                 <p className="text-gray-600 dark:text-gray-300">
@@ -191,6 +199,7 @@ export default function Invite() {
           </div>
         )}
 
+        {/* Notification */}
         {notification && (
           <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-[#670773] text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
             {notification}
