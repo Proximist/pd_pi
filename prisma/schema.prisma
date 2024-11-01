@@ -22,6 +22,7 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   totalPoints   Int       @default(0)
+  totalCommission Float @default(0)  // New field added
   invitePoints  Int       @default(0)
   level          Int       @default(1)
   introSeen      Boolean   @default(false)
