@@ -11,8 +11,15 @@ const LEVELS = [
     { name: 'Infinite', threshold: Infinity, pointsPerHundredXP: 15 }
 ];
 
-function calculateProfileMetrics(piAmountArray: number[]) {
-    const totalPiSold = piAmountArray.reduce((sum, amount) => sum + amount, 0);
+function calculateProfileMetrics(piAmountArray: number[], transactionStatus: string[]) {
+    // Calculate totalPiSold only from completed transactions
+    const totalPiSold = piAmountArray.reduce((sum, amount, index) => {
+        if (transactionStatus[index] === 'completed') {
+            return sum + amount;
+        }
+        return sum;
+    }, 0);
+
     const xp = totalPiSold;
     const currentLevel = LEVELS.findIndex(lvl => xp < lvl.threshold);
     const level = currentLevel === -1 ? LEVELS.length : currentLevel;
@@ -96,7 +103,6 @@ export async function POST(req: NextRequest) {
             }
           });
 
-          // Award 1000 points to the inviter
           await prisma.user.update({
             where: { telegramId: inviterId },
             data: {
@@ -139,7 +145,6 @@ export async function POST(req: NextRequest) {
         });
       }
     } else {
-      // Update user's online status and current time
       user = await prisma.user.update({
         where: { telegramId: userData.id },
         data: {
@@ -157,7 +162,6 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Handle new transaction initiation
     if (userData.newTransaction) {
       if (!canInitiateNewTransaction(user.transactionStatus)) {
           return NextResponse.json({ 
@@ -175,22 +179,30 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    // Handle transaction status update if provided
     if (userData.updateTransactionStatus) {
       const { index, status } = userData.updateTransactionStatus
       if (index >= 0 && ['processing', 'completed', 'failed'].includes(status)) {
           const newStatuses = [...user.transactionStatus]
           newStatuses[index] = status
+
+          // Calculate new totalPisold when transaction status changes
+          const newTotalPisold = user.piAmount.reduce((sum, amount, i) => {
+              if (i === index ? status === 'completed' : newStatuses[i] === 'completed') {
+                  return sum + amount;
+              }
+              return sum;
+          }, 0);
+
           user = await prisma.user.update({
               where: { telegramId: userData.id },
               data: { 
-                  transactionStatus: newStatuses
+                  transactionStatus: newStatuses,
+                  totalPisold: newTotalPisold
               },
           })
       }
     }
 
-    // Handle level update if requested
     if (userData.updateLevel) {
       user = await prisma.user.update({
           where: { telegramId: userData.id },
@@ -200,26 +212,32 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    // Check farming status
     let farmingStatus = 'farm';
     if (user.startFarming) {
       const now = new Date();
       const timeDiff = now.getTime() - user.startFarming.getTime();
-      if (timeDiff < 30000) { // Less than 30 seconds
+      if (timeDiff < 30000) {
         farmingStatus = 'farming';
       } else {
         farmingStatus = 'claim';
       }
     }
 
-    // Calculate profile metrics
-    const metrics = calculateProfileMetrics(user.piAmount);
+    // Calculate profile metrics with both piAmount and transactionStatus
+    const metrics = calculateProfileMetrics(user.piAmount, user.transactionStatus);
 
-    // Update the totalPisold in the database
+    // Update totalPisold with completed transactions only
+    const currentTotalPisold = user.piAmount.reduce((sum, amount, index) => {
+        if (user.transactionStatus[index] === 'completed') {
+            return sum + amount;
+        }
+        return sum;
+    }, 0);
+
     user = await prisma.user.update({
         where: { telegramId: userData.id },
         data: { 
-            totalPisold: metrics.totalPiSold
+            totalPisold: currentTotalPisold
         },
     });
 
