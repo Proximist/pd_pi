@@ -1,0 +1,76 @@
+<html>
+<head>
+    <title>FAQ Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen">
+    <div class="text-center max-w-xl mx-auto">
+        <button class="text-sm text-gray-500 mb-4">Contact Sales</button>
+        <h1 class="text-3xl font-semibold text-gray-900 mb-4">We're here to answer all your questions.</h1>
+        <p class="text-gray-500 mb-8">If you want to learn in detail or simply expand your current stack, this section will help you learn more about the platform and its features.</p>
+        
+        <div class="space-y-4">
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+                <div class="flex justify-between items-center cursor-pointer" onclick="toggleAnswer('answer1', this)">
+                    <span class="text-gray-900">What is Pi Coin?</span>
+                    <i class="fas fa-plus text-gray-500"></i>
+                </div>
+                <div id="answer1" class="hidden mt-2 text-left text-gray-700">
+                    Pi Coin is a digital currency developed by the Pi Network, aiming to make cryptocurrency accessible to the general public. It’s mined through the Pi Network app on mobile devices without draining much battery or requiring powerful hardware.
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+                <div class="flex justify-between items-center cursor-pointer" onclick="toggleAnswer('answer2', this)">
+                    <span class="text-gray-900">Can I withdraw or transfer my Pi Coins?</span>
+                    <i class="fas fa-plus text-gray-500"></i>
+                </div>
+                <div id="answer2" class="hidden mt-2 text-left text-gray-700">
+                    Yes, you can withdraw your Pi coins from your wallet and transfer them to other wallets once you've completed the required verification process.
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+                <div class="flex justify-between items-center cursor-pointer" onclick="toggleAnswer('answer3', this)">
+                    <span class="text-gray-900">When will Pi Coin be listed on exchanges?</span>
+                    <i class="fas fa-plus text-gray-500"></i>
+                </div>
+                <div id="answer3" class="hidden mt-2 text-left text-gray-700">
+                    There is no official timeline for when Pi Coin will be listed on exchanges. The team plans to complete several development phases, including moving to a mainnet, before any listings.
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+                <div class="flex justify-between items-center cursor-pointer" onclick="toggleAnswer('answer4', this)">
+                    <span class="text-gray-900">How do I start mining Pi?</span>
+                    <i class="fas fa-plus text-gray-500"></i>
+                </div>
+                <div id="answer4" class="hidden mt-2 text-left text-gray-700">
+                    To mine Pi, download the Pi Network app, create an account, and start mining with a simple tap every 24 hours. You’ll need to keep mining active daily, but the app runs in the background without heavy resource usage.
+                </div>
+            </div>
+        </div>
+
+    <script>
+        function toggleAnswer(id, element) {
+            var answer = document.getElementById(id);
+            var icon = element.querySelector('i');
+
+            if (answer.classList.contains('hidden')) {
+                answer.classList.remove('hidden');
+                icon.classList.remove('fa-plus');
+                icon.classList.add('fa-minus');
+            } else {
+                answer.classList.add('hidden');
+                icon.classList.remove('fa-minus');
+                icon.classList.add('fa-plus');
+            }
+        }
+    </script>
+    <script src="//code.tidio.co/gbp0lhn4z5yxjtcaad4w11k2bkyi16js.js" async></script>
+</body>
+</html>
