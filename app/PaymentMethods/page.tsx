@@ -298,10 +298,12 @@ const MergedPaymentPage = () => {
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#670773] text-black"
               placeholder="Enter amount"
             />
-            {piAmount && (
-              <p className="mt-3 text-[#670773] font-medium">
-                You will receive {calculateUSDT(piAmount)} USDT
-              </p>
+            <p className="mt-3 text-[#670773] font-medium">
+    {selectedPayment === 'UPI' 
+      ? `You will receive ₹${(parseFloat(calculateUSDT(piAmount)) * 84.2).toFixed(2)} INR`
+      : `You will receive ${calculateUSDT(piAmount)} USDT`
+    }
+  </p>
             )}
           </div>
 
