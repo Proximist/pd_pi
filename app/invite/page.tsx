@@ -14,10 +14,10 @@ declare global {
 }
 
 // Add interface for invited user data
-interface InvitedUser Data {
+interface InvitedUserData {
   username: string;
   totalPisold: number;
-  invitedUsers: InvitedUser Data[];
+  invitedUsers: InvitedUserData[];
 }
 
 export default function Invite() {
@@ -25,7 +25,7 @@ export default function Invite() {
   const [error, setError] = useState<string | null>(null)
   const [notification, setNotification] = useState('')
   const [inviteLink, setInviteLink] = useState('')
-  const [invitedUsers, setInvitedUsers] = useState<InvitedUser Data[]>([])
+  const [invitedUsers, setInvitedUsers] = useState<InvitedUserData[]>([])
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [mounted, setMounted] = useState(false)
 
