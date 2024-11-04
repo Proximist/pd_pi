@@ -23,14 +23,14 @@ const paymentMethods = [
   {
     id: 'KuCoin',
     label: 'KuCoin',
-    bonus: 0.15,
+    bonus: 0.20,
     placeholder: 'Enter KuCoin UID',
     image: 'https://i.imgur.com/jfjFkeA.jpg',
   },
   {
     id: 'UPI',
     label: 'UPI (Lowest Rate)',
-    bonus: 0,
+    bonus: 0.24,
     placeholder: 'Enter UPI Address',
     image: 'https://i.imgur.com/FK31xFx.jpg',
   },
@@ -43,7 +43,7 @@ const getLevelBonus = (level: number): number => {
     3: 0.03,
     4: 0.05,
     5: 0.07,
-    6: 0.01
+    6: 0.10
   };
   return bonuses[level as keyof typeof bonuses] || 0;
 };
