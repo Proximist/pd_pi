@@ -26,11 +26,11 @@ const getPaymentBonus = (paymentMethod: string): number => {
   switch (paymentMethod.toLowerCase()) {
     case 'Binance':
       return 0.28
-    case 'googlepay':
+    case 'Trust_Wallet':
       return 0.25
-    case 'applepay':
+    case 'KuCoin':
       return 0.15
-    case 'mastercard':
+    case 'UPI':
       return 0
     default:
       return 0
