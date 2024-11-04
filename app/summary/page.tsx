@@ -24,7 +24,7 @@ interface UserData {
 
 const getPaymentBonus = (paymentMethod: string): number => {
   switch (paymentMethod.toLowerCase()) {
-    case 'paypal':
+    case 'Binance':
       return 0.28
     case 'googlepay':
       return 0.25
