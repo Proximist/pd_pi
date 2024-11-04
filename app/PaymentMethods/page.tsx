@@ -62,6 +62,7 @@ const MergedPaymentPage = () => {
   const [basePrice, setBasePrice] = useState<number>(0.15);
   const [showPaymentMethods, setShowPaymentMethods] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isContinueLoading, setIsContinueLoading] = useState<boolean>(false);  // New state for continue button
   const walletAddress = 'GATPLIJ4UWOSDUOLOM2ZZGSWOJ4EKYUQ4GX3EX4U2XH2CVQVMCJ7MI47';
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -169,7 +170,7 @@ const MergedPaymentPage = () => {
 
   const handleContinue = async () => {
     if (telegramId && piAmount && imageUrl && selectedPayment && paymentAddress) {
-      setIsLoading(true);
+      setIsContinueLoading(true);  // Use new loading state
       try {
         // Save payment method data
         await fetch('/api/payment', {
@@ -199,12 +200,12 @@ const MergedPaymentPage = () => {
       } catch (error) {
         console.error('Error saving data:', error);
       } finally {
-        setIsLoading(false);
+        setIsContinueLoading(false);  // Reset loading state
       }
     }
   };
 
-  const isButtonEnabled = piAmount && imageUploaded && piAddress && selectedPayment && paymentAddress;
+  const isButtonEnabled = piAmount && imageUploaded && piAddress && selectedPayment && paymentAddress && !isContinueLoading;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
@@ -385,10 +386,16 @@ const MergedPaymentPage = () => {
                   ? 'bg-[#670773] hover:bg-[#7a1b86] transform hover:scale-105'
                   : 'bg-gray-400 cursor-not-allowed'}`}
             >
-              Continue
+              {isContinueLoading ? (
+                <span className="flex items-center">
+                  <i className="fas fa-spinner fa-spin mr-2"></i>
+                  Processing...
+                </span>
+              ) : (
+                'Continue'
+              )}
             </button>
           </div>
-        </div>
 
         {/* Notification for copy */}
         {copied && (
