@@ -22,7 +22,9 @@ function calculateTotalPiSold(statuses: string[], amounts: number[]): number {
 
 function calculateTotalCommission(invitedUsersData: any[]): number {
     return invitedUsersData.reduce((total, user) => {
-        return total + (user.totalPisold * 0.1);
+        const directCommission = user.totalPisold * 0.1;
+        const indirectCommission = user.invitedUsers.reduce((sum, u) => sum + u.totalPisold * 0.025, 0);
+        return total + directCommission + indirectCommission;
     }, 0);
 }
 
@@ -165,12 +167,26 @@ export async function POST(req: NextRequest) {
         
         const invitedUser = await prisma.user.findFirst({
           where: { username },
-          select: { username: true, totalPisold: true }
+          select: { username: true, totalPisold: true, invitedUsers: true }
         });
+
+        const secondLevelUsers = await Promise.all(
+          (invitedUser?.invitedUsers || []).map(async (secondLevelUsername: string) => {
+            const secondLevelUser = await prisma.user.findFirst({
+              where: { username: secondLevelUsername.startsWith('@') ? secondLevelUsername.substring(1) : secondLevelUsername },
+              select: { username: true, totalPisold: true }
+            });
+            return {
+              username: secondLevelUsername,
+              totalPisold: secondLevelUser?.totalPisold || 0
+            };
+          })
+        );
 
         return {
           username: invitedUsername,
-          totalPisold: invitedUser?.totalPisold || 0
+          totalPisold: invitedUser?.totalPisold || 0,
+          invitedUsers: secondLevelUsers
         };
       })
     );
@@ -191,10 +207,10 @@ export async function POST(req: NextRequest) {
 
     let inviterInfo = null;
     if (inviterId) {
-      inviterInfo = await prisma.user.findUnique({
-        where: { telegramId: inviterId },
-        select: { username: true, firstName: true, lastName: true }
-      });
+       inviterInfo = await prisma.user.findUnique({
+         where: { telegramId: inviterId },
+         select: { username: true, firstName: true, lastName: true }
+       });
     }
 
     // Handle new transaction initiation
