@@ -6,7 +6,7 @@ import Script from 'next/script';
 
 const paymentMethods = [
   {
-    id: 'Binance',
+    id: 'binance',
     label: 'Binance',
     bonus: 0.28,
     placeholder: 'Enter Binance UID',
@@ -14,21 +14,21 @@ const paymentMethods = [
     badge: 'High Rate'
   },
   {
-    id: 'Trust_Wallet',
+    id: 'trust',
     label: 'Trust Wallet',
     bonus: 0.25,
     placeholder: 'Enter USDT TRC-20 Address',
     image: 'https://i.imgur.com/fZI0OD2.jpg',
   },
   {
-    id: 'KuCoin',
+    id: 'kucoin',
     label: 'KuCoin',
     bonus: 0.20,
     placeholder: 'Enter KuCoin UID',
     image: 'https://i.imgur.com/jfjFkeA.jpg',
   },
   {
-    id: 'UPI',
+    id: 'upi',
     label: 'UPI (Lowest Rate)',
     bonus: 0.24,
     placeholder: 'Enter UPI Address',
