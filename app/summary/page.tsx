@@ -22,20 +22,28 @@ interface UserData {
   level: number
 }
 
-const getPaymentBonus = (paymentMethod: string): number => {
-  switch (paymentMethod) {
-    case 'Binance':
-      return 0.28
-    case 'Trust_Wallet':
-      return 0.25
-    case 'KuCoin':
-      return 0.15
-    case 'UPI':
-      return 0
-    default:
-      return 0
-  }
-}
+const paymentMethods = [
+  {
+    id: 'binance',
+    label: 'Binance',
+    bonus: 0.28
+  },
+  {
+    id: 'trust',
+    label: 'Trust Wallet',
+    bonus: 0.25
+  },
+  {
+    id: 'kucoin',
+    label: 'KuCoin',
+    bonus: 0.20
+  },
+  {
+    id: 'upi',
+    label: 'UPI (Lowest Rate)',
+    bonus: 0.24
+  },
+];
 
 const getLevelBonus = (level: number): number => {
   switch (level) {
@@ -48,7 +56,7 @@ const getLevelBonus = (level: number): number => {
     case 5:
       return 0.07
     case 6:
-      return 0.10
+      return 0.01
     default:
       return 0
   }
@@ -116,7 +124,8 @@ export default function Summary() {
   const latestPaymentAddress = userData?.paymentAddress[userData.paymentAddress.length - 1] || ''
   const latestPiAddress = userData?.piaddress[userData.piaddress.length - 1] || ''
   
-  const paymentBonus = getPaymentBonus(latestPaymentMethod)
+  const paymentMethod = paymentMethods.find(m => m.id === latestPaymentMethod) || { bonus: 0 };
+  const paymentBonus = paymentMethod.bonus;
   const levelBonus = getLevelBonus(userData?.level || 1)
   const basePrice = userData?.baseprice || 0.15
   
@@ -162,18 +171,17 @@ export default function Summary() {
             </div>
             
             <div className="flex justify-between items-center border-b pb-2">
-  <span className="text-gray-600">Amount to be Received:</span>
-  <span className="font-semibold text-[#670773]">
-    {latestPaymentMethod === 'UPI' 
-      ? `₹${(amountToReceive * 84.2).toFixed(2)} INR`
-      : `$${amountToReceive.toFixed(2)} USDT`
-    }
-  </span>
-</div>
+              <span className="text-gray-600">Amount to be Received:</span>
+              <span className="font-semibold text-[#670773]">
+                {latestPaymentMethod === 'upi' ? `₹${(amountToReceive * 84.2).toFixed(2)}` : `$${amountToReceive.toFixed(2)}`}
+              </span>
+            </div>
             
             <div className="flex justify-between items-center border-b pb-2">
               <span className="text-gray-600">Payment Method:</span>
-              <span className="font-semibold text-[#670773]">{latestPaymentMethod || 'N/A'}</span>
+              <span className="font-semibold text-[#670773]">
+                {paymentMethods.find(m => m.id === latestPaymentMethod)?.label || 'N/A'}
+              </span>
             </div>
             
             <div className="flex justify-between items-center border-b pb-2">
