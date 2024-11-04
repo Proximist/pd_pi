@@ -14,21 +14,21 @@ const paymentMethods = [
     badge: 'High Rate'
   },
   {
-    id: 'googlepay',
+    id: 'Trust_Wallet',
     label: 'Trust Wallet',
     bonus: 0.25,
     placeholder: 'Enter USDT TRC-20 Address',
     image: 'https://i.imgur.com/fZI0OD2.jpg',
   },
   {
-    id: 'applepay',
+    id: 'KuCoin',
     label: 'KuCoin',
     bonus: 0.15,
     placeholder: 'Enter KuCoin UID',
     image: 'https://i.imgur.com/jfjFkeA.jpg',
   },
   {
-    id: 'mastercard',
+    id: 'UPI',
     label: 'UPI (Lowest Rate)',
     bonus: 0,
     placeholder: 'Enter UPI Address',
