@@ -258,15 +258,12 @@ export default function TransactionHistory() {
                     <span className="font-bold custom-purple-text">{transaction.piAmount} Pi</span>
                   </div>
                   
-                 <div className="flex justify-between items-center border-b pb-2">
-                    <span className="text-gray-600">Amount to be Received:</span>
-                    <span className="font-semibold text-[#670773]">
-                      {transaction.paymentMethod === 'UPI' 
-                        ? `₹${(amount * 84.2).toFixed(2)} INR`
-                        : `$${amount.toFixed(2)} USDT`
-                      }
-                   </span>
-                 </div>
+                 <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Amount to Receive:</span>
+                    <span className="font-bold custom-purple-text">
+                      ${amount.toFixed(2)}
+                    </span>
+                  </div>
                   
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600">Status:</span>
