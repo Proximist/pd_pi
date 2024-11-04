@@ -17,7 +17,6 @@ declare global {
 interface InvitedUserData {
   username: string;
   totalPisold: number;
-  invitedUsers: string[];
 }
 
 export default function Invite() {
@@ -56,12 +55,10 @@ export default function Invite() {
             } else {
               setUser(data.user)
               setInviteLink(`https://t.me/gimmexcbot/Hcisjid/start?startapp=${data.user.telegramId}`)
-
-              // Convert invited users data to include totalPisold and invitedUsers
-              setInvitedUsers(data.invitedUsersData.map((invitedUser: any) => ({
-                username: invitedUser.username,
-                totalPisold: invitedUser.totalPisold,
-                invitedUsers: data.user.invitedUsers.filter((u: string) => u.startsWith(`@${invitedUser.username}`))
+              // Convert invited users data to include totalPisold
+              setInvitedUsers(data.invitedUsersData || data.user.invitedUsers.map((username: string) => ({
+                username,
+                totalPisold: 0
               })))
             }
           })
@@ -88,23 +85,6 @@ export default function Invite() {
       }
     }
   }
-
-  const calculateTotalCommission = () => {
-    let totalCommission = 0;
-    invitedUsers.forEach((invitedUser) => {
-      // 10% commission for each invited user
-      totalCommission += invitedUser.totalPisold * 0.1;
-
-      // 2.5% commission for each user the invited user has invited
-      invitedUser.invitedUsers.forEach((invitedUsername) => {
-        const invitedByUser = invitedUsers.find((u) => u.username === invitedUsername.slice(1));
-        if (invitedByUser) {
-          totalCommission += invitedByUser.totalPisold * 0.025;
-        }
-      });
-    });
-    return totalCommission;
-  };
 
   const darkModeClasses = isDarkMode ? 'dark' : ''
 
@@ -164,41 +144,45 @@ export default function Invite() {
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg text-center">
                   <p className="text-2xl font-bold text-[#670773] dark:text-purple-400">
-                    {calculateTotalCommission().toFixed(1)}
+                    {user?.totalCommission?.toFixed(1) || '0.0'}
                   </p>
                   <p className="text-gray-600 dark:text-gray-300">Total Pi Commission</p>
                 </div>
               </div>
 
               {/* Invited Friends List */}
-              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                <div className="flex items-center mb-4">
-                  <i className="fas fa-users text-[#670773] dark:text-purple-400 text-xl mr-2"></i>
-                  <h3 className="text-lg font-bold text-[#670773] dark:text-purple-400">
-                    Invited Friends
-                  </h3>
-                </div>
-                
-                {invitedUsers.length > 0 ? (
-                  <div className="space-y-2">
-                    {invitedUsers.map((user, index) => (
-                      <div key={index} className="bg-white dark:bg-gray-600 p-3 rounded-lg flex items-center justify-between">
-                        <div className="flex items-center">
-                          <i className="fas fa-user-circle text-[#670773] dark:text-purple-400 mr-3"></i>
-                          <span className="dark:text-gray-200">{user.username}</span>
-                        </div>
-                        <span className="text-[#670773] dark:text-purple-400 font-medium">
-                          {(user.totalPisold * 0.1).toFixed(1)} Pi
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center text-gray-500 dark:text-gray-400 py-4">
-                    <p>No friends invited yet</p>
-                  </div>
-                )}
-              </div>
+               <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+    <div className="flex items-center mb-4">
+      <i className="fas fa-users text-[#670773] dark:text-purple-400 text-xl mr-2"></i>
+      <h3 className="text-lg font-bold text-[#670773] dark:text-purple-400">
+        Invited Friends
+      </h3>
+    </div>
+    {invitedUsers.length > 0 ? (
+      <div className="space-y-2">
+        {invitedUsers.map((user, index) => (
+          <div key={index} className="bg-white dark:bg-gray-600 p-3 rounded-lg flex items-center justify-between">
+            <div className="flex items-center">
+              <i className="fas fa-user-circle text-[#670773] dark:text-purple-400 mr-3"></i>
+              <span className="dark:text-gray-200">{user.username}</span>
+            </div>
+            <div className="flex items-center">
+              <span className="text-[#670773] dark:text-purple-400 font-medium mr-2">
+                {(user.totalPisold * 0.1).toFixed(1)} Pi
+              </span>
+              <span className="text-gray-500 dark:text-gray-400 text-sm opacity-70">
+                + {(user.totalPisold * 0.025).toFixed(1)} Pi (2.5%)
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div className="text-center text-gray-500 dark:text-gray-400 py-4">
+        <p>No friends invited yet</p>
+      </div>
+    )}
+  </div>
             </div>
 
             {/* Invited By Section */}
