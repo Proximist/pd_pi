@@ -48,6 +48,18 @@ function canInitiateNewTransaction(transactionStatus: string[]) {
     return lastStatus === 'completed' || lastStatus === 'failed';
 }
 
+function calculateTwoStepCommission(invitedUsersData: any[]) {
+  return invitedUsersData.reduce((total, user) => {
+    if (user.invitedUsers) {
+      return total + (user.invitedUsers.reduce((subTotal, invitedUser) => {
+        const invitedUserData = invitedUsersData.find(u => u.username === invitedUser);
+        return subTotal + (invitedUserData?.totalPisold || 0) * 0.025;
+      }, 0));
+    }
+    return total;
+  }, 0);
+}
+
 export async function POST(req: NextRequest) {
   try {
     const userData = await req.json();
@@ -160,20 +172,20 @@ export async function POST(req: NextRequest) {
 
     // Fetch totalPisold data for all invited users
     const invitedUsersData = await Promise.all(
-  user.invitedUsers.map(async (invitedUsername: string) => {
-    const username = invitedUsername.startsWith('@') ? invitedUsername.substring(1) : invitedUsername;
-    const invitedUser = await prisma.user.findFirst({
-      where: { username },
-      select: { username: true, totalPisold: true, invitedUsers: true }
-    });
+      user.invitedUsers.map(async (invitedUsername: string) => {
+        const username = invitedUsername.startsWith('@') ? invitedUsername.substring(1) : invitedUsername;
+        
+        const invitedUser = await prisma.user.findFirst({
+          where: { username },
+          select: { username: true, totalPisold: true }
+        });
 
-    return {
-      username: invitedUsername,
-      totalPisold: invitedUser?.totalPisold || 0,
-      invitedUsers: invitedUser?.invitedUsers || []
-    };
-  })
-);
+        return {
+          username: invitedUsername,
+          totalPisold: invitedUser?.totalPisold || 0
+        };
+      })
+    );
 
     // Calculate total commission
     const totalCommission = calculateTotalCommission(invitedUsersData);
@@ -185,7 +197,8 @@ export async function POST(req: NextRequest) {
         isOnline: true,
         currentTime: new Date(),
         totalPisold: calculateTotalPiSold(user.transactionStatus, user.piAmount),
-        totalCommission: totalCommission
+        totalCommission: totalCommission,
+        twostepcom: calculateTwoStepCommission(invitedUsersData)
       }
     });
 
