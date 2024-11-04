@@ -396,6 +396,7 @@ const MergedPaymentPage = () => {
               )}
             </button>
           </div>
+          </div>
 
         {/* Notification for copy */}
         {copied && (
