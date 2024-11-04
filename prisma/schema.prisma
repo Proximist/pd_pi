@@ -38,6 +38,7 @@ model User {
   updatedAt     DateTime @updatedAt
   totalPoints   Int       @default(0)
   invitePoints  Int       @default(0)
+  startFarming  DateTime?
 }
 
 model CountdownConfig {
