@@ -261,7 +261,7 @@ export default function TransactionHistory() {
                  <div className="flex justify-between items-center border-b pb-2">
                     <span className="text-gray-600">Amount to be Received:</span>
                     <span className="font-semibold text-[#670773]">
-                      {latestPaymentMethod === 'UPI' 
+                      {PaymentMethod === 'UPI' 
                         ? `₹${(amount * 84.2).toFixed(2)} INR`
                         : `$${amount.toFixed(2)} USDT`
                       }
