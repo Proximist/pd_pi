@@ -23,15 +23,15 @@ interface UserData {
 }
 
 const getPaymentBonus = (paymentMethod: string): number => {
-  switch (paymentMethod.toLowerCase()) {
+  switch (paymentMethod) {
     case 'Binance':
       return 0.28
     case 'Trust_Wallet':
       return 0.25
     case 'KuCoin':
-      return 0.20
+      return 0.15
     case 'UPI':
-      return 0.24
+      return 0
     default:
       return 0
   }
@@ -162,14 +162,14 @@ export default function Summary() {
             </div>
             
             <div className="flex justify-between items-center border-b pb-2">
-              <span className="text-gray-600">Amount to be Received:</span>
-             <span className="font-semibold text-[#670773]">
-               {latestPaymentMethod === 'UPI' 
-                 ? `₹${(amountToReceive * 84.2).toFixed(2)} INR`
-                 : `$${amountToReceive.toFixed(2)} USDT`
-               }
-             </span>
-           </div>
+  <span className="text-gray-600">Amount to be Received:</span>
+  <span className="font-semibold text-[#670773]">
+    {latestPaymentMethod === 'UPI' 
+      ? `₹${(amountToReceive * 84.2).toFixed(2)} INR`
+      : `$${amountToReceive.toFixed(2)} USDT`
+    }
+  </span>
+</div>
             
             <div className="flex justify-between items-center border-b pb-2">
               <span className="text-gray-600">Payment Method:</span>
