@@ -39,9 +39,9 @@ const getPaymentBonus = (paymentMethod: string): number => {
     case 'Trust_Wallet':
       return 0.25
     case 'KuCoin':
-      return 0.15
+      return 0.20
     case 'UPI':
-      return 0
+      return 0.24
     default:
       return 0
   }
@@ -58,7 +58,7 @@ const getLevelBonus = (level: number): number => {
     case 5:
       return 0.07
     case 6:
-      return 0.01
+      return 0.10
     default:
       return 0
   }
