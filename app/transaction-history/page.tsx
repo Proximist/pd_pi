@@ -32,20 +32,28 @@ interface User {
   baseprice: number
 }
 
-const getPaymentBonus = (paymentMethod: string): number => {
-  switch (paymentMethod.toLowerCase()) {
-    case 'Binance':
-      return 0.28
-    case 'Trust_Wallet':
-      return 0.25
-    case 'KuCoin':
-      return 0.20
-    case 'UPI':
-      return 0.24
-    default:
-      return 0
-  }
-}
+const paymentMethods = [
+  {
+    id: 'binance',
+    label: 'Binance',
+    bonus: 0.28
+  },
+  {
+    id: 'trust',
+    label: 'Trust Wallet',
+    bonus: 0.25
+  },
+  {
+    id: 'kucoin',
+    label: 'KuCoin',
+    bonus: 0.20
+  },
+  {
+    id: 'upi',
+    label: 'UPI (Lowest Rate)',
+    bonus: 0.24
+  },
+];
 
 const getLevelBonus = (level: number): number => {
   switch (level) {
@@ -58,14 +66,14 @@ const getLevelBonus = (level: number): number => {
     case 5:
       return 0.07
     case 6:
-      return 0.10
+      return 0.01
     default:
       return 0
   }
 }
 
 const calculateAmount = (piAmount: number, paymentMethod: string, level: number, baseprice: number): number => {
-  const paymentBonus = getPaymentBonus(paymentMethod)
+  const paymentBonus = paymentMethods.find(m => m.id === paymentMethod)?.bonus || 0;
   const levelBonus = getLevelBonus(level)
   const pricePerPi = baseprice + paymentBonus + levelBonus
   return piAmount * pricePerPi
@@ -258,10 +266,10 @@ export default function TransactionHistory() {
                     <span className="font-bold custom-purple-text">{transaction.piAmount} Pi</span>
                   </div>
                   
-                 <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center">
                     <span className="text-gray-600">Amount to Receive:</span>
                     <span className="font-bold custom-purple-text">
-                      ${amount.toFixed(2)}
+                      {transaction.paymentMethod === 'upi' ? `₹${(amount * 84.2).toFixed(2)}` : `$${amount.toFixed(2)}`}
                     </span>
                   </div>
                   
@@ -279,7 +287,9 @@ export default function TransactionHistory() {
                   <div className="pt-3 border-t border-gray-200 space-y-3">
                     <div className="flex justify-between items-center">
                       <span className="text-gray-600">Payment Method:</span>
-                      <span className="font-medium">{transaction.paymentMethod}</span>
+                      <span className="font-medium">
+                        {paymentMethods.find(m => m.id === transaction.paymentMethod)?.label || 'N/A'}
+                      </span>
                     </div>
                     
                     <div className="flex justify-between items-center">
