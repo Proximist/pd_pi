@@ -14,17 +14,18 @@ declare global {
 }
 
 // Add interface for invited user data
-interface InvitedUserData {
+interface InvitedUser Data {
   username: string;
   totalPisold: number;
+  invitedUsers: InvitedUser Data[];
 }
 
 export default function Invite() {
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser ] = useState<any>(null)
   const [error, setError] = useState<string | null>(null)
   const [notification, setNotification] = useState('')
   const [inviteLink, setInviteLink] = useState('')
-  const [invitedUsers, setInvitedUsers] = useState<InvitedUserData[]>([])
+  const [invitedUsers, setInvitedUsers] = useState<InvitedUser Data[]>([])
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [mounted, setMounted] = useState(false)
 
@@ -53,12 +54,13 @@ export default function Invite() {
             if (data.error) {
               setError(data.error)
             } else {
-              setUser(data.user)
+              setUser (data.user)
               setInviteLink(`https://t.me/gimmexcbot/Hcisjid/start?startapp=${data.user.telegramId}`)
-              // Convert invited users data to include totalPisold
+              // Convert invited users data to include totalPisold and invited users
               setInvitedUsers(data.invitedUsersData || data.user.invitedUsers.map((username: string) => ({
                 username,
-                totalPisold: 0
+                totalPisold: 0,
+                invitedUsers: []
               })))
             }
           })
