@@ -17,11 +17,11 @@ declare global {
 interface InvitedUserData {
   username: string;
   totalPisold: number;
-  invitedUsers: InvitedUserData[];
+  invitedUsers: string[];
 }
 
 export default function Invite() {
-  const [user, setUser ] = useState<any>(null)
+  const [user, setUser] = useState<any>(null)
   const [error, setError] = useState<string | null>(null)
   const [notification, setNotification] = useState('')
   const [inviteLink, setInviteLink] = useState('')
@@ -54,13 +54,14 @@ export default function Invite() {
             if (data.error) {
               setError(data.error)
             } else {
-              setUser (data.user)
+              setUser(data.user)
               setInviteLink(`https://t.me/gimmexcbot/Hcisjid/start?startapp=${data.user.telegramId}`)
-              // Convert invited users data to include totalPisold and invited users
-              setInvitedUsers(data.invitedUsersData || data.user.invitedUsers.map((username: string) => ({
-                username,
-                totalPisold: 0,
-                invitedUsers: []
+
+              // Convert invited users data to include totalPisold and invitedUsers
+              setInvitedUsers(data.invitedUsersData.map((invitedUser: any) => ({
+                username: invitedUser.username,
+                totalPisold: invitedUser.totalPisold,
+                invitedUsers: data.user.invitedUsers.filter((u: string) => u.startsWith(`@${invitedUser.username}`))
               })))
             }
           })
@@ -87,6 +88,23 @@ export default function Invite() {
       }
     }
   }
+
+  const calculateTotalCommission = () => {
+    let totalCommission = 0;
+    invitedUsers.forEach((invitedUser) => {
+      // 10% commission for each invited user
+      totalCommission += invitedUser.totalPisold * 0.1;
+
+      // 2.5% commission for each user the invited user has invited
+      invitedUser.invitedUsers.forEach((invitedUsername) => {
+        const invitedByUser = invitedUsers.find((u) => u.username === invitedUsername.slice(1));
+        if (invitedByUser) {
+          totalCommission += invitedByUser.totalPisold * 0.025;
+        }
+      });
+    });
+    return totalCommission;
+  };
 
   const darkModeClasses = isDarkMode ? 'dark' : ''
 
@@ -146,7 +164,7 @@ export default function Invite() {
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg text-center">
                   <p className="text-2xl font-bold text-[#670773] dark:text-purple-400">
-                    {user?.totalCommission?.toFixed(1) || '0.0'}
+                    {calculateTotalCommission().toFixed(1)}
                   </p>
                   <p className="text-gray-600 dark:text-gray-300">Total Pi Commission</p>
                 </div>
