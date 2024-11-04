@@ -48,16 +48,18 @@ function canInitiateNewTransaction(transactionStatus: string[]) {
     return lastStatus === 'completed' || lastStatus === 'failed';
 }
 
-function calculateTwoStepCommission(invitedUsersData: any[]) {
-  return invitedUsersData.reduce((total, user) => {
-    if (user.invitedUsers) {
-      return total + (user.invitedUsers.reduce((subTotal: number, invitedUser) => {
-        const invitedUserData = invitedUsersData.find(u => u.username === invitedUser);
-        return subTotal + (invitedUserData?.totalPisold || 0) * 0.025;
-      }, 0));
+function calculateTwoStepCommission(invitedUsers: string[], invitedUsersData: any[]) {
+  let total = 0;
+  for (const invitedUser of invitedUsers) {
+    const invitedUserData = invitedUsersData.find(u => u.username === invitedUser);
+    if (invitedUserData?.invitedUsers) {
+      for (const subInvitedUser of invitedUserData.invitedUsers) {
+        const subInvitedUserData = invitedUsersData.find(u => u.username === subInvitedUser);
+        total += (subInvitedUserData?.totalPisold || 0) * 0.025;
+      }
     }
-    return total;
-  }, 0);
+  }
+  return total;
 }
 
 export async function POST(req: NextRequest) {
@@ -198,7 +200,7 @@ export async function POST(req: NextRequest) {
       currentTime: new Date(),
       totalPisold: calculateTotalPiSold(user.transactionStatus, user.piAmount),
       totalCommission: totalCommission,
-      twostepcom: calculateTwoStepCommission(invitedUsersData)
+      twostepcom: calculateTwoStepCommission(user.invitedUsers, invitedUsersData)
     }
   });
 
