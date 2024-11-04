@@ -48,13 +48,13 @@ function canInitiateNewTransaction(transactionStatus: string[]) {
     return lastStatus === 'completed' || lastStatus === 'failed';
 }
 
-function calculateTwoStepCommission(invitedUsersData: { username: string; totalPisold: number }[]) {
+function calculateTwoStepCommission(invitedUsersData: any[]) {
   return invitedUsersData.reduce((total, user) => {
     if (user.invitedUsers) {
-      return total + user.invitedUsers.reduce((subTotal: number, invitedUser) => {
+      return total + (user.invitedUsers.reduce((subTotal: number, invitedUser) => {
         const invitedUserData = invitedUsersData.find(u => u.username === invitedUser);
         return subTotal + (invitedUserData?.totalPisold || 0) * 0.025;
-      }, 0);
+      }, 0));
     }
     return total;
   }, 0);
