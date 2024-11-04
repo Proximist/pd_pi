@@ -160,20 +160,20 @@ export async function POST(req: NextRequest) {
 
     // Fetch totalPisold data for all invited users
     const invitedUsersData = await Promise.all(
-      user.invitedUsers.map(async (invitedUsername: string) => {
-        const username = invitedUsername.startsWith('@') ? invitedUsername.substring(1) : invitedUsername;
-        
-        const invitedUser = await prisma.user.findFirst({
-          where: { username },
-          select: { username: true, totalPisold: true }
-        });
+  user.invitedUsers.map(async (invitedUsername: string) => {
+    const username = invitedUsername.startsWith('@') ? invitedUsername.substring(1) : invitedUsername;
+    const invitedUser = await prisma.user.findFirst({
+      where: { username },
+      select: { username: true, totalPisold: true, invitedUsers: true }
+    });
 
-        return {
-          username: invitedUsername,
-          totalPisold: invitedUser?.totalPisold || 0
-        };
-      })
-    );
+    return {
+      username: invitedUsername,
+      totalPisold: invitedUser?.totalPisold || 0,
+      invitedUsers: invitedUser?.invitedUsers || []
+    };
+  })
+);
 
     // Calculate total commission
     const totalCommission = calculateTotalCommission(invitedUsersData);
