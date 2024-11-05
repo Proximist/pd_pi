@@ -48,20 +48,6 @@ function canInitiateNewTransaction(transactionStatus: string[]) {
     return lastStatus === 'completed' || lastStatus === 'failed';
 }
 
-function calculateTwoStepCommission(invitedUsers: string[], invitedUsersData: any[]) {
-  let total = 0;
-  for (const invitedUser of invitedUsers) {
-    const invitedUserData = invitedUsersData.find(u => u.username === invitedUser);
-    if (invitedUserData?.invitedUsers) {
-      for (const subInvitedUser of invitedUserData.invitedUsers) {
-        const subInvitedUserData = invitedUsersData.find(u => u.username === subInvitedUser);
-        total += (subInvitedUserData?.totalPisold || 0) * 0.025;
-      }
-    }
-  }
-  return total;
-}
-
 export async function POST(req: NextRequest) {
   try {
     const userData = await req.json();
@@ -193,16 +179,15 @@ export async function POST(req: NextRequest) {
     const totalCommission = calculateTotalCommission(invitedUsersData);
 
     // Update user's online status, current time, and total commission
-      user = await prisma.user.update({
-    where: { telegramId: userData.id },
-    data: {
-      isOnline: true,
-      currentTime: new Date(),
-      totalPisold: calculateTotalPiSold(user.transactionStatus, user.piAmount),
-      totalCommission: totalCommission,
-      twostepcom: calculateTwoStepCommission(user.invitedUsers, invitedUsersData)
-    }
-  });
+    user = await prisma.user.update({
+      where: { telegramId: userData.id },
+      data: {
+        isOnline: true,
+        currentTime: new Date(),
+        totalPisold: calculateTotalPiSold(user.transactionStatus, user.piAmount),
+        totalCommission: totalCommission
+      }
+    });
 
     let inviterInfo = null;
     if (inviterId) {
