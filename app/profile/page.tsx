@@ -185,16 +185,15 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-    <Script src="https://kit.fontawesome.com/18e66d329f.js"/>
-    
-    <div className="profile-header">
-      <Link href="/">
-        <button className="focus:outline-none hover-scale">
-          <i className="fas fa-arrow-left text-2xl"></i>
-        </button>
-      </Link>
-      <h1>Profile</h1>
-    </div>
+  <Script src="https://kit.fontawesome.com/18e66d329f.js"/>
+  <div className="profile-header flex items-center gap-4 p-4">
+    <Link href="/">
+      <button className="focus:outline-none transition-transform duration-200 ease-out hover:scale-105 active:scale-95">
+        <i className="fas fa-arrow-left text-2xl"></i>
+      </button>
+    </Link>
+    <h1>Profile</h1>
+  </div>
 
       <div className="profile-content">
         <div className="profile-card">
