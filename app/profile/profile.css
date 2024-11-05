@@ -4,6 +4,24 @@
 }
 
 .profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hover-scale {
+  transition: transform 0.2s ease-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-scale:active {
+  transform: scale(0.95);
+}
+
+.profile-header {
   width: 100%;
   background-color: #670773;
   padding: 1rem;
