@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import './profile.css';
 import Script from 'next/script';
+import Link from 'next/link';
 
 interface ProfileData {
   finalpis: number[];
