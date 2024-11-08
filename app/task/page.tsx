@@ -122,7 +122,7 @@ export default function Home() {
 
   const handleButtonClick7 = () => {
     if (buttonStage7 === 'check') {
-      window.open('https://discord.gg/KsV7hFKaEh', '_blank')
+      window.open('https://discord.gg/chkf7GvRa8', '_blank')
       setButtonStage7('claim')
     }
   }
